@@ -67,6 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\script.js" />
+    <Content Include="styles\style.css" />
+    <Content Include="views\components\footer.html" />
+    <Content Include="views\index.html" />
+    <Content Include="views\components\header.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
