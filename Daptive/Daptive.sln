@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daptive", "Daptive.csproj", "{DE61398B-DA8E-BB90-A511-CF5A352325F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE61398B-DA8E-BB90-A511-CF5A352325F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE61398B-DA8E-BB90-A511-CF5A352325F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE61398B-DA8E-BB90-A511-CF5A352325F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE61398B-DA8E-BB90-A511-CF5A352325F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF1DE8E2-CBFC-43A3-A636-197853D94A1A}
+	EndGlobalSection
+EndGlobal
