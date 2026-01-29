@@ -40,7 +40,12 @@ Inherits="Daptive.views.index" %>
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
-                  <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                  <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="#">Learning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Sponsors</a>
+                      </li>
                 </ul>
               </div>
             </div>
