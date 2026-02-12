@@ -52,7 +52,11 @@ Inherits="Daptive.views.index" %>
           </nav>
           </div>
       <main>
-        <h1>Our Dashboard</h1>
+          <br/>
+          <div class="container">
+            <h1>Our Dashboard</h1>  
+
+          </div>
       </main>
     </form>
     <script
