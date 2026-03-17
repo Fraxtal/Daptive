@@ -1,0 +1,93 @@
+/* ============================================================
+   CodeDaptive – register.css  (extends login.css)
+   ============================================================ */
+
+/* Role toggle buttons */
+.role-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.role-radio {
+    flex: 1;
+}
+
+/* Style the radio label cells */
+.role-toggle label {
+    display: block;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    border-right: 1px solid var(--border);
+}
+
+.role-toggle label:last-child { border-right: none; }
+
+/* Hide actual radio inputs */
+.role-toggle input[type="radio"] { display: none; }
+
+.role-toggle input[type="radio"]:checked + label {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Role info cards on left panel */
+.role-info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.role-card {
+    padding: 16px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.45);
+}
+
+.role-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+}
+
+.student-card  .role-badge { background: #d4e8df; color: #2d4a3e; }
+.lecturer-card .role-badge { background: #dde4f0; color: #2a3a5c; }
+
+.role-card p {
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: var(--text-mid);
+}
+
+/* Register card – slightly more compact */
+.register-card .form-title { margin-bottom: 24px; }
+
+/* Success message */
+.success-msg {
+    display: block;
+    background: #e2f0eb;
+    color: #2d4a3e;
+    border: 1px solid #a8d4bf;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+/* Tighter spacing for register form */
+.register-card .field-group { margin-bottom: 16px; }
