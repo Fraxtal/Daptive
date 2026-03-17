@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CodeDaptive – Create Account</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="CSS/login.css" />
-    <link rel="stylesheet" href="CSS/register.css" />
+    <link rel="stylesheet" href="styles/login.css" />
+    <link rel="stylesheet" href="styles/register.css" />
 </head>
 <body>
     <div class="page-wrapper">
@@ -75,13 +75,23 @@
                     <asp:Label ID="lblSuccess" runat="server" CssClass="success-msg" Visible="false"></asp:Label>
 
                     <!-- Role Selector -->
-                    <div class="field-group">
-                        <label>I am a</label>
-                        <div class="role-toggle">
-                            <asp:RadioButton ID="rbStudent"  runat="server" GroupName="Role" Text="Student"  Checked="true" CssClass="role-radio" />
-                            <asp:RadioButton ID="rbLecturer" runat="server" GroupName="Role" Text="Lecturer" CssClass="role-radio" />
-                        </div>
+                <div class="field-group">
+                    <label>I am a</label>
+
+                    <div class="role-toggle">
+
+                        <label class="role-option">
+                            <asp:RadioButton ID="rbStudent" runat="server" GroupName="Role" Checked="true" />
+                            <span>Student</span>
+                        </label>
+
+                        <label class="role-option">
+                            <asp:RadioButton ID="rbLecturer" runat="server" GroupName="Role" />
+                            <span>Lecturer</span>
+                     </label>
+
                     </div>
+                </div>
 
                     <!-- Username -->
                     <div class="field-group">

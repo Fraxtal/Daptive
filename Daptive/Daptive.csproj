@@ -81,11 +81,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CSS\login.css" />
-    <Content Include="CSS\register.css" />
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="scripts\script.js" />
+    <Content Include="styles\login.css" />
+    <Content Include="styles\register.css" />
     <Content Include="styles\style.css" />
     <Content Include="views\index.aspx" />
     <Content Include="Web.config" />
