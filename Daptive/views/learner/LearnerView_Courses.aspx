@@ -128,9 +128,26 @@
                     }
                 })
                 .catch(error => {
-                    console.error("Learner Courses AJAX Error: ", error)
-                    outputLit.innerHTML = "<span style='color:red;'>Something went wrong. Please try again.</span>";
+                    showErrorText("Something went wrong. Please try again.");
                 });
+        }
+
+        function showErrorText(message) {
+            var container = document.getElementById('err-container');
+
+            var txt = document.createElement('div');
+            txt.className = 'error-text';
+            txt.innerHTML = message;
+
+            container.prepend(txt);
+
+            setTimeout(function () {
+                txt.style.opacity = '0';
+                txt.style.transform = 'translateY(-20px)';
+                setTimeout(function () {
+                    txt.remove();
+                }, 400);
+            }, 4000);
         }
     </script>
 </body>
