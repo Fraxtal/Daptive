@@ -26,7 +26,7 @@ namespace Daptive
 
                     // NOTE: In production, store hashed passwords (e.g. BCrypt)
                     string sql = @"SELECT UserID, Role
-                                   FROM   Account
+                                   FROM   [user]
                                    WHERE  Username = @Username
                                    AND    Password = @Password";
 
