@@ -50,16 +50,32 @@
             <span class="sidebar-section-label">Main</span>
 
             <a href="#" class="nav-item active">
-              <span class="nav-icon">◈</span> Dashboard
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Dashboard
             </a>
             <a href="CreateQuiz.aspx" class="nav-item">
-              <span class="nav-icon">◈</span> Create Quiz
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Create Quiz
             </a>
             <a href="CreateCourse.aspx" class="nav-item">
-              <span class="nav-icon">◈</span> Create Course
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Create Course
             </a>
-            <a href="#" class="nav-item">
-              <span class="nav-icon">◈</span> Manage Quizzes
+            <a href="ManageQuizzes.aspx" class="nav-item">
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Manage Quizzes
             </a>
 
             <span class="sidebar-section-label">Analytics</span>
@@ -85,22 +101,22 @@
             <div class="stat-grid">
               <div class="stat-card">
                 <span class="stat-label">Total Students</span>
-                <span class="stat-value">42</span>
+                <span class="stat-value" id="totalStudents" runat="server">--</span>
                 <span class="stat-sub">Active learners</span>
               </div>
               <div class="stat-card">
                 <span class="stat-label">Quizzes Created</span>
-                <span class="stat-value">15</span>
+                <span class="stat-value" id="quizzesCreated" runat="server">--</span>
                 <span class="stat-sub">C# exercises</span>
               </div>
               <div class="stat-card">
                 <span class="stat-label">Avg Completion</span>
-                <span class="stat-value">68%</span>
+                <span class="stat-value" id="avgCompletion" runat="server">--</span>
                 <span class="stat-sub">Quiz attempts</span>
               </div>
               <div class="stat-card">
                 <span class="stat-label">Avg Score</span>
-                <span class="stat-value">75%</span>
+                <span class="stat-value" id="avgScore" runat="server">--</span>
                 <span class="stat-sub">Across all quizzes</span>
               </div>
             </div>
@@ -155,51 +171,19 @@
                   <span class="panel-title">Recent Activity</span>
                 </div>
                 <div class="activity-list">
-                  <div class="activity-item">
-                    <div class="activity-dot"></div>
-                    <div>
-                      <div class="activity-text">
-                        <strong>Alice</strong> scored 95% on Variables Quiz
+                  <asp:Repeater ID="rptRecentActivity" runat="server">
+                    <ItemTemplate>
+                      <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div>
+                          <div class="activity-text">
+                            <strong><%# Eval("FullName") %></strong> <%# Eval("ActionText") %>
+                          </div>
+                        </div>
                       </div>
-                      <div class="activity-time">10 minutes ago</div>
-                    </div>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-dot"></div>
-                    <div>
-                      <div class="activity-text">
-                        <strong>Bob</strong> completed Loops Challenge
-                      </div>
-                      <div class="activity-time">1 hour ago</div>
-                    </div>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-dot"></div>
-                    <div>
-                      <div class="activity-text">
-                        <strong>Charlie</strong> attempted Arrays Quiz
-                      </div>
-                      <div class="activity-time">2 hours ago</div>
-                    </div>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-dot"></div>
-                    <div>
-                      <div class="activity-text">
-                        <strong>Diana</strong> scored 88% on OOP Basics
-                      </div>
-                      <div class="activity-time">3 hours ago</div>
-                    </div>
-                  </div>
-                  <div class="activity-item">
-                    <div class="activity-dot"></div>
-                    <div>
-                      <div class="activity-text">
-                        <strong>Eve</strong> completed String Methods
-                      </div>
-                      <div class="activity-time">5 hours ago</div>
-                    </div>
-                  </div>
+                    </ItemTemplate>
+                  </asp:Repeater>
+                  <div class="activity-item" id="noRecentActivity" runat="server" visible="false">No recent activity available.</div>
                 </div>
               </div>
             </div>

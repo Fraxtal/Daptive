@@ -177,7 +177,11 @@ html, body {
     color: var(--accent-muted);
     font-size: 0.9rem;
     flex-shrink: 0;
+    /* use symbol-capable fonts first to avoid glyph fallback issues */
+    font-family: 'Segoe UI Symbol', 'Segoe UI Emoji', 'DM Mono', 'DM Sans', sans-serif;
 }
+
+.nav-icon-svg { width: 14px; height: 14px; display:block }
 
 .nav-item.active .nav-icon {
     color: var(--gold);

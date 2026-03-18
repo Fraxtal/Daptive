@@ -24,6 +24,15 @@ namespace Daptive.views.lecturer
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// ddlExistingTopics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlExistingTopics;
+
+        /// <summary>
         /// txtTopicName control.
         /// </summary>
         /// <remarks>
@@ -58,10 +67,5 @@ namespace Daptive.views.lecturer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPublishCourse;
-
-        /// <summary>
-        /// ddlExistingTopics control.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.DropDownList ddlExistingTopics;
     }
 }
