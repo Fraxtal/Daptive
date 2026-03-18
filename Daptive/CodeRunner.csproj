@@ -7,8 +7,8 @@
     <ProjectGuid>{D9245278-C341-46EC-9303-014DFDFA7333}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CLS_lib</RootNamespace>
-    <AssemblyName>CLS_lib</AssemblyName>
+    <RootNamespace>CodeRunner</RootNamespace>
+    <AssemblyName>CodeRunner</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

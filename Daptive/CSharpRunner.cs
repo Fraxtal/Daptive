@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CSharp;
 
-namespace CLS_lib
+namespace CodeRunner
 {
     // Run code in isolated AppDomain
     [System.Security.SecuritySafeCritical]
