@@ -85,7 +85,10 @@
   <ItemGroup>
     <Content Include="scripts\script.js" />
     <Content Include="styles\style.css" />
+    <Content Include="styles\learnerView.css" />
     <Content Include="views\index.aspx" />
+    <Content Include="views\LearnerView_Assessments.aspx" />
+    <Content Include="views\LearnerView_Courses.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +100,20 @@
     <Compile Include="views\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="views\LearnerView_Assessments.aspx.cs">
+      <DependentUpon>LearnerView_Assessments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\LearnerView_Assessments.aspx.designer.cs">
+      <DependentUpon>LearnerView_Assessments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\LearnerView_Courses.aspx.cs">
+      <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\LearnerView_Courses.aspx.designer.cs">
+      <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -106,6 +123,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ASG_TESTING\CLS_lib\CodeRunner.csproj">
+      <Project>{d9245278-c341-46ec-9303-014dfdfa7333}</Project>
+      <Name>CodeRunner</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
