@@ -4,21 +4,21 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="~/styles/login.css" runat="server"/>
-    <link rel="stylesheet" href="~/styles/learnerView.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/course.css" runat="server"/>
     <title>CodeDaptive</title>
 </head>
 <body>
     <form id="form1" runat="server">
-        <ul class="nav-bar">
-            <li><a href="LearnerView_Courses.aspx">Home</a></li>
+        <ul>
+            <li><a href="LearnerView_Courses.aspx">CodeDaptive</a></li>
             <li><a href="LearnerView_Courses.aspx">Courses</a></li>
             <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
             <li><a href="LearnerView_Courses.aspx">Profile</a></li>
         </ul>
         <div class="layout-container">
             <div class="sidebar">
-                <h3>CodeDaptive</h3>
+                <h3>Courses</h3>
                 <asp:Repeater ID="rptSidebar" runat="server" OnItemCommand="rptSidebar_ItemCommand">
                     <ItemTemplate>
                         <asp:LinkButton ID="lnkCourse" runat="server"

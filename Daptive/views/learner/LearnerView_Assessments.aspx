@@ -4,8 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="~/styles/login.css" runat="server"/>
-    <link rel="stylesheet" href="~/styles/learnerView.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/assessment.css" runat="server"/>
     <title></title>
 </head>
 <body>

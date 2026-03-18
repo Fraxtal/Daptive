@@ -83,38 +83,38 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Login.aspx" />
-    <Content Include="Register.aspx" />
+    <Content Include="styles\learner\assessment.css" />
+    <Content Include="views\authentication\Login.aspx" />
+    <Content Include="views\authentication\Register.aspx" />
     <Content Include="scripts\script.js" />
     <Content Include="styles\dashboard.css" />
     <Content Include="styles\lecturer\createcourse.css" />
     <Content Include="styles\lecturer\createquiz.css" />
-    <Content Include="styles\login.css" />
-    <Content Include="styles\register.css" />
-    <Content Include="styles\style.css" />
-    <Content Include="styles\learnerView.css" />
+    <Content Include="styles\authentication\login.css" />
+    <Content Include="styles\authentication\register.css" />
+    <Content Include="styles\learner\course.css" />
     <Content Include="views\index.aspx" />
-    <Content Include="views\LearnerView_Assessments.aspx" />
-    <Content Include="views\LearnerView_Courses.aspx" />
+    <Content Include="views\learner\LearnerView_Assessments.aspx" />
+    <Content Include="views\learner\LearnerView_Courses.aspx" />
     <Content Include="views\lecturer\CreateCourse.aspx" />
     <Content Include="views\lecturer\CreateQuiz.aspx" />
     <Content Include="views\lecturer\LecturerDashboard.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Login.aspx.cs">
+    <Compile Include="views\authentication\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.cs">
+    <Compile Include="views\authentication\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Register.aspx.cs">
+    <Compile Include="views\authentication\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Register.aspx.designer.cs">
+    <Compile Include="views\authentication\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="views\index.aspx.cs">
@@ -124,18 +124,18 @@
     <Compile Include="views\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="views\LearnerView_Assessments.aspx.cs">
+    <Compile Include="views\learner\LearnerView_Assessments.aspx.cs">
       <DependentUpon>LearnerView_Assessments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="views\LearnerView_Assessments.aspx.designer.cs">
+    <Compile Include="views\learner\LearnerView_Assessments.aspx.designer.cs">
       <DependentUpon>LearnerView_Assessments.aspx</DependentUpon>
     </Compile>
-    <Compile Include="views\LearnerView_Courses.aspx.cs">
+    <Compile Include="views\learner\LearnerView_Courses.aspx.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="views\LearnerView_Courses.aspx.designer.cs">
+    <Compile Include="views\learner\LearnerView_Courses.aspx.designer.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
     </Compile>
     <Compile Include="views\lecturer\CreateCourse.aspx.cs">
