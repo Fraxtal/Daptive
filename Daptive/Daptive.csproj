@@ -87,6 +87,8 @@
     <Content Include="Register.aspx" />
     <Content Include="scripts\script.js" />
     <Content Include="styles\dashboard.css" />
+    <Content Include="styles\lecturer\createcourse.css" />
+    <Content Include="styles\lecturer\createquiz.css" />
     <Content Include="styles\login.css" />
     <Content Include="styles\register.css" />
     <Content Include="styles\style.css" />
@@ -94,6 +96,8 @@
     <Content Include="views\index.aspx" />
     <Content Include="views\LearnerView_Assessments.aspx" />
     <Content Include="views\LearnerView_Courses.aspx" />
+    <Content Include="views\lecturer\CreateCourse.aspx" />
+    <Content Include="views\lecturer\CreateQuiz.aspx" />
     <Content Include="views\lecturer\LecturerDashboard.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -134,6 +138,20 @@
     <Compile Include="views\LearnerView_Courses.aspx.designer.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
     </Compile>
+    <Compile Include="views\lecturer\CreateCourse.aspx.cs">
+      <DependentUpon>CreateCourse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\lecturer\CreateCourse.aspx.designer.cs">
+      <DependentUpon>CreateCourse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\lecturer\CreateQuiz.aspx.cs">
+      <DependentUpon>CreateQuiz.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\lecturer\CreateQuiz.aspx.designer.cs">
+      <DependentUpon>CreateQuiz.aspx</DependentUpon>
+    </Compile>
     <Compile Include="views\lecturer\LecturerDashboard.aspx.cs">
       <DependentUpon>LecturerDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -157,9 +175,7 @@
       <Name>CodeRunner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="styles\lecturer\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,0 +1,437 @@
+﻿/* ── Wizard layout ── */
+.wizard-wrap {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* ── Outline panel (left) ── */
+.outline-panel {
+    position: sticky;
+    top: 80px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.outline-topic-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+.outline-topic-empty {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.outline-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+}
+
+.outline-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.outline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.outline-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+    .outline-item.active {
+        border-color: var(--accent);
+        background: rgba(45,74,62,0.05);
+    }
+
+    .outline-item:hover {
+        border-color: var(--accent-muted);
+    }
+
+.outline-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent-muted);
+    flex-shrink: 0;
+    width: 18px;
+}
+
+.outline-name {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.outline-empty {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* ── Step indicator ── */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 28px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.step-bubble {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+    .step-bubble.done {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+    }
+
+    .step-bubble.active {
+        border-color: var(--accent);
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+.step-label {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+    .step-label.active {
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+.step-connector {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 12px;
+    min-width: 32px;
+}
+
+/* ── Steps ── */
+.step {
+    display: none;
+}
+
+    .step.visible {
+        display: block;
+    }
+
+/* ── Form elements ── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.form-input, .form-textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+    .form-input:focus, .form-textarea:focus {
+        border-color: var(--accent);
+    }
+
+.form-textarea {
+    resize: vertical;
+}
+
+.code-editor {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    background: #1c1a17;
+    color: #e8e4de;
+    border: 1px solid #3a3830;
+    border-radius: 7px;
+    padding: 14px;
+    resize: vertical;
+    min-height: 200px;
+    outline: none;
+    width: 100%;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+}
+
+    .code-editor:focus {
+        border-color: var(--gold);
+    }
+
+.section-hint {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.preview-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-muted);
+    background: rgba(45,74,62,0.08);
+    border-radius: 20px;
+    padding: 4px 10px;
+}
+
+/* ── Course cards ── */
+.course-builder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.course-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    animation: slideUp 0.25s ease both;
+}
+
+    .course-card.active-card {
+        border-color: var(--accent);
+    }
+
+.course-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    background: #fff;
+    user-select: none;
+}
+
+    .course-card-header:hover {
+        background: rgba(45,74,62,0.03);
+    }
+
+.course-seq {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 5px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+}
+
+.course-card-title {
+    flex: 1;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+    .course-card-title.placeholder {
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+.card-chevron {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    transition: transform 0.2s;
+}
+
+    .card-chevron.open {
+        transform: rotate(180deg);
+    }
+
+.btn-remove-card {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+}
+
+    .btn-remove-card:hover {
+        color: #c0392b;
+        background: rgba(192,57,43,0.08);
+    }
+
+.course-card-body {
+    display: none;
+    padding: 18px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-ivory);
+}
+
+    .course-card-body.open {
+        display: block;
+    }
+
+.course-body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .btn-primary:hover {
+        background: var(--accent-hov);
+    }
+
+.btn-outline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: none;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 7px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .btn-outline:hover {
+        background: var(--accent);
+        color: #fff;
+    }
+
+.btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: none;
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+    .btn-ghost:hover {
+        color: var(--text-dark);
+        border-color: var(--text-mid);
+    }
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.add-course-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    background: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+    .add-course-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+@media (max-width: 960px) {
+    .wizard-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .course-body-grid {
+        grid-template-columns: 1fr;
+    }
+}
