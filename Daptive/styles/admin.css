@@ -1,0 +1,706 @@
+﻿/* ============================================================
+   CodeDaptive – admin.css
+   Shared styles for all Admin module pages
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-ivory: #e8e4de;
+    --bg-card: #f4f1ec;
+    --bg-white: #ffffff;
+    --text-dark: #1c1a17;
+    --text-mid: #4a4640;
+    --text-light: #8c8580;
+    --accent: #2d4a3e;
+    --accent-hov: #1e3329;
+    --accent-light: #7a9e8e;
+    --gold: #d4af37;
+    --border: #cec8c0;
+    --border-light: rgba(206, 200, 192, 0.4);
+    --error: #a63225;
+    --error-bg: #fce8e6;
+    --error-border: #f5c6c2;
+    --success: #2d4a3e;
+    --success-bg: #e6f0eb;
+    --amber: #854f0b;
+    --amber-bg: #faeeda;
+    --blue: #185fa5;
+    --blue-bg: #e6f1fb;
+    --sidebar-w: 220px;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-ivory);
+    color: var(--text-dark);
+}
+
+/* ?? Shell Layout ??????????????????????????????????????????? */
+.admin-shell {
+    display: block;
+    min-height: 100vh;
+}
+/* ?? Sidebar ???????????????????????????????????????????????? */
+.sidebar {
+    background: var(--accent);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 24px 20px 20px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.12);
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2px;
+}
+
+.brand-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: #fff;
+    letter-spacing: -0.01em;
+}
+
+.brand-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+}
+
+.nav-group {
+    padding: 16px 0 0;
+}
+
+.nav-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    padding: 0 20px 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background 0.15s, color 0.15s;
+}
+
+    .nav-item:hover {
+        background: rgba(255,255,255,0.07);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-item.active {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border-left: 2px solid var(--gold);
+    }
+
+    .nav-item svg {
+        width: 15px;
+        height: 15px;
+        opacity: 0.7;
+        flex-shrink: 0;
+    }
+
+    .nav-item.active svg {
+        opacity: 1;
+    }
+
+.sidebar-spacer {
+    flex: 1;
+}
+
+.sidebar-footer {
+    padding: 16px 20px;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+}
+
+.admin-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+}
+
+    a.admin-pill:hover {
+        background: rgba(255,255,255,0.15);
+        cursor: pointer;
+    }
+
+.admin-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.admin-info {
+    overflow: hidden;
+}
+
+.admin-name {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.logout-link {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    transition: color 0.15s;
+}
+
+    .logout-link:hover {
+        color: rgba(255,255,255,0.7);
+    }
+
+/* ?? Main Area ?????????????????????????????????????????????? */
+.main-area {
+    margin-left: var(--sidebar-w);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ?? Topbar ????????????????????????????????????????????????? */
+.topbar {
+    background: var(--bg-card);
+    border-bottom: 0.5px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    min-height: 64px;
+}
+
+.topbar-left {
+}
+
+.page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+}
+
+.page-breadcrumb {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 1px;
+    font-family: 'DM Mono', monospace;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ?? Buttons ???????????????????????????????????????????????? */
+.btn {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: var(--accent-hov);
+    }
+
+.btn-outline {
+    background: var(--bg-white);
+    color: var(--text-mid);
+    border: 0.5px solid var(--border);
+}
+
+    .btn-outline:hover {
+        background: var(--bg-ivory);
+    }
+
+.btn-danger {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 0.5px solid var(--error-border);
+}
+
+    .btn-danger:hover {
+        background: #f9d5d2;
+    }
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+/* ?? Page Content ??????????????????????????????????????????? */
+.page-content {
+    padding: 28px 32px;
+    flex: 1;
+}
+
+/* ?? Stat Cards ????????????????????????????????????????????? */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    min-width: 0;
+}
+
+.stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.stat-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+}
+
+.badge-up {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.badge-down {
+    background: var(--error-bg);
+    color: var(--error);
+}
+
+.badge-info {
+    background: var(--blue-bg);
+    color: var(--blue);
+}
+
+.badge-warn {
+    background: var(--amber-bg);
+    color: var(--amber);
+}
+
+/* ?? Two Column Layout ?????????????????????????????????????? */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.three-col {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+/* ?? Cards ?????????????????????????????????????????????????? */
+.card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.card-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+    .card-link:hover {
+        text-decoration: underline;
+    }
+
+.card-body {
+    padding: 20px;
+}
+
+/* ?? Bar Chart ?????????????????????????????????????????????? */
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bar-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    width: 72px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--accent);
+    transition: width 0.6s ease;
+}
+
+.bar-fill-light {
+    background: var(--accent-light);
+}
+
+.bar-val {
+    font-size: 11px;
+    color: var(--text-mid);
+    font-family: 'DM Mono', monospace;
+    width: 32px;
+}
+
+/* ?? Table ?????????????????????????????????????????????????? */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .data-table th {
+        font-family: 'DM Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-light);
+        padding: 10px 20px;
+        text-align: left;
+        border-bottom: 0.5px solid var(--border);
+        background: rgba(0,0,0,0.02);
+        white-space: nowrap;
+    }
+
+    .data-table td {
+        padding: 11px 20px;
+        font-size: 12px;
+        color: var(--text-mid);
+        border-bottom: 0.5px solid var(--border-light);
+        vertical-align: middle;
+    }
+
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+        background: rgba(0,0,0,0.015);
+    }
+
+/* ?? User Cell ?????????????????????????????????????????????? */
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.av-green {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.av-blue {
+    background: var(--blue-bg);
+    color: var(--blue);
+}
+
+.av-amber {
+    background: var(--amber-bg);
+    color: var(--amber);
+}
+
+.av-red {
+    background: var(--error-bg);
+    color: var(--error);
+}
+
+/* ?? Badges ????????????????????????????????????????????????? */
+.badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+}
+
+.b-student {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.b-lecturer {
+    background: var(--blue-bg);
+    color: var(--blue);
+}
+
+.b-admin {
+    background: var(--amber-bg);
+    color: var(--amber);
+}
+
+.b-active {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.b-inactive {
+    background: #f1efe8;
+    color: var(--text-light);
+}
+
+/* ?? Activity Feed ?????????????????????????????????????????? */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 0.5px solid var(--border-light);
+    align-items: flex-start;
+}
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+.activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.dot-green {
+    background: var(--accent);
+}
+
+.dot-red {
+    background: var(--error);
+}
+
+.dot-amber {
+    background: var(--amber);
+}
+
+.dot-blue {
+    background: var(--blue);
+}
+
+.activity-body {
+}
+
+.activity-text {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.5;
+}
+
+    .activity-text strong {
+        color: var(--text-dark);
+        font-weight: 500;
+    }
+
+.activity-time {
+    font-size: 10px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    margin-top: 3px;
+}
+
+/* ?? Alert Messages ????????????????????????????????????????? */
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+    .alert.show {
+        display: block;
+    }
+
+.alert-success {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 0.5px solid #b8d4c2;
+}
+
+.alert-error {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 0.5px solid var(--error-border);
+}
+
+/* ?? Responsive ????????????????????????????????????????????? */
+@media (max-width: 1024px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .two-col, .three-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-area {
+        margin-left: var(--sidebar-w);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-width: 0;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

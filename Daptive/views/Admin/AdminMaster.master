@@ -1,0 +1,1 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/views/Admin/AdminMaster.master" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="Daptive.views.Admin.AdminMaster" %>
