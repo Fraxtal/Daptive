@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daptive", "Daptive\Daptive.csproj", "{ACA28C4B-C7B2-401D-994B-5B1E577D6115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeRunner", "..\ASG_TESTING\CLS_lib\CodeRunner.csproj", "{D9245278-C341-46EC-9303-014DFDFA7333}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeRunner", "Daptive\CodeRunner.csproj", "{D9245278-C341-46EC-9303-014DFDFA7333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

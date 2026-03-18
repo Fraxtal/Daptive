@@ -143,7 +143,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ASG_TESTING\CLS_lib\CodeRunner.csproj">
+    <ProjectReference Include="CodeRunner.csproj">
       <Project>{d9245278-c341-46ec-9303-014dfdfa7333}</Project>
       <Name>CodeRunner</Name>
     </ProjectReference>
