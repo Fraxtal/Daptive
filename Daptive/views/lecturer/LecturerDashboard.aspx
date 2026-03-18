@@ -52,10 +52,10 @@
             <a href="#" class="nav-item active">
               <span class="nav-icon">◈</span> Dashboard
             </a>
-            <a href="CreateQuiz.html" class="nav-item">
+            <a href="CreateQuiz.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Create Quiz
             </a>
-            <a href="CreateCourse.html" class="nav-item">
+            <a href="CreateCourse.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Create Course
             </a>
             <a href="#" class="nav-item">

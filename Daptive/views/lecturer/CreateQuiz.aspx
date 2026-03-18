@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../../styles/dashboard.css" />
-    <link rel="stylesheet" href="../../styles/createquiz.css" />
+    <link rel="stylesheet" href="../../styles/lecturer/createquiz.css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -51,13 +51,13 @@
           <!-- ── SIDEBAR ── -->
           <aside class="sidebar">
             <span class="sidebar-section-label">Main</span>
-            <a href="LecturerDashboard.html" class="nav-item">
+            <a href="LecturerDashboard.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Dashboard
             </a>
-            <a href="CreateQuiz.html" class="nav-item active">
+            <a href="CreateQuiz.aspx" class="nav-item active">
               <span class="nav-icon">◈</span> Create Quiz
             </a>
-            <a href="CreateCourse.html" class="nav-item">
+            <a href="CreateCourse.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Create Course
             </a>
             <a href="#" class="nav-item">
@@ -91,12 +91,7 @@
 
                   <div class="form-group">
                     <label class="form-label">Quiz Name</label>
-                    <input
-                      type="text"
-                      class="form-input"
-                      id="quizName"
-                      placeholder="e.g. Reverse a String"
-                    />
+                    <asp:TextBox runat="server" ID="txtQuizName" ClientIDMode="Static" CssClass="form-input" placeholder="e.g. Reverse a String" />
                   </div>
                 </div>
 
@@ -112,12 +107,7 @@
                   </p>
                   <div class="form-group">
                     <label class="form-label">Content</label>
-                    <textarea
-                      class="form-textarea"
-                      id="quizContent"
-                      style="min-height: 320px"
-                      placeholder='Given a string s, return the string reversed.&#10;&#10;Example:&#10;  Input:  "hello"&#10;  Output: "olleh"&#10;&#10;Constraints:&#10;  1 ≤ s.length ≤ 1000'
-                    ></textarea>
+                    <asp:TextBox runat="server" ID="txtQuizContent" ClientIDMode="Static" TextMode="MultiLine" CssClass="form-textarea" Style="min-height:320px" placeholder='Given a string s, return the string reversed.&#10;&#10;Example:&#10;  Input:  "hello"&#10;  Output: "olleh"&#10;&#10;Constraints:&#10;  1 ≤ s.length ≤ 1000'></asp:TextBox>
                   </div>
                 </div>
               </div>
@@ -136,20 +126,13 @@
                   </p>
                   <div class="form-group">
                     <label class="form-label">DefaultCode (C#)</label>
-                    <textarea
-                      class="code-editor"
-                      id="defaultCode"
-                      spellcheck="false"
-                    >
-    public class Solution
+                    <asp:TextBox runat="server" ID="txtDefaultCode" TextMode="MultiLine" CssClass="code-editor" spellcheck="false">public class Solution
     {
         public string Solve(string input)
         {
             // Write your solution here
-        
         }
-    }</textarea
-                    >
+    }</asp:TextBox>
                   </div>
                 </div>
 
@@ -166,15 +149,14 @@
                     ÷ total cases × 100.
                   </p>
 
+                  <asp:HiddenField runat="server" ID="hfTestCases" ClientIDMode="Static" />
                   <div id="testcaseList"></div>
 
                   <div class="form-actions">
                     <button class="btn-outline" onclick="history.back()">
                       Cancel
                     </button>
-                    <button class="btn-primary" onclick="saveQuiz()">
-                      Publish Quiz
-                    </button>
+                    <asp:Button runat="server" ID="btnPublishQuiz" CssClass="btn-primary" Text="Publish Quiz" OnClick="SaveQuiz_Click" OnClientClick="return prepareQuizSubmission();" />
                   </div>
                 </div>
               </div>
@@ -215,54 +197,32 @@
             document.getElementById(`tc-${n}`)?.remove();
           }
 
-          function saveQuiz() {
-            const name = document.getElementById("quizName").value.trim();
-            const content = document.getElementById("quizContent").value.trim();
-            const defaultCode = document.getElementById("defaultCode").value.trim();
+          function prepareQuizSubmission() {
+            const name = document.getElementById('txtQuizName').value.trim();
+            const content = document.getElementById('txtQuizContent').value.trim();
+            const defaultCode = document.getElementById('txtDefaultCode').value.trim();
 
-            if (!name) {
-              alert("Please enter a quiz name.");
-              return;
-            }
-            if (!content) {
-              alert("Please enter a problem statement.");
-              return;
-            }
-            if (!defaultCode) {
-              alert("Please provide starter code.");
-              return;
-            }
+            if (!name) { alert('Please enter a quiz name.'); return false; }
+            if (!content) { alert('Please enter a problem statement.'); return false; }
+            if (!defaultCode) { alert('Please provide starter code.'); return false; }
 
-            const cards = document.querySelectorAll(".testcase-card");
-            if (cards.length < 3) {
-              alert("Please add at least 3 test cases.");
-              return;
-            }
+            const cards = document.querySelectorAll('.testcase-card');
+            if (cards.length < 3) { alert('Please add at least 3 test cases.'); return false; }
 
-            const testCases = [];
+            const parts = [];
             for (const card of cards) {
-              const inputs = card.querySelectorAll("input");
+              const inputs = card.querySelectorAll('input');
               const tc = inputs[0].value.trim();
               const er = inputs[1].value.trim();
-              if (!tc || !er) {
-                alert("Please fill in all test case fields.");
-                return;
-              }
-              testCases.push({ testCase: tc, expectedResult: er });
+              if (!tc || !er) { alert('Please fill in all test case fields.'); return false; }
+              // Escape delimiters by replacing occurrences
+              const escTc = tc.replace(/\|\|/g, '');
+              const escEr = er.replace(/\|\|/g, '');
+              parts.push(escTc + '::' + escEr);
             }
 
-            const payload = {
-              quiz: name,
-              content,
-              defaultCode,
-              testCases, // → insert into testcase table (QuizId FK)
-            };
-
-            console.log("Quiz payload:", payload);
-            // TODO: POST payload to API → quiz + testcase tables
-            alert(
-              `Quiz "${name}" published with ${testCases.length} test case(s)!`,
-            );
+            document.getElementById('hfTestCases').value = parts.join('||');
+            return true;
           }
 
           // Start with 3 test cases (minimum)
