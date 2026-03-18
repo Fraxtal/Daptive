@@ -115,6 +115,16 @@
                             <p class="section-hint">A topic is the overarching subject. All lessons (courses) you build in the next step will live under this topic.</p>
 
                             <div class="form-group">
+                                <label class="form-label">Use existing topic</label>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <label style="display:flex; align-items:center; gap:8px; font-size:0.9rem; color:var(--text-mid);">
+                                        <input type="checkbox" id="chkUseExistingTopic" onchange="toggleExistingTopic(this.checked)" />
+                                        <span style="font-size:0.9rem;">Enable</span>
+                                    </label>
+                                    <asp:DropDownList runat="server" ID="ddlExistingTopics" ClientIDMode="Static" CssClass="form-input" Style="display:none;"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-label">Topic Name</label>
                                 <asp:TextBox runat="server" ID="txtTopicName" ClientIDMode="Static" CssClass="form-input" placeholder="e.g. Loops in C#" oninput="updateOutlineTopic()" />
                             </div>
@@ -340,35 +350,44 @@
         }
 
         function prepareCourseSubmission() {
-            const topicName = document.getElementById('txtTopicName').value.trim();
-            const topicDesc = document.getElementById('txtTopicDesc').value.trim();
-            // Ensure Step 1 was completed (user pressed Next)
-            const step1Done = document.getElementById('bubble-1')?.classList.contains('done');
-            if (!topicName) { alert('Please enter a topic name.'); return false; }
-            if (!step1Done) { alert('Please complete Step 1 (Define Topic) before publishing. Click "Next — Build Lessons →" to continue.'); return false; }
-
+            // Serialize lessons into hidden field and let server-side validation/alerts handle user feedback
             const cards = document.querySelectorAll('.course-card');
-            if (!cards.length) { alert('Please add at least one lesson.'); return false; }
-
             const parts = [];
             for (const card of cards) {
-                const name = card.querySelector('.lesson-name-input').value.trim();
-                const content = card.querySelector('.form-textarea').value.trim();
-                const code = card.querySelector('.lesson-code').value.trim();
-                if (!name) { alert('Please fill in all lesson names.'); openCard(card); return false; }
-                if (!content) { alert('Please fill in all lesson content.'); openCard(card); return false; }
+                const name = (card.querySelector('.lesson-name-input')?.value || '').trim();
+                const content = (card.querySelector('.form-textarea')?.value || '').trim();
+                const code = (card.querySelector('.lesson-code')?.value || '').trim();
                 const escName = name.replace(/\|\|/g, '');
                 const escContent = content.replace(/\|\|/g, '');
                 const escCode = code.replace(/\|\|/g, '');
                 parts.push(escName + '::' + escContent + '::' + escCode);
             }
 
-            // Ensure Step 2 is active/visible (user navigated to it)
-            const step2Active = document.getElementById('bubble-2')?.classList.contains('active') || document.getElementById('step-2')?.classList.contains('visible');
-            if (!step2Active) { alert('Please open Step 2 (Build Lessons) and finish adding lessons before publishing.'); return false; }
-
             document.getElementById('hfLessons').value = parts.join('||');
             return true;
+        }
+
+        function toggleExistingTopic(enabled) {
+            const ddl = document.getElementById('ddlExistingTopics');
+            const txt = document.getElementById('txtTopicName');
+            const desc = document.getElementById('txtTopicDesc');
+            if (enabled) {
+                ddl.style.display = 'block';
+                txt.disabled = true;
+                desc.disabled = true;
+                // update outline to show selected topic if any
+                ddl.onchange = () => {
+                    const sel = ddl.options[ddl.selectedIndex]?.text || '';
+                    document.getElementById('outlineTopicName').innerHTML = sel ? `<strong>${sel}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
+                };
+            } else {
+                ddl.style.display = 'none';
+                txt.disabled = false;
+                desc.disabled = false;
+                // restore outline from textbox
+                txt.oninput = updateOutlineTopic;
+                updateOutlineTopic();
+            }
         }
     </script>
     </form>

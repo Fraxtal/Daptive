@@ -140,7 +140,7 @@
                 <div class="panel">
                   <div class="testcases-header">
                     <span class="panel-title">Test Cases</span>
-                    <button class="btn-outline" onclick="addTestCase()">
+                    <button type="button" class="btn-outline" onclick="addTestCase()">
                       + Add Test Case
                     </button>
                   </div>
@@ -168,25 +168,63 @@
           let tcCount = 0;
 
           function addTestCase() {
-            tcCount++;
-            const n = tcCount;
-            const list = document.getElementById("testcaseList");
+            try {
+              tcCount++;
+              const n = tcCount;
+              const list = document.getElementById('testcaseList');
+              if (!list) {
+                console.error('testcaseList container not found');
+                return;
+              }
 
-            const card = document.createElement("div");
-            card.className = "testcase-card";
-            card.id = `tc-${n}`;
-            card.innerHTML = `
-                <div class="form-group">
-                    <label class="form-label">Input (TestCase)</label>
-                    <input type="text" class="form-input" placeholder='e.g. "hello"' />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Expected Output</label>
-                    <input type="text" class="form-input" placeholder='e.g. "olleh"' />
-                </div>
-                <button class="btn-remove" onclick="removeTestCase(${n})" title="Remove">✕</button>
-            `;
-            list.appendChild(card);
+              const card = document.createElement('div');
+              card.className = 'testcase-card';
+              card.id = `tc-${n}`;
+
+              // Input group
+              const grp1 = document.createElement('div');
+              grp1.className = 'form-group';
+              const lbl1 = document.createElement('label');
+              lbl1.className = 'form-label';
+              lbl1.textContent = 'Input (TestCase)';
+              const inp1 = document.createElement('input');
+              inp1.type = 'text';
+              inp1.className = 'form-input';
+              inp1.placeholder = 'e.g. "hello"';
+              grp1.appendChild(lbl1);
+              grp1.appendChild(inp1);
+
+              // Expected group
+              const grp2 = document.createElement('div');
+              grp2.className = 'form-group';
+              const lbl2 = document.createElement('label');
+              lbl2.className = 'form-label';
+              lbl2.textContent = 'Expected Output';
+              const inp2 = document.createElement('input');
+              inp2.type = 'text';
+              inp2.className = 'form-input';
+              inp2.placeholder = 'e.g. "olleh"';
+              grp2.appendChild(lbl2);
+              grp2.appendChild(inp2);
+
+              // Remove button
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'btn-remove';
+              btn.title = 'Remove';
+              btn.textContent = '✕';
+              btn.addEventListener('click', function (ev) { ev.stopPropagation(); removeTestCase(n); });
+
+              card.appendChild(grp1);
+              card.appendChild(grp2);
+              card.appendChild(btn);
+
+              list.appendChild(card);
+              // optional: scroll to new card
+              card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (err) {
+              console.error('addTestCase error', err);
+            }
           }
 
           function removeTestCase(n) {
@@ -198,30 +236,20 @@
           }
 
           function prepareQuizSubmission() {
-            const name = document.getElementById('txtQuizName').value.trim();
-            const content = document.getElementById('txtQuizContent').value.trim();
-            const defaultCode = document.getElementById('txtDefaultCode').value.trim();
-
-            if (!name) { alert('Please enter a quiz name.'); return false; }
-            if (!content) { alert('Please enter a problem statement.'); return false; }
-            if (!defaultCode) { alert('Please provide starter code.'); return false; }
-
             const cards = document.querySelectorAll('.testcase-card');
-            if (cards.length < 3) { alert('Please add at least 3 test cases.'); return false; }
-
             const parts = [];
             for (const card of cards) {
               const inputs = card.querySelectorAll('input');
-              const tc = inputs[0].value.trim();
-              const er = inputs[1].value.trim();
-              if (!tc || !er) { alert('Please fill in all test case fields.'); return false; }
-              // Escape delimiters by replacing occurrences
+              const tc = (inputs[0]?.value || '').trim();
+              const er = (inputs[1]?.value || '').trim();
+              // Escape delimiters
               const escTc = tc.replace(/\|\|/g, '');
               const escEr = er.replace(/\|\|/g, '');
               parts.push(escTc + '::' + escEr);
             }
 
             document.getElementById('hfTestCases').value = parts.join('||');
+            // Let server perform validation and show alerts
             return true;
           }
 
