@@ -86,6 +86,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="scripts\script.js" />
+    <Content Include="styles\dashboard.css" />
     <Content Include="styles\login.css" />
     <Content Include="styles\register.css" />
     <Content Include="styles\style.css" />
@@ -93,6 +94,7 @@
     <Content Include="views\index.aspx" />
     <Content Include="views\LearnerView_Assessments.aspx" />
     <Content Include="views\LearnerView_Courses.aspx" />
+    <Content Include="views\lecturer\LecturerDashboard.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +134,13 @@
     <Compile Include="views\LearnerView_Courses.aspx.designer.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
     </Compile>
+    <Compile Include="views\lecturer\LecturerDashboard.aspx.cs">
+      <DependentUpon>LecturerDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\lecturer\LecturerDashboard.aspx.designer.cs">
+      <DependentUpon>LecturerDashboard.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -147,6 +156,9 @@
       <Project>{d9245278-c341-46ec-9303-014dfdfa7333}</Project>
       <Name>CodeRunner</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="styles\lecturer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
