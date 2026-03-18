@@ -15,8 +15,9 @@ namespace Daptive.views.lecturer
         }
         protected void btnPublish_Click(object sender, EventArgs e)
         {
-            string TopicName = topicName.Text;
-            string TopicDesc = topicDescription.Text;
+            // Read values from form fields (use Request to avoid missing control references)
+            string TopicName = Request.Form["topicName"] ?? string.Empty;
+            string TopicDesc = Request.Form["topicDescription"] ?? string.Empty;
 
             // Example: Save to database
             SaveTopic(TopicName, TopicDesc);
