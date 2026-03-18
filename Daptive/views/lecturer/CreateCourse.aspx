@@ -124,8 +124,8 @@
                             </div>
 
                             <div class="form-actions" style="margin-top:20px;">
-                                <button class="btn-ghost" onclick="history.back()">Cancel</button>
-                                <button class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
+                                <button type="button" class="btn-ghost" onclick="history.back()">Cancel</button>
+                                <button type="button" class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
                             </div>
                         </div>
                     </div>
@@ -143,10 +143,10 @@
                         <asp:HiddenField runat="server" ID="hfLessons" ClientIDMode="Static" />
                         <div class="course-builder" id="courseBuilder"></div>
 
-                        <button class="add-course-btn" onclick="addLesson()">+ Add Lesson</button>
+                        <button type="button" class="add-course-btn" onclick="addLesson()">+ Add Lesson</button>
 
                         <div class="form-actions" style="margin-top:20px;">
-                            <button class="btn-ghost" onclick="goToStep1()">← Back</button>
+                            <button type="button" class="btn-ghost" onclick="goToStep1()">← Back</button>
                             <asp:Button runat="server" ID="btnPublishCourse" CssClass="btn-primary" Text="Publish Course" OnClick="PublishCourse_Click" OnClientClick="return prepareCourseSubmission();" />
                         </div>
                     </div>

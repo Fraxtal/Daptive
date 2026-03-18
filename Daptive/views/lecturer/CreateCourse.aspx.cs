@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
@@ -32,10 +33,10 @@ namespace Daptive.views.lecturer
                     try
                     {
                         int topicId;
-                        using (var cmd = new SqlCommand("INSERT INTO topic (Topic, Description) OUTPUT INSERTED.TopicId VALUES (@Topic, @Desc)", conn, tran))
+                        using (var cmd = new SqlCommand("INSERT INTO [dbo].[topic] ([Topic], [Description]) OUTPUT INSERTED.[TopicId] VALUES (@Topic, @Desc)", conn, tran))
                         {
-                            cmd.Parameters.AddWithValue("@Topic", topicName);
-                            cmd.Parameters.AddWithValue("@Desc", topicDesc);
+                            cmd.Parameters.Add(new SqlParameter("@Topic", SqlDbType.NVarChar, 255) { Value = topicName });
+                            cmd.Parameters.Add(new SqlParameter("@Desc", SqlDbType.Text) { Value = string.IsNullOrEmpty(topicDesc) ? (object)DBNull.Value : topicDesc });
                             topicId = (int)cmd.ExecuteScalar();
                         }
 
@@ -52,12 +53,12 @@ namespace Daptive.views.lecturer
 
                             foreach (var l in lessons)
                             {
-                                using (var cmd = new SqlCommand("INSERT INTO course (TopicId, Name, Content, DefaultCode) VALUES (@TopicId, @Name, @Content, @Code)", conn, tran))
+                                using (var cmd = new SqlCommand("INSERT INTO [dbo].[course] ([TopicId], [Name], [Content], [DefaultCode]) VALUES (@TopicId, @Name, @Content, @Code)", conn, tran))
                                 {
-                                    cmd.Parameters.AddWithValue("@TopicId", topicId);
-                                    cmd.Parameters.AddWithValue("@Name", l.Item1);
-                                    cmd.Parameters.AddWithValue("@Content", l.Item2);
-                                    cmd.Parameters.AddWithValue("@Code", l.Item3);
+                                    cmd.Parameters.Add(new SqlParameter("@TopicId", SqlDbType.Int) { Value = topicId });
+                                    cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 255) { Value = l.Item1 });
+                                    cmd.Parameters.Add(new SqlParameter("@Content", SqlDbType.Text) { Value = string.IsNullOrEmpty(l.Item2) ? (object)DBNull.Value : l.Item2 });
+                                    cmd.Parameters.Add(new SqlParameter("@Code", SqlDbType.Text) { Value = string.IsNullOrEmpty(l.Item3) ? (object)DBNull.Value : l.Item3 });
                                     cmd.ExecuteNonQuery();
                                 }
                             }
