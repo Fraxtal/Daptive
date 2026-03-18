@@ -46,16 +46,32 @@
         <aside class="sidebar">
             <span class="sidebar-section-label">Main</span>
             <a href="LecturerDashboard.aspx" class="nav-item">
-                <span class="nav-icon">◈</span> Dashboard
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Dashboard
             </a>
             <a href="CreateQuiz.aspx" class="nav-item">
-                <span class="nav-icon">◈</span> Create Quiz
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Create Quiz
             </a>
             <a href="CreateCourse.aspx" class="nav-item active">
-                <span class="nav-icon">◈</span> Create Course
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Create Course
             </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">◈</span> Manage Quizzes
+            <a href="ManageQuizzes.aspx" class="nav-item">
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Manage Quizzes
             </a>
             <span class="sidebar-section-label">Analytics</span>
             <a href="#" class="nav-item">
@@ -133,8 +149,8 @@
                                 <asp:TextBox runat="server" ID="txtTopicDesc" ClientIDMode="Static" TextMode="MultiLine" CssClass="form-textarea" Style="min-height:120px;" placeholder="A brief overview of what learners will explore in this topic…"></asp:TextBox>
                             </div>
 
-                            <div class="form-actions" style="margin-top:20px;">
-                                <button type="button" class="btn-ghost" onclick="history.back()">Cancel</button>
+            <div class="form-actions" style="margin-top:20px;">
+                                <button type="button" class="btn-ghost" onclick="window.location='LecturerDashboard.aspx'">Cancel</button>
                                 <button type="button" class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
                             </div>
                         </div>

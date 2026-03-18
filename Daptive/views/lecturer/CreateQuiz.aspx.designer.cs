@@ -41,14 +41,6 @@ namespace Daptive.views.lecturer
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtQuizContent;
 
-        /// <summary>
-        /// txtDefaultCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDefaultCode;
 
         /// <summary>
         /// hfTestCases control.

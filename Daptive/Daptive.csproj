@@ -90,6 +90,7 @@
   <ItemGroup>
     <Content Include="resources\logo.png" />
     <Content Include="styles\admin.css" />
+    <Content Include="styles\lecturer\managequizzes.css" />
     <Content Include="views\Admin\AdminProfile.aspx" />
     <Content Include="views\Admin\Analytics.aspx" />
     <Content Include="views\Admin\Content.aspx" />
@@ -115,6 +116,7 @@
     <Content Include="views\lecturer\CreateCourse.aspx" />
     <Content Include="views\lecturer\CreateQuiz.aspx" />
     <Content Include="views\lecturer\LecturerDashboard.aspx" />
+    <Content Include="views\lecturer\ManageQuizzes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +174,9 @@
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-	  <Compile Include="views\Admin\Users.aspx.designer.cs">
-		  <DependentUpon>Users.aspx</DependentUpon>
-	  </Compile>
+    <Compile Include="views\Admin\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
     <Compile Include="views\authentication\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -237,6 +239,13 @@
     </Compile>
     <Compile Include="views\lecturer\LecturerDashboard.aspx.designer.cs">
       <DependentUpon>LecturerDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\lecturer\ManageQuizzes.aspx.cs">
+      <DependentUpon>ManageQuizzes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\lecturer\ManageQuizzes.aspx.designer.cs">
+      <DependentUpon>ManageQuizzes.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
