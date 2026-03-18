@@ -2,6 +2,8 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Script.Serialization;
+using System.Collections;
 using System.Web.UI;
 
 namespace Daptive.views.lecturer
@@ -15,6 +17,47 @@ namespace Daptive.views.lecturer
                 BindQuizzes();
             }
         }
+
+        protected void btnModalSavePost_Click(object sender, EventArgs e)
+        {
+            int id;
+            if (!int.TryParse(hfModalQuizId.Value, out id)) return;
+            var name = hfModalQuizName.Value ?? string.Empty;
+            var desc = hfModalQuizContent.Value ?? hfModalQuizDesc.Value ?? string.Empty;
+            // parse testcases JSON
+            object[] tests = null;
+            try {
+                var json = hfModalTestCases.Value ?? "[]";
+                var serializer = new JavaScriptSerializer();
+                var list = serializer.Deserialize<System.Collections.Generic.List<System.Collections.Generic.Dictionary<string,string>>>(json);
+                if (list != null)
+                {
+                    var htList = new ArrayList();
+                    foreach (var dict in list)
+                    {
+                        var ht = new Hashtable();
+                        if (dict.ContainsKey("Input")) ht["Input"] = dict["Input"];
+                        if (dict.ContainsKey("Expected")) ht["Expected"] = dict["Expected"];
+                        htList.Add(ht);
+                    }
+                    tests = htList.ToArray();
+                }
+            } catch { tests = null; }
+
+            // call SaveQuizChanges WebMethod logic directly
+            SaveQuizChanges(id, name, desc, tests);
+            // optionally rebind
+            BindQuizzes();
+        }
+
+        protected void btnConfirmDeletePost_Click(object sender, EventArgs e)
+        {
+            int id;
+            if (!int.TryParse(hfDeleteQuizId.Value, out id)) return;
+            DeleteQuiz(id);
+            BindQuizzes();
+        }
+
 
         [System.Web.Services.WebMethod]
         public static object GetQuiz(int quizId)
@@ -148,9 +191,11 @@ namespace Daptive.views.lecturer
         {
             if (e.CommandName == "EditQuiz")
             {
+                // keep server-side edit handling if needed - currently modal handles edit
                 var id = e.CommandArgument?.ToString();
-                // redirect to create/edit page with id parameter - placeholder
-                Response.Redirect("CreateQuiz.aspx?id=" + Server.UrlEncode(id));
+                // If you want server-side redirect to create page, uncomment below
+                // Response.Redirect("CreateQuiz.aspx?id=" + Server.UrlEncode(id));
+                return;
             }
             else if (e.CommandName == "DeleteQuiz")
             {

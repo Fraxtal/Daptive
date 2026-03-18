@@ -33,6 +33,78 @@ namespace Daptive.views.lecturer
         protected global::System.Web.UI.ScriptManager sm;
 
         /// <summary>
+        /// hfModalQuizId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModalQuizId;
+
+        /// <summary>
+        /// hfModalQuizName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModalQuizName;
+
+        /// <summary>
+        /// hfModalQuizDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModalQuizDesc;
+
+        /// <summary>
+        /// hfModalQuizContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModalQuizContent;
+
+        /// <summary>
+        /// hfModalTestCases control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModalTestCases;
+
+        /// <summary>
+        /// hfDeleteQuizId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDeleteQuizId;
+
+        /// <summary>
+        /// btnModalSavePost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModalSavePost;
+
+        /// <summary>
+        /// btnConfirmDeletePost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmDeletePost;
+
+        /// <summary>
         /// btnCreateQuiz control.
         /// </summary>
         /// <remarks>

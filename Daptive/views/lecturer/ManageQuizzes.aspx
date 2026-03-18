@@ -17,6 +17,14 @@
     <body>
         <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="sm" EnablePageMethods="true" />
+        <asp:HiddenField runat="server" ID="hfModalQuizId" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="hfModalQuizName" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="hfModalQuizDesc" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="hfModalQuizContent" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="hfModalTestCases" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="hfDeleteQuizId" ClientIDMode="Static" />
+        <asp:Button runat="server" ID="btnModalSavePost" Style="display:none;" OnClick="btnModalSavePost_Click" />
+        <asp:Button runat="server" ID="btnConfirmDeletePost" Style="display:none;" OnClick="btnConfirmDeletePost_Click" />
         <div class="shell">
           <!-- ── TOP BAR ── -->
           <header class="topbar">
@@ -112,7 +120,7 @@
               </div>
               <p class="section-hint">View, edit or remove quizzes you have published.</p>
 
-              <asp:GridView runat="server" ID="gvQuizzes" CssClass="table" AutoGenerateColumns="false" DataKeyNames="QuizId">
+              <asp:GridView runat="server" ID="gvQuizzes" CssClass="table" AutoGenerateColumns="false" DataKeyNames="QuizId" OnRowCommand="gvQuizzes_RowCommand">
                 <Columns>
                   <asp:BoundField DataField="QuizId" HeaderText="#" />
                   <asp:BoundField DataField="Quiz" HeaderText="Quiz" />
@@ -133,10 +141,10 @@
                 <h3>Edit Quiz</h3>
                 <p id="editModalTitle" class="section-hint"></p>
 
-                <div style="display:flex; gap:8px; margin-bottom:12px;">
-                  <button type="button" class="btn-outline" id="btnEditInfo">Info</button>
-                  <button type="button" class="btn-outline" id="btnEditContent">Problem</button>
-                  <button type="button" class="btn-outline" id="btnEditTests">Tests</button>
+                <div class="modal-tabs" style="display:flex; gap:8px; margin-bottom:12px;">
+                  <button type="button" class="btn-outline modal-tab active" id="btnEditInfo">Info</button>
+                  <button type="button" class="btn-outline modal-tab" id="btnEditContent">Problem</button>
+                  <button type="button" class="btn-outline modal-tab" id="btnEditTests">Tests</button>
                 </div>
 
                 <div id="editBody">
@@ -172,7 +180,7 @@
 
                 <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
                       <button type="button" class="btn-outline" onclick="closeModal('editModal')">Cancel</button>
-                  <button type="button" class="btn-primary" id="btnModalSave">Save Changes</button>
+                  <button type="button" class="btn-primary" id="btnModalSave" onclick="submitModalChanges()">Save Changes</button>
                 </div>
               </div>
             </div>
@@ -189,13 +197,6 @@
               </div>
             </div>
 
-            <style>
-              .modal { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index:9999; }
-              .modal-content { background:#fff; padding:20px; border-radius:8px; width:420px; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
-              .modal-actions { display:flex; gap:8px; flex-direction:column; }
-              .modal-actions .btn-outline, .modal-actions .btn-primary { width:100%; }
-            </style>
-
             <script>
               let currentQuizId = null;
 
@@ -209,14 +210,34 @@
                 loadQuizIntoModal(currentQuizId);
 
                 // wire section buttons
-                document.getElementById('btnEditInfo').addEventListener('click', function(e){ e.preventDefault(); showEditSection('info'); });
-                document.getElementById('btnEditContent').addEventListener('click', function(e){ e.preventDefault(); showEditSection('content'); });
-                document.getElementById('btnEditTests').addEventListener('click', function(e){ e.preventDefault(); showEditSection('tests'); });
+                document.getElementById('btnEditInfo').addEventListener('click', function(e){ e.preventDefault(); showEditSection('info'); setActiveTab('btnEditInfo'); });
+                document.getElementById('btnEditContent').addEventListener('click', function(e){ e.preventDefault(); showEditSection('content'); setActiveTab('btnEditContent'); });
+                document.getElementById('btnEditTests').addEventListener('click', function(e){ e.preventDefault(); showEditSection('tests'); setActiveTab('btnEditTests'); });
 
                 document.getElementById('btnModalAddTest').addEventListener('click', function(e){ e.preventDefault(); addModalTestCase(); });
                 document.getElementById('btnModalSave').addEventListener('click', function(e){ e.preventDefault(); saveModalChanges(); });
 
                 document.getElementById('editModal').style.display = 'flex';
+              }
+
+              function setActiveTab(id) {
+                document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+                const el = document.getElementById(id); if (el) el.classList.add('active');
+              }
+
+              function submitModalChanges() {
+                // move modal form data into hidden fields and postback to server
+                document.getElementById('hfModalQuizId').value = currentQuizId || '';
+                document.getElementById('hfModalQuizName').value = document.getElementById('modalQuizName').value.trim();
+                document.getElementById('hfModalQuizDesc').value = document.getElementById('modalQuizDesc').value.trim();
+                document.getElementById('hfModalQuizContent').value = document.getElementById('modalQuizContent').value.trim();
+                // serialize testcases to simple JSON
+                const cards = document.querySelectorAll('#modalTestList .testcase-card');
+                const arr = [];
+                cards.forEach(c=>{ const inputs = c.querySelectorAll('input'); if (inputs.length>=2) arr.push({ Input: inputs[0].value.trim(), Expected: inputs[1].value.trim() }); });
+                document.getElementById('hfModalTestCases').value = JSON.stringify(arr);
+                // trigger server postback
+                document.getElementById('btnModalSavePost').click();
               }
 
               function showEditSection(name) {
@@ -281,7 +302,33 @@
 
                 fetch('ManageQuizzes.aspx/SaveQuizChanges', {
                   method: 'POST', headers: { 'Content-Type':'application/json; charset=utf-8' }, body: JSON.stringify(payload)
-                }).then(r=>r.json()).then(function(res){ const d=res && res.d?res.d:res; if (d && d.success) { window.location.reload(); } else { alert('Failed to save changes'); } }).catch(e=>{ console.error(e); alert('Failed to save changes'); });
+                }).then(r=>r.json()).then(function(res){
+                  const d = res && res.d ? res.d : res;
+                  if (d && d.success) {
+                    // update row in-place without full reload
+                    try {
+                      const selector = `button[data-id='${currentQuizId}']`;
+                      const btn = document.querySelector(selector);
+                      const tr = btn && btn.closest('tr');
+                      if (tr) {
+                        // columns: 0=QuizId,1=Quiz,2=Description
+                        if (tr.cells.length >= 3) {
+                          tr.cells[1].textContent = payload.quiz;
+                          tr.cells[2].textContent = payload.description;
+                        } else {
+                          // fallback: try to update any text nodes
+                          const quizCell = tr.querySelector('.quiz-name'); if (quizCell) quizCell.textContent = payload.quiz;
+                          const descCell = tr.querySelector('.quiz-desc'); if (descCell) descCell.textContent = payload.description;
+                        }
+                      }
+                    } catch (err) {
+                      console.warn('Failed to update row in-place', err);
+                    }
+                    closeModal('editModal');
+                  } else {
+                    alert('Failed to save changes');
+                  }
+                }).catch(e=>{ console.error(e); alert('Failed to save changes'); });
               }
 
               function escapeHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -289,7 +336,9 @@
               function openDeleteModal(el) {
                 currentQuizId = el.getAttribute('data-id');
                 document.getElementById('deleteModal').style.display = 'flex';
-                document.getElementById('btnConfirmDelete').addEventListener('click', function(e){ e.preventDefault(); confirmDelete(); });
+                // set hidden field for server-side deletion
+                document.getElementById('hfDeleteQuizId').value = currentQuizId || '';
+                document.getElementById('btnConfirmDelete').addEventListener('click', function(e){ e.preventDefault(); document.getElementById('btnConfirmDeletePost').click(); });
               }
 
               function closeModal(id) {
@@ -307,7 +356,14 @@
                   // ASP.NET returns { d: <value> }
                   const payload = res && res.d ? res.d : res;
                   if (payload && payload.success) {
-                    window.location.reload();
+                    // remove row from table
+                    try {
+                      const selector = `button[data-id='${currentQuizId}']`;
+                      const btn = document.querySelector(selector);
+                      const tr = btn && btn.closest('tr');
+                      if (tr) tr.remove();
+                    } catch (err) { console.warn('Failed to remove row', err); }
+                    closeModal('deleteModal');
                   } else {
                     alert('Failed to delete quiz');
                     closeModal('deleteModal');
