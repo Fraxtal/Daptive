@@ -18,11 +18,17 @@ namespace Daptive.views.lecturer
         protected void SaveQuiz_Click(object sender, EventArgs e)
         {
             string name = txtQuizName.Text.Trim();
+            string description = txtQuizContent.Text.Trim();
             string testcasesJson = hfTestCases.Value; // expected as 'tc::expected||tc::expected'
 
             if (string.IsNullOrEmpty(name))
             {
                 Response.Write("<script>alert('Please enter a quiz name.');</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(description))
+            {
+                Response.Write("<script>alert('Please provide a problem statement/description.');</script>");
                 return;
             }
 
@@ -34,12 +40,12 @@ namespace Daptive.views.lecturer
                 {
                     try
                     {
-                        // Insert quiz (schema: [dbo].[quiz] ([QuizId], [Quiz]))
+                        // Insert quiz (schema: [dbo].[quiz] ([QuizId], [Quiz], [Description]))
                         int quizId;
-                        using (var cmd = new SqlCommand("INSERT INTO [dbo].[quiz] ([Quiz]) OUTPUT INSERTED.[QuizId] VALUES (@Quiz)", conn, tran))
+                        using (var cmd = new SqlCommand("INSERT INTO [dbo].[quiz] ([Quiz], [Description]) OUTPUT INSERTED.[QuizId] VALUES (@Quiz, @Description)", conn, tran))
                         {
-                            var p = cmd.Parameters.Add("@Quiz", System.Data.SqlDbType.NVarChar, 255);
-                            p.Value = name;
+                            cmd.Parameters.Add(new SqlParameter("@Quiz", System.Data.SqlDbType.NVarChar, 255) { Value = name });
+                            cmd.Parameters.Add(new SqlParameter("@Description", System.Data.SqlDbType.Text) { Value = string.IsNullOrEmpty(description) ? (object)DBNull.Value : description });
                             quizId = (int)cmd.ExecuteScalar();
                         }
 
