@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LearnerView_Courses.aspx.cs" Inherits="Daptive.views.LearnerView_Courses" %>
+<%@ Register Src="~/views/learner/logo.ascx" TagPrefix="custom" TagName="Logo" %>
 
 <!DOCTYPE html>
 
@@ -11,14 +12,14 @@
 <body>
     <form id="form1" runat="server">
         <ul>
-            <li><a href="LearnerView_Courses.aspx">CodeDaptive</a></li>
+            <li><a href="LearnerView_Courses.aspx"><custom:Logo runat="server" ID="MainBrandLogo" /></a></li>
             <li><a href="LearnerView_Courses.aspx">Courses</a></li>
             <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
             <li><a href="LearnerView_Courses.aspx">Profile</a></li>
         </ul>
         <div class="layout-container">
             <div class="sidebar">
-                <h3>Courses</h3>
+                <h3>Topics</h3>
                 <asp:Repeater ID="rptSidebar" runat="server" OnItemCommand="rptSidebar_ItemCommand">
                     <ItemTemplate>
                         <asp:LinkButton ID="lnkCourse" runat="server"
@@ -29,11 +30,11 @@
                 </asp:Repeater>
             </div>
             <div class="main-content">
-                <div id="welcomeMsg" runat="server">
-                    <h2>Welcome to CodeDaptive</h2>
+                <div id="Topic" runat="server">
+                    <h2 id="contentTopic" runat="server">Welcome to CodeDaptive</h2>
                     <br />
                     <div class="course-text">
-                        <asp:Literal runat="server" Text="Nice to meet you! Get started by clicking any course on the left"></asp:Literal>
+                        <asp:Literal id="contentTopicDesc" runat="server" Text="Nice to meet you! Get started by clicking any course on the left"></asp:Literal>
                     </div>
                 </div>
                 <asp:Repeater ID="rptContent" runat="server">
@@ -49,18 +50,9 @@
                         <div class="section-container">
                             <div class="monaco-container"></div>
 
-                            <asp:TextBox ID="txtCode" runat="server" 
-                                CssClass="hidden-textbox" 
-                                TextMode="MultiLine" 
-                                style="display:none;">
-public class Program
-{
-    public static void Main()
-    {
-        Console.WriteLine("Hello from Monaco Editor!");
-    }
-}
-                            </asp:TextBox>
+                            <textarea class="hidden-textbox" style="display:none;">
+                                <%# HttpUtility.HtmlEncode(Eval("DefaultCode").ToString()) %>
+                            </textarea>
 
                             <button type="button" class="btn-run" 
                                 onclick="executeCodeAJAX(this)">

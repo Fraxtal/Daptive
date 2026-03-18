@@ -24,6 +24,15 @@ namespace Daptive.views
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// MainBrandLogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Daptive.views.learner.logo MainBrandLogo;
+
+        /// <summary>
         /// rptSidebar control.
         /// </summary>
         /// <remarks>
@@ -33,13 +42,31 @@ namespace Daptive.views
         protected global::System.Web.UI.WebControls.Repeater rptSidebar;
 
         /// <summary>
-        /// welcomeMsg control.
+        /// Topic control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl welcomeMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Topic;
+
+        /// <summary>
+        /// contentTopic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contentTopic;
+
+        /// <summary>
+        /// contentTopicDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal contentTopicDesc;
 
         /// <summary>
         /// rptContent control.

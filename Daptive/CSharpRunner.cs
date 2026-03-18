@@ -91,12 +91,18 @@ namespace CodeRunner
         }
         public static ExecutionResult CompileAndRun(string userCode, string[] testCases, int timeoutMilliseconds = 3000)
         {
-            // injection to replace all console calling to sandbox console
-            string safeCode = userCode.Replace("System.Console.", "SandboxConsole.")
-                                      .Replace("Console.", "SandboxConsole.");
-
             // make a virtual console(Sandbox Console) and attach it after the student's code
             string injectedCode = @"
+            using System;
+            using System.Collections;
+            using System.Collections.Generic;
+            using System.Linq;
+            using System.Text;
+            using System.Text.RegularExpressions;
+            using System.Numerics;
+
+            using Console = SandboxConsole;
+
             public static class SandboxConsole
             {
                 public static System.IO.StringWriter Output = new System.IO.StringWriter();
@@ -109,7 +115,7 @@ namespace CodeRunner
                 public static void Write(object obj) { Output.Write(obj); }
                 public static void Write(string obj) { Output.Write(obj); }
             }";
-            string finalCode = injectedCode + "\n#line 1\n" + safeCode;
+            string finalCode = injectedCode + "\n#line 1\n" + userCode;
 
             // setup compiler
             CSharpCodeProvider provider = new CSharpCodeProvider();
@@ -119,6 +125,7 @@ namespace CodeRunner
             parameters.OutputAssembly = tempAssemblyPath;
             parameters.GenerateExecutable = false;
             parameters.ReferencedAssemblies.Add("System.dll");
+            parameters.ReferencedAssemblies.Add("System.Core.dll");
 
             // compile code
             CompilerResults results = provider.CompileAssemblyFromSource(parameters, finalCode);

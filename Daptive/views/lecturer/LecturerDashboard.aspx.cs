@@ -15,11 +15,11 @@ namespace Daptive.views.lecturer
         }
         protected void btnPublish_Click(object sender, EventArgs e)
         {
-            string TopicName = topicName.Text;
-            string TopicDesc = topicDescription.Text;
+            //string TopicName = topicName.Text;
+            //string TopicDesc = topicDescription.Text;
 
             // Example: Save to database
-            SaveTopic(TopicName, TopicDesc);
+            //SaveTopic(TopicName, TopicDesc);
 
             // You would normally also receive lesson data via AJAX or hidden fields
         }
