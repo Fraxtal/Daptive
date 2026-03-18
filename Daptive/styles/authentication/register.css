@@ -1,0 +1,56 @@
+/* ============================================================
+   CodeDaptive – register.css  (extends login.css)
+   ============================================================ */
+
+/* Role toggle buttons */
+.role-toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* Each option */
+.role-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-right: 1px solid var(--border);
+    position: relative;
+}
+
+    /* Remove last border */
+    .role-option:last-child {
+        border-right: none;
+    }
+
+    /* Hide default radio */
+    .role-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Hover state */
+    .role-option:hover {
+        background: #f3f5f4;
+    }
+
+    /* Selected dark green style */
+    .role-option:has(input[type="radio"]:checked) {
+        background: #1f4f3f;
+        color: #fff;
+    }
+
+    /* Text inside button */
+    .role-option span {
+        pointer-events: none;
+    }
