@@ -116,7 +116,7 @@
                     <asp:Label ID="lblSuccess" runat="server" CssClass="alert alert-success" Visible="false" />
                     <asp:Label ID="lblError"   runat="server" CssClass="alert alert-error"   Visible="false" />
 
-                    <!-- ── Questions Table ────────────────────── -->
+                    <!-- Questions Table -->
                     <div class="card" style="margin-bottom:32px;">
                         <div class="card-header">
                             <span class="card-title">
@@ -170,7 +170,7 @@
                             style="display:block; padding:20px; font-size:13px; color:var(--text-light);" />
                     </div>
 
-                    <!-- ── Test Cases Section ─────────────────── -->
+                    <!-- Test Cases Section -->
                     <div style="margin-bottom:16px;">
                         <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--text-dark);">
                             Test Cases

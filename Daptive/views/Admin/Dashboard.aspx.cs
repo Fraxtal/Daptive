@@ -8,10 +8,7 @@ namespace Daptive.Admin
 {
     public partial class Dashboard : Page
     {
-        private readonly string _connStr =
-            System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
-
-        // ── Page Load ────────────────────────────────────────────────
+        private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
@@ -27,14 +24,11 @@ namespace Daptive.Admin
                 string username = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
                 litUsername.Text = username;
                 litInitials.Text = GetInitials(username);
-
                 LoadStatCards();
                 LoadCourseChart();
                 LoadRecentUsers();
             }
         }
-
-        // ── Stat Cards ───────────────────────────────────────────────
         private void LoadStatCards()
         {
             try
@@ -42,14 +36,7 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-
-                    string sql = @"
-                        SELECT
-                            COUNT(*)                                            AS TotalUsers,
-                            SUM(CASE WHEN Role = 'Student'  THEN 1 ELSE 0 END) AS Students,
-                            SUM(CASE WHEN Role = 'Lecturer' THEN 1 ELSE 0 END) AS Lecturers
-                        FROM [user]";
-
+                    string sql = @"SELECT COUNT(*) AS TotalUsers, SUM(CASE WHEN Role = 'Student' THEN 1 ELSE 0 END) AS Students, SUM(CASE WHEN Role = 'Lecturer' THEN 1 ELSE 0 END) AS Lecturers FROM [user]";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     using (SqlDataReader r = cmd.ExecuteReader())
                     {
@@ -60,10 +47,11 @@ namespace Daptive.Admin
                             litTotalLecturers.Text = r["Lecturers"].ToString();
                         }
                     }
-
                     string courseSql = "SELECT COUNT(*) FROM [course]";
                     using (SqlCommand cmd2 = new SqlCommand(courseSql, conn))
+                    {
                         litTotalCourses.Text = cmd2.ExecuteScalar().ToString();
+                    }
                 }
             }
             catch (Exception ex)
@@ -71,8 +59,6 @@ namespace Daptive.Admin
                 System.Diagnostics.Debug.WriteLine("LoadStatCards error: " + ex.Message);
             }
         }
-
-        // ── Course Chart ─────────────────────────────────────────────
         private void LoadCourseChart()
         {
             try
@@ -80,38 +66,30 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-
-                    string sql = @"
-                        SELECT TOP 5
-                            c.Name           AS CourseName,
-                            COUNT(s.ScoreId) AS ActivityCount
-                        FROM  [course] c
-                        LEFT JOIN [question] q ON c.CourseId   = q.QuestionId
-                        LEFT JOIN [score]    s ON q.QuestionId = s.QuestionId
-                        GROUP BY c.CourseId, c.Name
-                        ORDER BY ActivityCount DESC";
-
+                    string sql = @"SELECT TOP 5 c.Name AS CourseName, COUNT(s.ScoreId) AS ActivityCount FROM [course] c LEFT JOIN [question] q ON c.CourseId = q.QuestionId LEFT JOIN [score] s ON q.QuestionId = s.QuestionId GROUP BY c.CourseId, c.Name ORDER BY ActivityCount DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+                    {
                         da.Fill(dt);
-
+                    }
                     if (dt.Rows.Count == 0)
                     {
                         string fallback = "SELECT TOP 5 Name AS CourseName, 0 AS ActivityCount FROM [course]";
                         using (SqlDataAdapter da2 = new SqlDataAdapter(fallback, conn))
+                        {
                             da2.Fill(dt);
+                        }
                     }
-
                     if (dt.Rows.Count == 0)
                     {
                         lblNoCourses.Visible = true;
                         return;
                     }
-
                     int max = 1;
                     foreach (DataRow row in dt.Rows)
+                    {
                         max = Math.Max(max, Convert.ToInt32(row["ActivityCount"]));
-
+                    }
                     dt.Columns.Add("BarPercent", typeof(int));
                     dt.Columns.Add("SortOrder", typeof(int));
                     for (int i = 0; i < dt.Rows.Count; i++)
@@ -120,7 +98,6 @@ namespace Daptive.Admin
                         dt.Rows[i]["BarPercent"] = max > 0 ? (count * 100 / max) : 15;
                         dt.Rows[i]["SortOrder"] = i + 1;
                     }
-
                     rptCourseStats.DataSource = dt;
                     rptCourseStats.DataBind();
                 }
@@ -131,8 +108,6 @@ namespace Daptive.Admin
                 System.Diagnostics.Debug.WriteLine("LoadCourseChart error: " + ex.Message);
             }
         }
-
-        // ── Recent Users Table ────────────────────────────────────────
         private void LoadRecentUsers()
         {
             try
@@ -140,41 +115,28 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-
-                    string sql = @"
-                        SELECT TOP 8
-                            UserID,
-                            Username,
-                            FullName,
-                            Email,
-                            Role
-                        FROM [user]
-                        ORDER BY UserID DESC";
-
+                    string sql = @"SELECT TOP 8 UserID, Username, FullName, Email, Role FROM [user] ORDER BY UserID DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+                    {
                         da.Fill(dt);
-
+                    }
                     if (dt.Rows.Count == 0)
                     {
                         lblNoUsers.Visible = true;
                         return;
                     }
-
                     dt.Columns.Add("Initials", typeof(string));
                     dt.Columns.Add("AvatarClass", typeof(string));
                     dt.Columns.Add("RoleBadgeClass", typeof(string));
-
                     foreach (DataRow row in dt.Rows)
                     {
                         string fullName = row["FullName"] != null ? row["FullName"].ToString() : row["Username"].ToString();
                         string role = row["Role"] != null ? row["Role"].ToString() : "Student";
-
                         row["Initials"] = GetInitials(fullName);
                         row["AvatarClass"] = GetAvatarClass(role);
                         row["RoleBadgeClass"] = GetRoleBadgeClass(role);
                     }
-
                     rptRecentUsers.DataSource = dt;
                     rptRecentUsers.DataBind();
                 }
@@ -185,30 +147,28 @@ namespace Daptive.Admin
                 System.Diagnostics.Debug.WriteLine("LoadRecentUsers error: " + ex.Message);
             }
         }
-
-        // ── Delete Handler ────────────────────────────────────────────
-        protected void BtnDeleteUserCommand(object sender, CommandEventArgs e)
+        protected void BtnDeleteUser_Command(object sender, CommandEventArgs e)
         {
-            if (e.CommandName != "DeleteUser") return;
-
-            int userID = Convert.ToInt32(e.CommandArgument);
-
-            if (Session["UserID"] != null && userID == Convert.ToInt32(Session["UserID"]))
+            if (e.CommandName != "DeleteUser")
+            {
                 return;
-
+            }
+            int userID = Convert.ToInt32(e.CommandArgument);
+            if (Session["UserID"] != null && userID == Convert.ToInt32(Session["UserID"]))
+            {
+                return;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-
                     string deleteScores = "DELETE FROM [score] WHERE UserId = @UserID";
                     using (SqlCommand cmd = new SqlCommand(deleteScores, conn))
                     {
                         cmd.Parameters.AddWithValue("@UserID", userID);
                         cmd.ExecuteNonQuery();
                     }
-
                     string deleteUser = "DELETE FROM [user] WHERE UserID = @UserID";
                     using (SqlCommand cmd2 = new SqlCommand(deleteUser, conn))
                     {
@@ -216,7 +176,6 @@ namespace Daptive.Admin
                         cmd2.ExecuteNonQuery();
                     }
                 }
-
                 Response.Redirect("Dashboard.aspx");
             }
             catch (Exception ex)
@@ -224,34 +183,41 @@ namespace Daptive.Admin
                 System.Diagnostics.Debug.WriteLine("DeleteUser error: " + ex.Message);
             }
         }
-
-        // ── Helpers ───────────────────────────────────────────────────
         private static string GetInitials(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) return "??";
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "??";
+            }
             string[] parts = name.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length == 1)
+            {
                 return parts[0].Substring(0, Math.Min(2, parts[0].Length)).ToUpper();
+            }
             return (parts[0][0].ToString() + parts[parts.Length - 1][0].ToString()).ToUpper();
         }
-
         private static string GetAvatarClass(string role)
         {
             switch (role.ToLower())
             {
-                case "lecturer": return "av-blue";
-                case "admin": return "av-amber";
-                default: return "av-green";
+                case "lecturer":
+                    return "av-blue";
+                case "admin":
+                    return "av-amber";
+                default:
+                    return "av-green";
             }
         }
-
         private static string GetRoleBadgeClass(string role)
         {
             switch (role.ToLower())
             {
-                case "lecturer": return "b-lecturer";
-                case "admin": return "b-admin";
-                default: return "b-student";
+                case "lecturer":
+                    return "b-lecturer";
+                case "admin":
+                    return "b-admin";
+                default:
+                    return "b-student";
             }
         }
     }
