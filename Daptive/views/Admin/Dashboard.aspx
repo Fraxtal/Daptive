@@ -11,22 +11,11 @@
     <form id="form1" runat="server">
         <div class="admin-shell">
 
-            <!-- ═══════════════════════════════════════════
-                 SIDEBAR
-            ════════════════════════════════════════════ -->
+            <!-- SIDEBAR -->
             <aside class="sidebar">
                 <div class="sidebar-brand">
                     <div class="brand-logo">
-                        <svg viewBox="0 0 120 110" width="28" height="26" xmlns="http://www.w3.org/2000/svg">
-                            <g stroke="#D4AF37" stroke-width="1.5" fill="none">
-                                <polygon points="60,6 114,104 6,104"/>
-                                <polygon points="60,22 102,96 18,96"/>
-                                <polygon points="60,38 90,88 30,88"/>
-                                <line x1="60" y1="6"   x2="60" y2="76"/>
-                                <line x1="6"   y1="104" x2="84" y2="84"/>
-                                <line x1="114" y1="104" x2="36" y2="84"/>
-                            </g>
-                        </svg>
+                        <img src="../../resources/logo.png" alt="CodeDaptive Logo" style="width:40px; height:40px; object-fit:contain;" />
                         <span class="brand-name">CodeDaptive</span>
                     </div>
                     <div class="brand-tag">Admin Portal</div>
@@ -97,7 +86,7 @@
                 <div class="sidebar-spacer"></div>
 
                 <div class="sidebar-footer">
-                    <div class="admin-pill">
+                    <a href="AdminProfile.aspx" class="admin-pill" style="text-decoration:none;">
                         <div class="admin-avatar">
                             <asp:Literal ID="litInitials" runat="server" Text="AD" />
                         </div>
@@ -107,14 +96,12 @@
                             </div>
                             <div class="admin-role">Super Admin</div>
                         </div>
-                    </div>
+                    </a>
                     <a href="../../Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
                 </div>
             </aside>
 
-            <!-- ═══════════════════════════════════════════
-                 MAIN CONTENT
-            ════════════════════════════════════════════ -->
+            <!-- MAIN CONTENT -->
             <div class="main-area">
 
                 <header class="topbar">
@@ -130,7 +117,7 @@
 
                 <main class="page-content">
 
-                    <!-- ── Stat Cards ─────────────────────── -->
+                    <!-- Stat Cards -->
                     <div class="stat-grid">
                         <div class="stat-card">
                             <div class="stat-label">Total Users</div>
@@ -162,7 +149,7 @@
                         </div>
                     </div>
 
-                    <!-- ── Course Activity Chart ──────────── -->
+                    <!-- Course Activity Chart -->
                     <div class="card" style="margin-bottom: 24px;">
                         <div class="card-header">
                             <span class="card-title">Course activity</span>
@@ -190,7 +177,7 @@
                         </div>
                     </div>
 
-                    <!-- ── Recent Users Table ─────────────── -->
+                    <!-- Recent Users Table -->
                     <div class="card">
                         <div class="card-header">
                             <span class="card-title">Recently registered users</span>

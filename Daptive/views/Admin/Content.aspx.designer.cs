@@ -11,7 +11,7 @@ namespace Daptive.Admin
 {
 
 
-    public partial class Courses
+    public partial class Content
     {
 
         /// <summary>
@@ -60,57 +60,57 @@ namespace Daptive.Admin
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// litCourseCount control.
+        /// litQuestionCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCourseCount;
+        protected global::System.Web.UI.WebControls.Literal litQuestionCount;
 
         /// <summary>
-        /// rptCourses control.
+        /// rptQuestions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCourses;
+        protected global::System.Web.UI.WebControls.Repeater rptQuestions;
 
         /// <summary>
-        /// lblNoCourses control.
+        /// lblNoQuestions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoCourses;
+        protected global::System.Web.UI.WebControls.Label lblNoQuestions;
 
         /// <summary>
-        /// litTopicCount control.
+        /// litTestCaseCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTopicCount;
+        protected global::System.Web.UI.WebControls.Literal litTestCaseCount;
 
         /// <summary>
-        /// rptTopics control.
+        /// rptTestCases control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTopics;
+        protected global::System.Web.UI.WebControls.Repeater rptTestCases;
 
         /// <summary>
-        /// lblNoTopics control.
+        /// lblNoTestCases control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoTopics;
+        protected global::System.Web.UI.WebControls.Label lblNoTestCases;
     }
 }

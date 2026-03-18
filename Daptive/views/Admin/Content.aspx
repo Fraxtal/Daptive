@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Courses.aspx.cs" Inherits="Daptive.Admin.Courses" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Content.aspx.cs" Inherits="Daptive.Admin.Content" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CodeDaptive – Courses</title>
+    <title>CodeDaptive – Content</title>
     <link rel="stylesheet" href="../../styles/admin.css" />
 </head>
 <body>
@@ -43,14 +43,14 @@
                         </svg>
                         Users
                     </a>
-                    <a href="Courses.aspx" class="nav-item active">
+                    <a href="Courses.aspx" class="nav-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
                         </svg>
                         Courses
                     </a>
-                    <a href="Content.aspx" class="nav-item">
+                    <a href="Content.aspx" class="nav-item active">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                             <polyline points="14 2 14 8 20 8"/>
@@ -106,8 +106,8 @@
 
                 <header class="topbar">
                     <div class="topbar-left">
-                        <div class="page-title">Courses</div>
-                        <div class="page-breadcrumb">Admin / Courses</div>
+                        <div class="page-title">Content</div>
+                        <div class="page-breadcrumb">Admin / Questions &amp; Test Cases</div>
                     </div>
                 </header>
 
@@ -116,47 +116,47 @@
                     <asp:Label ID="lblSuccess" runat="server" CssClass="alert alert-success" Visible="false" />
                     <asp:Label ID="lblError"   runat="server" CssClass="alert alert-error"   Visible="false" />
 
-                    <!-- ── Courses Table -->
+                    <!-- ── Questions Table ────────────────────── -->
                     <div class="card" style="margin-bottom:32px;">
                         <div class="card-header">
                             <span class="card-title">
-                                All courses
+                                Questions
                                 <span style="font-weight:400; color:var(--text-light); font-size:12px; margin-left:8px;">
-                                    (<asp:Literal ID="litCourseCount" runat="server" Text="0" /> total)
+                                    (<asp:Literal ID="litQuestionCount" runat="server" Text="0" /> total)
                                 </span>
                             </span>
                         </div>
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Course Name</th>
-                                    <th>Topic</th>
-                                    <th>Content</th>
-                                    <th>Default Code</th>
+                                    <th>#</th>
+                                    <th>Question</th>
+                                    <th>Test Cases</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="rptCourses" runat="server"
-                                    OnItemCommand="rptCourses_ItemCommand">
+                                <asp:Repeater ID="rptQuestions" runat="server"
+                                    OnItemCommand="rptQuestions_ItemCommand">
                                     <ItemTemplate>
                                         <tr>
-                                            <td style="font-weight:500; color:var(--text-dark);">
-                                                <%# Eval("Name") %>
+                                            <td style="font-family:'DM Mono',monospace; font-size:11px; color:var(--text-light); width:40px;">
+                                                <%# Eval("QuestionId") %>
+                                            </td>
+                                            <td style="color:var(--text-dark);">
+                                                <%# Eval("Question") %>
                                             </td>
                                             <td>
-                                                <span class="badge b-lecturer"><%# Eval("TopicName") %></span>
-                                            </td>
-                                            <td class="td-clamp"><%# Eval("Content") %></td>
-                                            <td>
-                                                <code class="code-preview"><%# Eval("DefaultCode") %></code>
+                                                <span class="badge b-lecturer">
+                                                    <%# Eval("TestCaseCount") %> case(s)
+                                                </span>
                                             </td>
                                             <td>
                                                 <asp:LinkButton runat="server"
-                                                    CommandName="DeleteCourse"
-                                                    CommandArgument='<%# Eval("CourseId") %>'
+                                                    CommandName="DeleteQuestion"
+                                                    CommandArgument='<%# Eval("QuestionId") %>'
                                                     CssClass="btn btn-danger btn-sm"
-                                                    OnClientClick="return confirm('Delete this course? This cannot be undone.');">
+                                                    OnClientClick="return confirm('Delete this question and all its test cases?');">
                                                     Delete
                                                 </asp:LinkButton>
                                             </td>
@@ -165,59 +165,63 @@
                                 </asp:Repeater>
                             </tbody>
                         </table>
-                        <asp:Label ID="lblNoCourses" runat="server" Visible="false"
-                            Text="No courses have been added yet."
+                        <asp:Label ID="lblNoQuestions" runat="server" Visible="false"
+                            Text="No questions have been added yet."
                             style="display:block; padding:20px; font-size:13px; color:var(--text-light);" />
                     </div>
 
-                    <!-- ── Topics Section -->
+                    <!-- ── Test Cases Section ─────────────────── -->
                     <div style="margin-bottom:16px;">
-                        <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--text-dark);">Topics</div>
+                        <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--text-dark);">
+                            Test Cases
+                        </div>
                         <div style="font-size:11px; color:var(--text-light); font-family:'DM Mono',monospace; margin-top:2px;">
-                            Categories that group courses together
+                            Input/output pairs used to validate student code submissions
                         </div>
                     </div>
 
                     <div class="card">
                         <div class="card-header">
                             <span class="card-title">
-                                All topics
+                                All test cases
                                 <span style="font-weight:400; color:var(--text-light); font-size:12px; margin-left:8px;">
-                                    (<asp:Literal ID="litTopicCount" runat="server" Text="0" /> total)
+                                    (<asp:Literal ID="litTestCaseCount" runat="server" Text="0" /> total)
                                 </span>
                             </span>
                         </div>
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Topic Name</th>
-                                    <th>Description</th>
-                                    <th>Courses</th>
+                                    <th>#</th>
+                                    <th>Question</th>
+                                    <th>Test Case (Input)</th>
+                                    <th>Expected Result</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="rptTopics" runat="server"
-                                    OnItemCommand="rptTopics_ItemCommand">
+                                <asp:Repeater ID="rptTestCases" runat="server"
+                                    OnItemCommand="rptTestCases_ItemCommand">
                                     <ItemTemplate>
                                         <tr>
-                                            <td style="font-weight:500; color:var(--text-dark);">
-                                                <%# Eval("Topic") %>
+                                            <td style="font-family:'DM Mono',monospace; font-size:11px; color:var(--text-light); width:40px;">
+                                                <%# Eval("TestCaseId") %>
                                             </td>
-                                            <td style="color:var(--text-light);">
-                                                <%# Eval("Description") %>
+                                            <td style="color:var(--text-mid); font-size:12px; max-width:200px;">
+                                                <%# Eval("QuestionText") %>
                                             </td>
                                             <td>
-                                                <span class="badge b-student">
-                                                    <%# Eval("CourseCount") %> course(s)
-                                                </span>
+                                                <code class="code-preview"><%# Eval("TestCase") %></code>
+                                            </td>
+                                            <td>
+                                                <code class="code-preview expected"><%# Eval("ExpectedResult") %></code>
                                             </td>
                                             <td>
                                                 <asp:LinkButton runat="server"
-                                                    CommandName="DeleteTopic"
-                                                    CommandArgument='<%# Eval("TopicId") %>'
+                                                    CommandName="DeleteTestCase"
+                                                    CommandArgument='<%# Eval("TestCaseId") %>'
                                                     CssClass="btn btn-danger btn-sm"
-                                                    OnClientClick="return confirm('Delete this topic? Courses under it will lose their topic.');">
+                                                    OnClientClick="return confirm('Delete this test case?');">
                                                     Delete
                                                 </asp:LinkButton>
                                             </td>
@@ -226,8 +230,8 @@
                                 </asp:Repeater>
                             </tbody>
                         </table>
-                        <asp:Label ID="lblNoTopics" runat="server" Visible="false"
-                            Text="No topics have been added yet."
+                        <asp:Label ID="lblNoTestCases" runat="server" Visible="false"
+                            Text="No test cases have been added yet."
                             style="display:block; padding:20px; font-size:13px; color:var(--text-light);" />
                     </div>
 
@@ -237,27 +241,23 @@
     </form>
 
     <style>
-        .td-clamp {
-            max-width: 240px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: var(--text-light);
-            font-size: 12px;
-        }
         .code-preview {
             font-family: 'DM Mono', monospace;
             font-size: 11px;
             color: var(--accent);
             background: var(--success-bg);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
             display: inline-block;
-            max-width: 160px;
+            max-width: 180px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             vertical-align: middle;
+        }
+        .code-preview.expected {
+            color: var(--blue);
+            background: var(--blue-bg);
         }
         .alert { display:block; padding:12px 16px; border-radius:8px; font-size:13px; margin-bottom:20px; }
         .alert-success { background:var(--success-bg); color:var(--success); border:0.5px solid #b8d4c2; }
@@ -265,4 +265,3 @@
     </style>
 </body>
 </html>
-

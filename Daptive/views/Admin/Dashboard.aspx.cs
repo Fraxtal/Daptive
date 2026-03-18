@@ -19,7 +19,9 @@ namespace Daptive.Admin
             //    Response.Redirect("~/Login.aspx");
             //    return;
             //}
-
+            Session["Role"] = "admin";
+            Session["Username"] = "Bobby67";
+            Session["UserID"] = 1;
             if (!IsPostBack)
             {
                 string username = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
