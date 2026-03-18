@@ -29,7 +29,7 @@ namespace Daptive
                     conn.Open();
 
                     // 1. Check if username already exists
-                    string checkSql = "SELECT COUNT(1) FROM Account WHERE Username = @Username";
+                    string checkSql = "SELECT COUNT(1) FROM [user] WHERE Username = @Username";
                     using (SqlCommand checkCmd = new SqlCommand(checkSql, conn))
                     {
                         checkCmd.Parameters.AddWithValue("@Username", username);
@@ -43,7 +43,7 @@ namespace Daptive
                     }
 
                     // 2. Check if email already registered
-                    string emailCheckSql = "SELECT COUNT(1) FROM Account WHERE Email = @Email";
+                    string emailCheckSql = "SELECT COUNT(1) FROM [user] WHERE Email = @Email";
                     using (SqlCommand emailCmd = new SqlCommand(emailCheckSql, conn))
                     {
                         emailCmd.Parameters.AddWithValue("@Email", email);
@@ -58,7 +58,7 @@ namespace Daptive
 
                     // 3. Insert new account
                     // NOTE: Hash password before storing in production!
-                    string insertSql = @"INSERT INTO Account (Username, FullName, Email, Password, Role)
+                    string insertSql = @"INSERT INTO [user] (Username, FullName, Email, Password, Role)
                                          VALUES (@Username, @FullName, @Email, @Password, @Role)";
 
                     using (SqlCommand insertCmd = new SqlCommand(insertSql, conn))

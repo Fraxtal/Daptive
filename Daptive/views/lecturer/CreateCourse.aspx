@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CreateCourse.aspx.cs" Inherits="Daptive.views.lecturer.CreateQuiz" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CreateCourse.aspx.cs" Inherits="Daptive.views.lecturer.CreateCourse" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
     <title>CodeDaptive – Create Course</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../../styles/dashboard.css" />
-    <link rel="stylesheet" href="../../styles/createcourse.css" />
+    <link rel="stylesheet" href="../../styles/lecturer/createcourse.css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -45,13 +45,13 @@
         <!-- ── SIDEBAR ── -->
         <aside class="sidebar">
             <span class="sidebar-section-label">Main</span>
-            <a href="LecturerDashboard.html" class="nav-item">
+            <a href="LecturerDashboard.aspx" class="nav-item">
                 <span class="nav-icon">◈</span> Dashboard
             </a>
-            <a href="CreateQuiz.html" class="nav-item">
+            <a href="CreateQuiz.aspx" class="nav-item">
                 <span class="nav-icon">◈</span> Create Quiz
             </a>
-            <a href="CreateCourse.html" class="nav-item active">
+            <a href="CreateCourse.aspx" class="nav-item active">
                 <span class="nav-icon">◈</span> Create Course
             </a>
             <a href="#" class="nav-item">
@@ -116,19 +116,16 @@
 
                             <div class="form-group">
                                 <label class="form-label">Topic Name</label>
-                                <input type="text" class="form-input" id="topicName"
-                                    placeholder="e.g. Loops in C#"
-                                    oninput="updateOutlineTopic()" />
+                                <asp:TextBox runat="server" ID="txtTopicName" ClientIDMode="Static" CssClass="form-input" placeholder="e.g. Loops in C#" oninput="updateOutlineTopic()" />
                             </div>
                             <div class="form-group" style="margin-bottom:0;">
                                 <label class="form-label">Description</label>
-                                <textarea class="form-textarea" id="topicDesc" style="min-height:120px;"
-                                    placeholder="A brief overview of what learners will explore in this topic…"></textarea>
+                                <asp:TextBox runat="server" ID="txtTopicDesc" ClientIDMode="Static" TextMode="MultiLine" CssClass="form-textarea" Style="min-height:120px;" placeholder="A brief overview of what learners will explore in this topic…"></asp:TextBox>
                             </div>
 
                             <div class="form-actions" style="margin-top:20px;">
-                                <button class="btn-ghost" onclick="history.back()">Cancel</button>
-                                <button class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
+                                <button type="button" class="btn-ghost" onclick="history.back()">Cancel</button>
+                                <button type="button" class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
                             </div>
                         </div>
                     </div>
@@ -143,13 +140,14 @@
                             <p class="section-hint">Each lesson is a course entry under your topic. Learners go through them in order. Expand a lesson to fill in its content and starter code.</p>
                         </div>
 
+                        <asp:HiddenField runat="server" ID="hfLessons" ClientIDMode="Static" />
                         <div class="course-builder" id="courseBuilder"></div>
 
-                        <button class="add-course-btn" onclick="addLesson()">+ Add Lesson</button>
+                        <button type="button" class="add-course-btn" onclick="addLesson()">+ Add Lesson</button>
 
                         <div class="form-actions" style="margin-top:20px;">
-                            <button class="btn-ghost" onclick="goToStep1()">← Back</button>
-                            <button class="btn-primary" onclick="publishCourse()">Publish Course</button>
+                            <button type="button" class="btn-ghost" onclick="goToStep1()">← Back</button>
+                            <asp:Button runat="server" ID="btnPublishCourse" CssClass="btn-primary" Text="Publish Course" OnClick="PublishCourse_Click" OnClientClick="return prepareCourseSubmission();" />
                         </div>
                     </div>
 
@@ -163,7 +161,7 @@
 
         /* ── Outline sync ── */
         function updateOutlineTopic() {
-            const val = document.getElementById('topicName').value.trim();
+            const val = document.getElementById('txtTopicName').value.trim();
             document.getElementById('outlineTopicName').innerHTML =
                 val ? `<strong>${val}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
         }
@@ -189,7 +187,7 @@
 
         /* ── Step navigation ── */
         function goToStep2() {
-            const name = document.getElementById('topicName').value.trim();
+            const name = document.getElementById('txtTopicName').value.trim();
             if (!name) { alert('Please enter a topic name.'); return; }
 
             document.getElementById('step-1').classList.remove('visible');
@@ -315,8 +313,8 @@
 
         /* ── Publish ── */
         function publishCourse() {
-            const topicName = document.getElementById('topicName').value.trim();
-            const topicDesc = document.getElementById('topicDesc').value.trim();
+            const topicName = document.getElementById('txtTopicName').value.trim();
+            const topicDesc = document.getElementById('txtTopicDesc').value.trim();
             const cards = document.querySelectorAll('.course-card');
 
             if (!cards.length) { alert('Please add at least one lesson.'); return; }
@@ -339,6 +337,38 @@
             console.log('Payload:', payload);
             // TODO: POST to API
             alert(`Course published!\nTopic: "${topicName}"\n${lessons.length} lesson(s) created.`);
+        }
+
+        function prepareCourseSubmission() {
+            const topicName = document.getElementById('txtTopicName').value.trim();
+            const topicDesc = document.getElementById('txtTopicDesc').value.trim();
+            // Ensure Step 1 was completed (user pressed Next)
+            const step1Done = document.getElementById('bubble-1')?.classList.contains('done');
+            if (!topicName) { alert('Please enter a topic name.'); return false; }
+            if (!step1Done) { alert('Please complete Step 1 (Define Topic) before publishing. Click "Next — Build Lessons →" to continue.'); return false; }
+
+            const cards = document.querySelectorAll('.course-card');
+            if (!cards.length) { alert('Please add at least one lesson.'); return false; }
+
+            const parts = [];
+            for (const card of cards) {
+                const name = card.querySelector('.lesson-name-input').value.trim();
+                const content = card.querySelector('.form-textarea').value.trim();
+                const code = card.querySelector('.lesson-code').value.trim();
+                if (!name) { alert('Please fill in all lesson names.'); openCard(card); return false; }
+                if (!content) { alert('Please fill in all lesson content.'); openCard(card); return false; }
+                const escName = name.replace(/\|\|/g, '');
+                const escContent = content.replace(/\|\|/g, '');
+                const escCode = code.replace(/\|\|/g, '');
+                parts.push(escName + '::' + escContent + '::' + escCode);
+            }
+
+            // Ensure Step 2 is active/visible (user navigated to it)
+            const step2Active = document.getElementById('bubble-2')?.classList.contains('active') || document.getElementById('step-2')?.classList.contains('visible');
+            if (!step2Active) { alert('Please open Step 2 (Build Lessons) and finish adding lessons before publishing.'); return false; }
+
+            document.getElementById('hfLessons').value = parts.join('||');
+            return true;
         }
     </script>
     </form>

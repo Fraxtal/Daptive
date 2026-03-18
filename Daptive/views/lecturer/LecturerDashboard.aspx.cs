@@ -13,22 +13,5 @@ namespace Daptive.views.lecturer
         {
 
         }
-        protected void btnPublish_Click(object sender, EventArgs e)
-        {
-            //string TopicName = topicName.Text;
-            //string TopicDesc = topicDescription.Text;
-
-            // Example: Save to database
-            //SaveTopic(TopicName, TopicDesc);
-
-            // You would normally also receive lesson data via AJAX or hidden fields
-        }
-
-        private void SaveTopic(string name, string desc)
-        {
-            // Example only (replace with real DB logic)
-            System.Diagnostics.Debug.WriteLine($"Topic: {name}");
-            System.Diagnostics.Debug.WriteLine($"Description: {desc}");
-        }
     }
 }
