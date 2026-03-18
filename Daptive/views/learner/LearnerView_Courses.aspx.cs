@@ -8,6 +8,8 @@ using System.Web.UI;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using CodeRunner;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace Daptive.views
 {
@@ -37,43 +39,109 @@ namespace Daptive.views
         private List<Courses> courses { get; set; } = new List<Courses> { };
         private List<Topics> topics { get; set; } = new List<Topics> { };
 
+        private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            courses.Add(new Courses { Id = 1, TopicId = 1, Name = "Variables", Content = "Variables are containers for storing data values. In C#, there are different types of variables like int, double, char, string, and bool.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 2, TopicId = 1, Name = "Strings", Content = "A string is used for storing text. A string variable contains a collection of characters surrounded by double quotes.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 3, TopicId = 1, Name = "Operators", Content = "Operators are used to perform operations on variables and values, such as Arithmetic, Assignment, Comparison, and Logical operators.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 4, TopicId = 1, Name = "Booleans", Content = "In programming, you often need a data type that can only have one of two values, like YES/NO or TRUE/FALSE. C# uses the bool data type for this.", DefaultCode = "" });
-
-            courses.Add(new Courses { Id = 5, TopicId = 2, Name = "If...Else", Content = "C# supports logical conditions from mathematics. You can use these conditions to perform different actions for different decisions using if, else if, and else statements.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 6, TopicId = 2, Name = "Switch", Content = "Use the switch statement to select one of many code blocks to be executed. This is often used as a cleaner alternative to long if...else if chains.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 7, TopicId = 2, Name = "Loops", Content = "Loops execute a block of code as long as a specified condition is reached. They save time and reduce errors. Common loops include for and while.", DefaultCode = "" });
-
-            courses.Add(new Courses { Id = 8, TopicId = 3, Name = "Arrays", Content = "Arrays are used to store multiple values in a single variable. To declare an array, define the variable type with square brackets.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 9, TopicId = 3, Name = "Lists", Content = "A List is a strongly typed collection of objects that can be accessed by index. Unlike arrays, lists can dynamically grow and shrink in size.", DefaultCode = "" });
-            courses.Add(new Courses { Id = 10, TopicId = 3, Name = "Dictionaries", Content = "A Dictionary is a collection of keys and values. It is used to store data in key/value pairs, providing fast data retrieval based on the keys.", DefaultCode = "" });
-
-            topics.Add(new Topics { Id = 1, Name = "Introduction to C#", Description = "" });
-            topics.Add(new Topics { Id = 2, Name = "Logic Operator", Description = "" });
-            topics.Add(new Topics { Id = 3, Name = "Containers", Description = "" });
-
             if (!IsPostBack)
             {
-                rptSidebar.DataSource = topics;
-                rptSidebar.DataBind();
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(_connStr))
+                    {
+                        conn.Open();
+                        // Load Topics
+                        using (SqlCommand cmd = new SqlCommand("SELECT TopicId, Topic, Description FROM topic", conn))
+                        {
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    topics.Add(new Topics
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        Name = reader.GetString(1),
+                                        Description = reader.IsDBNull(2) ? "" : reader.GetString(2)
+                                    });
+                                }
+                            }
+                            rptSidebar.DataSource = topics;
+                            rptSidebar.DataBind();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions (e.g., log the error)
+                    System.Diagnostics.Debug.WriteLine("Error loading topics: " + ex.Message);
+                }
             }
+            
         }
 
         protected void rptSidebar_ItemCommand(object sender, RepeaterCommandEventArgs e)
         {
             if (e.CommandName == "LoadCourse")
             {
-                int id = Convert.ToInt32(e.CommandArgument);
-                if (id > 0)
+                try
                 {
-                    var courses = this.courses.Where(c => c.TopicId == id);
-                    rptContent.DataSource = courses;
-                    rptContent.DataBind();
-                    welcomeMsg.Visible = false;
+                    int id = Convert.ToInt32(e.CommandArgument);
+                    string currentTopicName = "";
+                    string currentTopicDesc = "";
+
+                    using (SqlConnection conn = new SqlConnection(_connStr))
+                    {
+                        conn.Open();
+                        using (SqlCommand cmdTopic = new SqlCommand("SELECT Topic, Description FROM [topic] WHERE TopicId = @TopicId", conn))
+                        {
+                            cmdTopic.Parameters.AddWithValue("@TopicId", id);
+                            using (SqlDataReader readerTopic = cmdTopic.ExecuteReader())
+                            {
+                                if (readerTopic.Read())
+                                {
+                                    currentTopicName = readerTopic.GetString(0);
+                                    currentTopicDesc = readerTopic.IsDBNull(1) ? "" : readerTopic.GetString(1);
+                                }
+                            }
+                        }
+                        // Load Courses
+                        using (SqlCommand cmd = new SqlCommand("SELECT CourseId, TopicId, Name, Content, DefaultCode " +
+                            " FROM course" +
+                            " WHERE TopicId = @TopicId", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@TopicId", id);
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                courses.Clear();
+                                while (reader.Read())
+                                {
+                                    courses.Add(new Courses
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        TopicId = reader.IsDBNull(1) ? -1 : reader.GetInt32(1),
+                                        Name = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                                        Content = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                                        DefaultCode = reader.IsDBNull(4) ? "" : reader.GetString(4)
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    if (courses.Count > 0)
+                    {
+                        rptContent.DataSource = this.courses;
+                        rptContent.DataBind();
+
+                        
+                    }
+                    contentTopic.InnerText = currentTopicName;
+                    contentTopicDesc.Text = currentTopicDesc;
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions (e.g., log the error)
+                    System.Diagnostics.Debug.WriteLine("Error loading courses: " + ex.Message);
                 }
             }
         }

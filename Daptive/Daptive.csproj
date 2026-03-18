@@ -96,6 +96,7 @@
     <Content Include="views\index.aspx" />
     <Content Include="views\learner\LearnerView_Assessments.aspx" />
     <Content Include="views\learner\LearnerView_Courses.aspx" />
+    <Content Include="views\learner\logo.ascx" />
     <Content Include="views\lecturer\CreateCourse.aspx" />
     <Content Include="views\lecturer\CreateQuiz.aspx" />
     <Content Include="views\lecturer\LecturerDashboard.aspx" />
@@ -137,6 +138,13 @@
     </Compile>
     <Compile Include="views\learner\LearnerView_Courses.aspx.designer.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\learner\logo.ascx.cs">
+      <DependentUpon>logo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\learner\logo.ascx.designer.cs">
+      <DependentUpon>logo.ascx</DependentUpon>
     </Compile>
     <Compile Include="views\lecturer\CreateCourse.aspx.cs">
       <DependentUpon>CreateCourse.aspx</DependentUpon>
