@@ -89,14 +89,14 @@
               </span> Manage Quizzes
             </a>
             <span class="sidebar-section-label">Analytics</span>
-            <a href="#" class="nav-item">
+            <a href="StudentResults.aspx" class="nav-item">
               <span class="nav-icon">
                 <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
                   <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
                 </svg>
               </span> Student Progress
             </a>
-            <a href="#" class="nav-item">
+            <a href="QuizResults.aspx" class="nav-item">
               <span class="nav-icon">
                 <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
                   <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />

@@ -118,6 +118,7 @@
     <Content Include="views\lecturer\LecturerDashboard.aspx" />
     <Content Include="views\lecturer\ManageQuizzes.aspx" />
     <Content Include="views\lecturer\QuizResults.aspx" />
+    <Content Include="views\lecturer\StudentResults.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +255,13 @@
     </Compile>
     <Compile Include="views\lecturer\QuizResults.aspx.designer.cs">
       <DependentUpon>QuizResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\lecturer\StudentResults.aspx.cs">
+      <DependentUpon>StudentResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\lecturer\StudentResults.aspx.designer.cs">
+      <DependentUpon>StudentResults.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
