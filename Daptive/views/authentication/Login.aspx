@@ -48,10 +48,10 @@
                 </div>
 
                 <div class="feature-list">
-                    <div class="feat"><span class="feat-icon">◈</span><span>Structured C# curriculum with live exercises</span></div>
-                    <div class="feat"><span class="feat-icon">◈</span><span>Lecturer tools to create and manage courses</span></div>
-                    <div class="feat"><span class="feat-icon">◈</span><span>Track your progress across every topic</span></div>
-                    <div class="feat"><span class="feat-icon">◈</span><span>Community forum and code review sessions</span></div>
+                    <div class="feat"><span>></span><span>Structured C# curriculum with live exercises</span></div>
+                    <div class="feat"><span>></span><span>Lecturer tools to create and manage courses</span></div>
+                    <div class="feat"><span>></span><span>Track your progress across every topic</span></div>
+                    <div class="feat"><span>></span><span>Community forum and code review sessions</span></div>
                 </div>
 
                 <p class="left-footer">© 2025 CodeDaptive. All rights reserved.</p>
