@@ -45,7 +45,7 @@ namespace Daptive.views.lecturer
         {
             var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
             using (var conn = new SqlConnection(connStr))
-            using (var cmd = new SqlCommand(@"SELECT UserID, COALESCE(NULLIF(FullName, ''), Username) AS DisplayName, Email FROM dbo.[user] ORDER BY COALESCE(NULLIF(FullName, ''), Username) ASC", conn))
+            using (var cmd = new SqlCommand(@"SELECT UserID, COALESCE(NULLIF(FullName, ''), Username) AS DisplayName, Email FROM dbo.[user] WHERE [Role] = 'Student'ORDER BY COALESCE(NULLIF(FullName, ''), Username) ASC", conn))
             using (var da = new SqlDataAdapter(cmd))
             {
                 var dt = new DataTable();
