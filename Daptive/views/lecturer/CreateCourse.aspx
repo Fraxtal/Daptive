@@ -388,18 +388,25 @@
             const txt = document.getElementById('txtTopicName');
             const desc = document.getElementById('txtTopicDesc');
             if (enabled) {
+                // show dropdown and mark text fields readonly so their values still post
                 ddl.style.display = 'block';
-                txt.disabled = true;
-                desc.disabled = true;
-                // update outline to show selected topic if any
+                txt.readOnly = true;
+                desc.readOnly = true;
+                // set textbox value from selected option so validation and postback work
+                const selText = ddl.options[ddl.selectedIndex]?.text || '';
+                txt.value = selText;
+                desc.value = '';
+                document.getElementById('outlineTopicName').innerHTML = selText ? `<strong>${selText}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
+                // update outline and textbox when selection changes
                 ddl.onchange = () => {
                     const sel = ddl.options[ddl.selectedIndex]?.text || '';
+                    txt.value = sel;
                     document.getElementById('outlineTopicName').innerHTML = sel ? `<strong>${sel}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
                 };
             } else {
                 ddl.style.display = 'none';
-                txt.disabled = false;
-                desc.disabled = false;
+                txt.readOnly = false;
+                desc.readOnly = false;
                 // restore outline from textbox
                 txt.oninput = updateOutlineTopic;
                 updateOutlineTopic();
