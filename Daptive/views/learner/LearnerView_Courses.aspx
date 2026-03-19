@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="~/styles/learner/course.css" runat="server"/>
     <title>CodeDaptive</title>
 </head>
@@ -16,6 +17,7 @@
             <li><a href="LearnerView_Courses.aspx">Courses</a></li>
             <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
             <li><a href="LearnerView_Profile.aspx">Profile</a></li>
+            <li><asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin: auto 30px" Text="Logout"></asp:Button></li>
         </ul>
         <div id="err-container"></div>
         <div class="layout-container">

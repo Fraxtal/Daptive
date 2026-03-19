@@ -104,6 +104,11 @@ namespace Daptive.views.learner
                 ShowMessage("Database error while updating profile, please try again ", false);
             }
         }
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
 
         [WebMethod(EnableSession = true)]
         public static bool VerifyPassword(string password)

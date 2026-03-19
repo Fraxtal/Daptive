@@ -154,7 +154,7 @@
                             <div class="admin-role">Super Admin</div>
                         </div>
                     </a>
-                    <a href="../../Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
+                    <a href=../authentication/Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
                 </div>
             </aside>
 

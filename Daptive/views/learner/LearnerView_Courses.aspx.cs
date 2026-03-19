@@ -146,6 +146,12 @@ namespace Daptive.views
             }
         }
 
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
+
         [WebMethod]
         public static Result RunUsrCodeAJAX(string code)
         {

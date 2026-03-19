@@ -33,6 +33,15 @@ namespace Daptive.views.learner
         protected global::Daptive.views.learner.logo MainBrandLogo;
 
         /// <summary>
+        /// btnSignout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSignout;
+
+        /// <summary>
         /// rptMiniCourses control.
         /// </summary>
         /// <remarks>

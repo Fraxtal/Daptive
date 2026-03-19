@@ -19,39 +19,6 @@ h1, h2, h3, h4 {
     margin-top: 0;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: var(--bg-ivory);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    height: 60px;
-}
-
-    ul li {
-        float: left;
-    }
-
-        ul li a {
-            display: block;
-            color: var(--accent);
-            text-align: center;
-            padding: 14px 16px;
-            margin: 0 8px;
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-            ul li a:hover {
-                color: var(--accent);
-                background-color: rgba(45, 74, 62, 0.15);
-            }
-
 hr {
     border: none;
     height: 2px;
@@ -59,62 +26,15 @@ hr {
     margin: 30px 0;
 }
 
-.nav-bar {
-    background-color: var(--text-dark)
-}
-
-.nav-bar li {
-    float: left;
-}
-
-    .nav-bar li a {
-        display: block;
-        color: var(--bg-ivory);
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-weight: 500;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-    }
-
-        .nav-bar li a:hover {
-            color: var(--accent);
-            background-color: #fff;
-        }
-
-        .nav-bar li a:hover .brand {
-            color: var(--accent)
-        }
-
-    .nav-bar li:last-child {
-        margin-left: auto;
-    }
-
-    .nav-bar .triangle-svg {
-        width: 30px;
-        height: auto;
-    }
-
-    .nav-bar .brand {
-        font-size: 1.3rem;
-        margin: 0;
-        color: var(--bg-ivory);
-        transition: color 0.2s ease;
-    }
-
-    .nav-bar .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }   
-
 .main-content {
-    height: calc(100vh - 60px);
-    padding: 50px 80px;
-    overflow-y: auto;
+    flex-grow: 1;
+    min-width: 0;
     background-color: #ffffff;
-    box-sizing:border-box;
+    background-image: none;
+    padding: 40px 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .row-item {

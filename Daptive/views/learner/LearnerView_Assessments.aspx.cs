@@ -36,7 +36,7 @@ namespace Daptive.views
         {
             if (!IsPostBack)
             {
-                string query = @"SELECT q.QuizId, q.Question, q.Description, UserScore.HighestScore FROM quiz q " +
+                string query = @"SELECT q.QuizId, q.Quiz, q.Description, UserScore.HighestScore FROM quiz q " +
                     "LEFT JOIN (SELECT QuizId, Max(Score) AS HighestScore FROM score " +
                     "WHERE UserID=@UsrId GROUP BY QuizId) AS UserScore ON q.QuizId = UserScore.QuizId";
                 try
@@ -73,6 +73,12 @@ namespace Daptive.views
                     return;
                 }
             }
+        }
+
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
 
         [WebMethod(EnableSession = true)]
@@ -128,17 +134,18 @@ namespace Daptive.views
                     report.AppendLine($"Test case {i + 1} failed. Expected: '{expectedResultList[i]}', but got: '{result.Outputs[i]}'");
                 }
             }
-            if (!UpdateScore(quizId, score))
+            int scr = score / testCases.Length * 100;
+            if (!UpdateScore(quizId, scr))
             {
                 report.AppendLine("\nSomething went wrong! Your attempt will not be recorded, please try again!");
             }
             if (score == testCases.Length)
             {
-                return new Result { Score = score, Message = $"Congratulations! All test cases passed.\n\n{report.ToString()}" };
+                return new Result { Score = 100, Message = $"Congratulations! All test cases passed.\n\n{report.ToString()}" };
             }
             else
             {
-                return new Result { Score = score, Message = $"You passed {score} out of {testCases.Length} test cases.\n\n{report.ToString()}" };
+                return new Result { Score = scr, Message = $"You passed {score} out of {testCases.Length} test cases. Marks: {scr}%\n\n{report.ToString()}" };
             }
         }
 

@@ -33,7 +33,7 @@ namespace Daptive.views.learner
                 int userId = Session["UserId"] != null ? Convert.ToInt32(Session["UserId"]) : 1;
                 try
                 {
-                    string quizQuery = @"SELECT TOP 4 q.QuizId, q.Question, UserScore.HighestScore FROM quiz q 
+                    string quizQuery = @"SELECT TOP 4 q.QuizId, q.Quiz, UserScore.HighestScore FROM quiz q 
                     LEFT JOIN (SELECT QuizId, Max(Score) AS HighestScore FROM score WHERE UserID=@UsrId GROUP BY QuizId)
                     AS UserScore ON q.QuizId = UserScore.QuizId ORDER BY q.QuizId, UserScore.HighestScore DESC";
                     string courseQuery = @"SELECT TOP 3 c.CourseId, t.Topic, c.Name FROM course c
@@ -88,6 +88,11 @@ namespace Daptive.views.learner
                     System.Diagnostics.Debug.WriteLine(ex.Message);
                 }
             }
+        }
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
 
         private void ShowMessage(string msg)
