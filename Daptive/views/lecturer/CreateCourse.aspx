@@ -46,22 +46,38 @@
         <aside class="sidebar">
             <span class="sidebar-section-label">Main</span>
             <a href="LecturerDashboard.aspx" class="nav-item">
-                <span class="nav-icon">◈</span> Dashboard
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Dashboard
             </a>
             <a href="CreateQuiz.aspx" class="nav-item">
-                <span class="nav-icon">◈</span> Create Quiz
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Create Quiz
             </a>
             <a href="CreateCourse.aspx" class="nav-item active">
-                <span class="nav-icon">◈</span> Create Course
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Create Course
             </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">◈</span> Manage Quizzes
+            <a href="ManageQuizzes.aspx" class="nav-item">
+                <span class="nav-icon">
+                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                      <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                </span> Manage Quizzes
             </a>
             <span class="sidebar-section-label">Analytics</span>
-            <a href="#" class="nav-item">
+            <a href="StudentResults.aspx" class="nav-item">
                 <span class="nav-icon">◈</span> Student Progress
             </a>
-            <a href="#" class="nav-item">
+            <a href="QuizResults.aspx" class="nav-item">
                 <span class="nav-icon">◈</span> Quiz Results
             </a>
             <div class="sidebar-footer">© 2025 CodeDaptive</div>
@@ -133,8 +149,8 @@
                                 <asp:TextBox runat="server" ID="txtTopicDesc" ClientIDMode="Static" TextMode="MultiLine" CssClass="form-textarea" Style="min-height:120px;" placeholder="A brief overview of what learners will explore in this topic…"></asp:TextBox>
                             </div>
 
-                            <div class="form-actions" style="margin-top:20px;">
-                                <button type="button" class="btn-ghost" onclick="history.back()">Cancel</button>
+            <div class="form-actions" style="margin-top:20px;">
+                                <button type="button" class="btn-ghost" onclick="window.location='LecturerDashboard.aspx'">Cancel</button>
                                 <button type="button" class="btn-primary" onclick="goToStep2()">Next — Build Lessons →</button>
                             </div>
                         </div>
@@ -372,18 +388,25 @@
             const txt = document.getElementById('txtTopicName');
             const desc = document.getElementById('txtTopicDesc');
             if (enabled) {
+                // show dropdown and mark text fields readonly so their values still post
                 ddl.style.display = 'block';
-                txt.disabled = true;
-                desc.disabled = true;
-                // update outline to show selected topic if any
+                txt.readOnly = true;
+                desc.readOnly = true;
+                // set textbox value from selected option so validation and postback work
+                const selText = ddl.options[ddl.selectedIndex]?.text || '';
+                txt.value = selText;
+                desc.value = '';
+                document.getElementById('outlineTopicName').innerHTML = selText ? `<strong>${selText}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
+                // update outline and textbox when selection changes
                 ddl.onchange = () => {
                     const sel = ddl.options[ddl.selectedIndex]?.text || '';
+                    txt.value = sel;
                     document.getElementById('outlineTopicName').innerHTML = sel ? `<strong>${sel}</strong>` : '<span class="outline-topic-empty">No topic yet…</span>';
                 };
             } else {
                 ddl.style.display = 'none';
-                txt.disabled = false;
-                desc.disabled = false;
+                txt.readOnly = false;
+                desc.readOnly = false;
                 // restore outline from textbox
                 txt.oninput = updateOutlineTopic;
                 updateOutlineTopic();

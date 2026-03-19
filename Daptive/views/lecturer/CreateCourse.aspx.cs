@@ -53,7 +53,8 @@ namespace Daptive.views.lecturer
             var topicDesc = txtTopicDesc.Text.Trim();
             var lessonsData = hfLessons.Value; // expected as lessonName::content::code separated by ||
 
-            if (string.IsNullOrEmpty(topicName))
+            // If no existing topic selected, require a topic name
+            if (selectedTopicId == 0 && string.IsNullOrEmpty(topicName))
             {
                 Response.Write("<script>alert('Please enter a topic name.');</script>");
                 return;
@@ -70,11 +71,25 @@ namespace Daptive.views.lecturer
                         int topicId = selectedTopicId;
                         if (topicId == 0)
                         {
-                            using (var cmd = new SqlCommand("INSERT INTO [dbo].[topic] ([Topic], [Description]) OUTPUT INSERTED.[TopicId] VALUES (@Topic, @Desc)", conn, tran))
+                            // If no existing topic selected, check if a topic with the same name already exists to avoid duplicates
+                            using (var chk = new SqlCommand("SELECT TOP 1 TopicId FROM [dbo].[topic] WHERE Topic = @Topic", conn, tran))
                             {
-                                cmd.Parameters.Add(new SqlParameter("@Topic", SqlDbType.NVarChar, 255) { Value = topicName });
-                                cmd.Parameters.Add(new SqlParameter("@Desc", SqlDbType.Text) { Value = string.IsNullOrEmpty(topicDesc) ? (object)DBNull.Value : topicDesc });
-                                topicId = (int)cmd.ExecuteScalar();
+                                chk.Parameters.Add(new SqlParameter("@Topic", SqlDbType.NVarChar, 255) { Value = topicName });
+                                var obj = chk.ExecuteScalar();
+                                if (obj != null && obj != DBNull.Value)
+                                {
+                                    topicId = Convert.ToInt32(obj);
+                                }
+                            }
+
+                            if (topicId == 0)
+                            {
+                                using (var cmd = new SqlCommand("INSERT INTO [dbo].[topic] ([Topic], [Description]) OUTPUT INSERTED.[TopicId] VALUES (@Topic, @Desc)", conn, tran))
+                                {
+                                    cmd.Parameters.Add(new SqlParameter("@Topic", SqlDbType.NVarChar, 255) { Value = topicName });
+                                    cmd.Parameters.Add(new SqlParameter("@Desc", SqlDbType.Text) { Value = string.IsNullOrEmpty(topicDesc) ? (object)DBNull.Value : topicDesc });
+                                    topicId = (int)cmd.ExecuteScalar();
+                                }
                             }
                         }
 

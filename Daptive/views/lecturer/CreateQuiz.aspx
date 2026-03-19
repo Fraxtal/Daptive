@@ -52,23 +52,47 @@
           <aside class="sidebar">
             <span class="sidebar-section-label">Main</span>
             <a href="LecturerDashboard.aspx" class="nav-item">
-              <span class="nav-icon">◈</span> Dashboard
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Dashboard
             </a>
             <a href="CreateQuiz.aspx" class="nav-item active">
-              <span class="nav-icon">◈</span> Create Quiz
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Create Quiz
             </a>
             <a href="CreateCourse.aspx" class="nav-item">
-              <span class="nav-icon">◈</span> Create Course
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Create Course
             </a>
-            <a href="#" class="nav-item">
-              <span class="nav-icon">◈</span> Manage Quizzes
+            <a href="ManageQuizzes.aspx" class="nav-item">
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Manage Quizzes
             </a>
             <span class="sidebar-section-label">Analytics</span>
-            <a href="#" class="nav-item">
-              <span class="nav-icon">◈</span> Student Progress
+            <a href="StudentResults.aspx" class="nav-item">
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Student Progress
             </a>
-            <a href="#" class="nav-item">
-              <span class="nav-icon">◈</span> Quiz Results
+            <a href="QuizResults.aspx" class="nav-item">
+              <span class="nav-icon">
+                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="nav-icon-svg" aria-hidden="true">
+                  <polygon points="6,0 12,6 6,12 0,6" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </span> Quiz Results
             </a>
             <div class="sidebar-footer">© 2025 CodeDaptive</div>
           </aside>
@@ -112,29 +136,7 @@
                 </div>
               </div>
 
-              <!-- RIGHT: Default code + test cases -->
               <div style="display: flex; flex-direction: column; gap: 20px">
-                <!-- Default Code -->
-                <div class="panel">
-                  <div class="panel-header">
-                    <span class="panel-title">Starter Code</span>
-                    <span class="preview-pill">⌨ Pre-filled in editor</span>
-                  </div>
-                  <p class="section-hint">
-                    This code stub is shown to the learner when they open the quiz.
-                    Leave method bodies empty for them to complete.
-                  </p>
-                  <div class="form-group">
-                    <label class="form-label">DefaultCode (C#)</label>
-                    <asp:TextBox runat="server" ID="txtDefaultCode" TextMode="MultiLine" CssClass="code-editor" spellcheck="false">public class Solution
-    {
-        public string Solve(string input)
-        {
-            // Write your solution here
-        }
-    }</asp:TextBox>
-                  </div>
-                </div>
 
                 <!-- Test Cases -->
                 <div class="panel">

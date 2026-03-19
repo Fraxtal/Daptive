@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Daptive.views.lecturer
+namespace Daptive.views.learner
 {
 
 
-    public partial class LecturerDashboard
+    public partial class LearnerView_Dashboard
     {
 
         /// <summary>
@@ -24,57 +24,57 @@ namespace Daptive.views.lecturer
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// totalStudents control.
+        /// MainBrandLogo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalStudents;
+        protected global::Daptive.views.learner.logo MainBrandLogo;
 
         /// <summary>
-        /// quizzesCreated control.
+        /// btnSignout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl quizzesCreated;
+        protected global::System.Web.UI.WebControls.Button btnSignout;
 
         /// <summary>
-        /// avgCompletion control.
+        /// rptMiniCourses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl avgCompletion;
+        protected global::System.Web.UI.WebControls.Repeater rptMiniCourses;
 
         /// <summary>
-        /// avgScore control.
+        /// lblNoCourses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl avgScore;
+        protected global::System.Web.UI.WebControls.Label lblNoCourses;
 
         /// <summary>
-        /// rptRecentActivity control.
+        /// rptMiniQuizzes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptRecentActivity;
+        protected global::System.Web.UI.WebControls.Repeater rptMiniQuizzes;
 
         /// <summary>
-        /// noRecentActivity control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl noRecentActivity;
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

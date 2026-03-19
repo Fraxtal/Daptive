@@ -6,17 +6,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="~/styles/learner/course.css" runat="server"/>
     <title>CodeDaptive</title>
 </head>
 <body>
     <form id="form1" runat="server">
         <ul>
-            <li><a href="LearnerView_Courses.aspx"><custom:Logo runat="server" ID="MainBrandLogo" /></a></li>
+            <li><a href="LearnerView_Dashboard.aspx"><custom:Logo runat="server" ID="MainBrandLogo" /></a></li>
             <li><a href="LearnerView_Courses.aspx">Courses</a></li>
             <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
-            <li><a href="LearnerView_Courses.aspx">Profile</a></li>
+            <li><a href="LearnerView_Profile.aspx">Profile</a></li>
+            <li><asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin: auto 30px" Text="Logout"></asp:Button></li>
         </ul>
+        <div id="err-container"></div>
         <div class="layout-container">
             <div class="sidebar">
                 <h3>Topics</h3>
@@ -128,9 +131,26 @@
                     }
                 })
                 .catch(error => {
-                    console.error("Learner Courses AJAX Error: ", error)
-                    outputLit.innerHTML = "<span style='color:red;'>Something went wrong. Please try again.</span>";
+                    showErrorText("Something went wrong. Please try again.");
                 });
+        }
+
+        function showErrorText(message) {
+            var container = document.getElementById('err-container');
+
+            var txt = document.createElement('div');
+            txt.className = 'error-text';
+            txt.innerHTML = message;
+
+            container.prepend(txt);
+
+            setTimeout(function () {
+                txt.style.opacity = '0';
+                txt.style.transform = 'translateY(-20px)';
+                setTimeout(function () {
+                    txt.remove();
+                }, 400);
+            }, 4000);
         }
     </script>
 </body>
