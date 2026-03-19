@@ -29,6 +29,11 @@ namespace Daptive.views.lecturer
                 LoadRecentActivity();
             }
         }
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
 
         private void LoadRecentActivity()
         {

@@ -17,6 +17,7 @@
             <header class="topbar">
                 <div class="topbar-brand"><span class="brand">CodeDaptive</span></div>
                 <div class="topbar-right"><div class="topbar-user"><div class="avatar">LC</div><span>Lecturer</span></div></div>
+                <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
             </header>
 
             <!-- ── SIDEBAR ── -->

@@ -17,6 +17,11 @@ namespace Daptive.views.lecturer
                 BindQuizzes();
             }
         }
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
 
         protected void btnModalSavePost_Click(object sender, EventArgs e)
         {

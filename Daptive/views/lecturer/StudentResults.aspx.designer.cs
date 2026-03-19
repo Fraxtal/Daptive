@@ -51,6 +51,15 @@ namespace Daptive.views.lecturer
         protected global::System.Web.UI.WebControls.Button btnLoadStudentResults;
 
         /// <summary>
+        /// btnSignout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSignout;
+
+        /// <summary>
         /// gvStudents control.
         /// </summary>
         /// <remarks>
@@ -58,11 +67,6 @@ namespace Daptive.views.lecturer
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvStudents;
-
-        /// <summary>
-        /// btnViewResults control (used within GridView as template)
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnViewResults;
 
         /// <summary>
         /// lblStudentModalTitle control.

@@ -105,6 +105,15 @@ namespace Daptive.views.lecturer
         protected global::System.Web.UI.WebControls.Button btnConfirmDeletePost;
 
         /// <summary>
+        /// btnSignout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSignout;
+
+        /// <summary>
         /// btnCreateQuiz control.
         /// </summary>
         /// <remarks>

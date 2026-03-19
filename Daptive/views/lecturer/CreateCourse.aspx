@@ -38,7 +38,7 @@
                     <div class="avatar">LC</div>
                     <span>Lecturer</span>
                 </div>
-                <button class="btn-signout">Sign out</button>
+                <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
             </div>
         </header>
 

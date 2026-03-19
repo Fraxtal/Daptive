@@ -14,7 +14,11 @@ namespace Daptive.views.lecturer
         {
 
         }
-
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
         protected void SaveQuiz_Click(object sender, EventArgs e)
         {
             string name = txtQuizName.Text.Trim();

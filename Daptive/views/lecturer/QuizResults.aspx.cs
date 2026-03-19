@@ -15,7 +15,11 @@ namespace Daptive.views.lecturer
                 BindResults();
             }
         }
-
+        protected void btnsignout_click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
         private void BindResults()
         {
             var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
