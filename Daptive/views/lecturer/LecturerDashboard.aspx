@@ -80,10 +80,10 @@
 
             <span class="sidebar-section-label">Analytics</span>
 
-            <a href="#" class="nav-item">
+            <a href="StudentResults.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Student Progress
             </a>
-            <a href="#" class="nav-item">
+            <a href="QuizResults.aspx" class="nav-item">
               <span class="nav-icon">◈</span> Quiz Results
             </a>
 
