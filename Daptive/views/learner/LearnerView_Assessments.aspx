@@ -14,14 +14,12 @@
     <form id="form1" runat="server">
         <div>
             <ul class="nav-bar">
-                <li><a href="LearnerView_Courses.aspx"><custom:Logo runat="server" ID="MainBrandLogo" /></a></li>
+                <li><a href="LearnerView_Dashboard.aspx"><custom:Logo runat="server" ID="MainBrandLogo" /></a></li>
                 <li><a href="LearnerView_Courses.aspx">Courses</a></li>
                 <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
-                <li><a href="LearnerView_Courses.aspx">Profile</a></li>
+                <li><a href="LearnerView_Profile.aspx">Profile</a></li>
             </ul>
-            <div id="err-container">
-
-            </div>
+            <div id="err-container"></div>
             <div class="main-content">
                 <h1>Quizzes</h1>
                 <br />

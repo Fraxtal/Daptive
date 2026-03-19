@@ -90,6 +90,8 @@
   <ItemGroup>
     <Content Include="resources\logo.png" />
     <Content Include="styles\admin.css" />
+    <Content Include="styles\learner\dashboard.css" />
+    <Content Include="styles\learner\profile.css" />
     <Content Include="views\Admin\AdminProfile.aspx" />
     <Content Include="views\Admin\Analytics.aspx" />
     <Content Include="views\Admin\Content.aspx" />
@@ -111,6 +113,8 @@
     <Content Include="views\index.aspx" />
     <Content Include="views\learner\LearnerView_Assessments.aspx" />
     <Content Include="views\learner\LearnerView_Courses.aspx" />
+    <Content Include="views\learner\LearnerView_Dashboard.aspx" />
+    <Content Include="views\learner\LearnerView_Profile.aspx" />
     <Content Include="views\learner\logo.ascx" />
     <Content Include="views\lecturer\CreateCourse.aspx" />
     <Content Include="views\lecturer\CreateQuiz.aspx" />
@@ -172,9 +176,9 @@
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-	  <Compile Include="views\Admin\Users.aspx.designer.cs">
-		  <DependentUpon>Users.aspx</DependentUpon>
-	  </Compile>
+    <Compile Include="views\Admin\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
     <Compile Include="views\authentication\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -209,6 +213,20 @@
     </Compile>
     <Compile Include="views\learner\LearnerView_Courses.aspx.designer.cs">
       <DependentUpon>LearnerView_Courses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\learner\LearnerView_Dashboard.aspx.cs">
+      <DependentUpon>LearnerView_Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\learner\LearnerView_Dashboard.aspx.designer.cs">
+      <DependentUpon>LearnerView_Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="views\learner\LearnerView_Profile.aspx.cs">
+      <DependentUpon>LearnerView_Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\learner\LearnerView_Profile.aspx.designer.cs">
+      <DependentUpon>LearnerView_Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="views\learner\logo.ascx.cs">
       <DependentUpon>logo.ascx</DependentUpon>

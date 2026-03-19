@@ -57,7 +57,7 @@ namespace Daptive
                                         Response.Redirect("~/Lecturer/Dashboard.aspx");
                                         break;
                                     default:
-                                        Response.Redirect("~/Student/Dashboard.aspx");
+                                        Response.Redirect("~/views/learner/LearnerView_Dashboard.aspx");
                                         break;
                                 }
                             }

@@ -69,8 +69,7 @@ namespace Daptive.views
                 catch (Exception ex)
                 {
                     // Handle exceptions (e.g., log the error, show a message to the user, etc.)
-                    Console.WriteLine("Error loading quizzes: " + ex.Message);
-                    Response.Write("<h2 style='color:red;'>Database Error: " + ex.Message + "</h2>");
+                    ShowMessage("An error occurred while loading quizzes. Please try again later.");
                     return;
                 }
             }
@@ -172,6 +171,15 @@ namespace Daptive.views
             {
                 return false;
             }
+        }
+
+        private void ShowMessage(string msg)
+        {
+            string functionName = "showErrorText";
+
+            string script = $"{functionName}('{msg.Replace("'", "\\'")}');";
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "ServerToast", script, true);
         }
     }
 }
