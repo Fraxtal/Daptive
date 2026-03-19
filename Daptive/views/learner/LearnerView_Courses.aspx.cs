@@ -72,8 +72,8 @@ namespace Daptive.views
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions (e.g., log the error)
-                    System.Diagnostics.Debug.WriteLine("Error loading topics: " + ex.Message);
+                    // Handle exceptions
+                    ShowMessage("Error loading topics! Please try again.");
                 }
             }
             
@@ -140,8 +140,8 @@ namespace Daptive.views
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions (e.g., log the error)
-                    System.Diagnostics.Debug.WriteLine("Error loading courses: " + ex.Message);
+                    // Handle exceptions
+                    ShowMessage("Error loading courses! Please try again.");
                 }
             }
         }
@@ -161,6 +161,15 @@ namespace Daptive.views
                                        : "Execution completed without an output"
                 };
             }
+        }
+
+        private void ShowMessage(string msg)
+        {
+            string functionName = "showErrorText";
+
+            string script = $"{functionName}('{msg.Replace("'", "\\'")}');";
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "ServerToast", script, true);
         }
     }
 }

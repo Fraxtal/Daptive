@@ -127,7 +127,9 @@ hr {
 }
 
     .row-item.active .row-header {
+        background: rgba(45, 74, 62, 0.05);
         border-bottom: 1px solid #ddd;
+        color: var(--accent);
     }
 
     .row-item.active .row-content {
@@ -144,9 +146,9 @@ hr {
         border-bottom: 1px solid var(--border);
     }
 
-    .row-item .row-header:hover {
-        background-color: var(--text-light)
-    }
+        .row-item .row-header:hover {
+            background: rgba(45, 74, 62, 0.05);
+        }
 
 .row-content {
     height: 0;
