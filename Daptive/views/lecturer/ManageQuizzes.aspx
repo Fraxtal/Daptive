@@ -272,8 +272,9 @@
                   row.className = 'testcase-card';
                   row.dataset.idx = i;
                   row.innerHTML = `<div class="form-group"><label class="form-label">Input</label><input class="form-input" value="${escapeHtml(t.TestCase || '')}" /></div>` +
-                                  `<div class="form-group"><label class="form-label">Expected</label><input class="form-input" value="${escapeHtml(t.ExpectedResult || '')}" /></div>` +
-                                  `<button type="button" class="btn-remove">✕</button>`;
+                      `<div class="form-group"><label class="form-label">Expected</label><input class="form-input" value="${escapeHtml(t.ExpectedResult || '')}" /></div>` +
+                      '</br>' +
+                                  `<button type="button" class="btn-remove" aria-label="Delete test case">Delete</button>`;
                   row.querySelector('.btn-remove').addEventListener('click', ()=> row.remove());
                   list.appendChild(row);
                 });
@@ -284,8 +285,9 @@
                 const card = document.createElement('div');
                 card.className = 'testcase-card';
                 card.innerHTML = `<div class="form-group"><label class="form-label">Input</label><input class="form-input" /></div>` +
-                                 `<div class="form-group"><label class="form-label">Expected</label><input class="form-input" /></div>` +
-                                 `<button type="button" class="btn-remove">✕</button>`;
+                    `<div class="form-group"><label class="form-label">Expected</label><input class="form-input" /></div>` +
+                                 '</br>' +
+                                 `<button type="button" class="btn-remove" aria-label="Delete test case">Delete</button>`;
                 card.querySelector('.btn-remove').addEventListener('click', ()=> card.remove());
                 list.appendChild(card);
               }

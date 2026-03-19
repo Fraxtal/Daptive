@@ -188,56 +188,7 @@
               </div>
             </div>
 
-            <!-- Student Progress Overview -->
-            <div class="panel" style="margin-top: 20px">
-              <div class="panel-header">
-                <span class="panel-title">Top Performing Students</span>
-                <a href="#" class="panel-action">View all</a>
-              </div>
-              <div class="course-list">
-                <div class="course-item">
-                  <div class="course-icon">A</div>
-                  <div class="course-info">
-                    <div class="course-name">Alice Johnson</div>
-                    <div class="course-meta">12 quizzes completed</div>
-                    <div class="progress-wrap">
-                      <div class="progress-bar">
-                        <div class="progress-fill" style="width: 92%"></div>
-                      </div>
-                      <div class="progress-label">92% average score</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="course-item">
-                  <div class="course-icon">D</div>
-                  <div class="course-info">
-                    <div class="course-name">Diana Smith</div>
-                    <div class="course-meta">10 quizzes completed</div>
-                    <div class="progress-wrap">
-                      <div class="progress-bar">
-                        <div class="progress-fill" style="width: 88%"></div>
-                      </div>
-                      <div class="progress-label">88% average score</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="course-item">
-                  <div class="course-icon">B</div>
-                  <div class="course-info">
-                    <div class="course-name">Bob Williams</div>
-                    <div class="course-meta">11 quizzes completed</div>
-                    <div class="progress-wrap">
-                      <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%"></div>
-                      </div>
-                      <div class="progress-label">85% average score</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </main>
         </div>
         
