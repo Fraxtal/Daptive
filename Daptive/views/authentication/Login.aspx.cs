@@ -51,10 +51,10 @@ namespace Daptive
                                 switch (role.ToLower())
                                 {
                                     case "admin":
-                                        Response.Redirect("~/Admin/Dashboard.aspx");
+                                        Response.Redirect("~/views/Admin/Dashboard.aspx");
                                         break;
                                     case "lecturer":
-                                        Response.Redirect("~/Lecturer/Dashboard.aspx");
+                                        Response.Redirect("~/views/lecturer/LecturerDashboard.aspx");
                                         break;
                                     default:
                                         Response.Redirect("~/views/learner/LearnerView_Dashboard.aspx");

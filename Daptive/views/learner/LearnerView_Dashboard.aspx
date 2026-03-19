@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
     <title>CodeDaptive - Dashboard</title>
 </head>
@@ -14,6 +15,7 @@
             <div class="logo-container">
                 <custom:Logo runat="server" ID="MainBrandLogo" />
             </div>
+            <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
         </div>
         <div id="err-container"></div>
 

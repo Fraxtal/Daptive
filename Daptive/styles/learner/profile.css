@@ -196,7 +196,7 @@
     }
 }
 
-.editable-targer[readonly] {
+.editable-targert[readonly] {
     background-color: #f8f9fa;
     cursor: not-allowed;
     border-color: transparent;
