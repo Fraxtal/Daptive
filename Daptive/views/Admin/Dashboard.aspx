@@ -218,7 +218,7 @@
                                                     CommandArgument='<%# Eval("UserID") %>'
                                                     CssClass="btn btn-danger btn-sm"
                                                     OnClientClick="return confirm('Delete this user? This cannot be undone.');"
-                                                    OnCommand="BtnDeleteUserCommand"
+                                                    OnCommand="BtnDeleteUser_Command"
                                                     Text="Delete" />
                                             </td>
                                         </tr>
