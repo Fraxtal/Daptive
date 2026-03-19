@@ -111,7 +111,6 @@
     <Content Include="styles\authentication\login.css" />
     <Content Include="styles\authentication\register.css" />
     <Content Include="styles\learner\course.css" />
-    <Content Include="views\index.aspx" />
     <Content Include="views\learner\LearnerView_Assessments.aspx" />
     <Content Include="views\learner\LearnerView_Courses.aspx" />
     <Content Include="views\learner\LearnerView_Dashboard.aspx" />
@@ -196,13 +195,6 @@
     </Compile>
     <Compile Include="views\authentication\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="views\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="views\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="views\learner\LearnerView_Assessments.aspx.cs">
       <DependentUpon>LearnerView_Assessments.aspx</DependentUpon>

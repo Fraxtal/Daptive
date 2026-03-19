@@ -4,7 +4,7 @@
 <head runat="server">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CodeDaptive – Create Account</title>
+    <title>CodeDaptive - Create Account</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/authentication/register.css" runat="server"/>
