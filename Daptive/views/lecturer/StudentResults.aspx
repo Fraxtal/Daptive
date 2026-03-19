@@ -27,7 +27,7 @@
                 </div>
                 <div class="topbar-right">
                     <div class="topbar-user"><div class="avatar">LC</div><span>Lecturer</span></div>
-                    <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
+                    <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" Text="Logout"></asp:Button>
                 </div>
             </header>
 
