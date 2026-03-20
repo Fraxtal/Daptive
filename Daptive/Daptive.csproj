@@ -89,8 +89,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\logo.png" />
+    <Content Include="scripts\learner\assessment.js" />
+    <Content Include="scripts\learner\course.js" />
+    <Content Include="scripts\learner\dashboard.js" />
+    <Content Include="scripts\learner\forum.js" />
+    <Content Include="scripts\learner\profile.js" />
     <Content Include="styles\admin.css" />
     <Content Include="styles\learner\dashboard.css" />
+    <Content Include="styles\learner\forum.css" />
     <Content Include="styles\learner\profile.css" />
     <Content Include="styles\lecturer\managequizzes.css" />
     <Content Include="views\Admin\AdminProfile.aspx" />
@@ -100,7 +106,6 @@
     <Content Include="views\Admin\Reports.aspx" />
     <Content Include="views\Admin\Users.aspx" />
     <Content Include="views\Admin\Dashboard.aspx" />
-    <Content Include="App_Data\CodeDaptiveDB.mdf" />
     <Content Include="styles\learner\assessment.css" />
     <Content Include="views\authentication\Login.aspx" />
     <Content Include="views\authentication\Register.aspx" />
@@ -114,6 +119,7 @@
     <Content Include="views\learner\LearnerView_Assessments.aspx" />
     <Content Include="views\learner\LearnerView_Courses.aspx" />
     <Content Include="views\learner\LearnerView_Dashboard.aspx" />
+    <Content Include="views\learner\LearnerView_Forum.aspx" />
     <Content Include="views\learner\LearnerView_Profile.aspx" />
     <Content Include="views\learner\logo.ascx" />
     <Content Include="views\lecturer\CreateCourse.aspx" />
@@ -217,6 +223,13 @@
     <Compile Include="views\learner\LearnerView_Dashboard.aspx.designer.cs">
       <DependentUpon>LearnerView_Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="views\learner\LearnerView_Forum.aspx.cs">
+      <DependentUpon>LearnerView_Forum.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="views\learner\LearnerView_Forum.aspx.designer.cs">
+      <DependentUpon>LearnerView_Forum.aspx</DependentUpon>
+    </Compile>
     <Compile Include="views\learner\LearnerView_Profile.aspx.cs">
       <DependentUpon>LearnerView_Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -290,7 +303,9 @@
       <Name>CodeRunner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
