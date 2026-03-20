@@ -165,7 +165,8 @@
         font-weight: bold;
         padding-left: 15px;
         color: var(--accent);
-        border-left: 1px solid var(--text-dark);
+        border-left: 1px solid var(--accent);
+        width: 35%;
     }
 
 .mini-item-text {
@@ -229,6 +230,26 @@
     .btn-action-sm:hover {
         background-color: #4a6b5d;
         color: white;
+    }
+
+
+.btn-signout {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+    .btn-signout:hover {
+        color: var(--accent);
+        border-color: var(--accent);
     }
 
 .empty-msg {

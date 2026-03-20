@@ -18,7 +18,7 @@ namespace Daptive.views
             public int QuizId { get; set; }
             public string Question { get; set; }
             public bool isCompleted { get; set; }
-            public string Score { get; set; }
+            public int Score { get; set; }
             public string Description { get; set; }
         }
 
@@ -56,7 +56,7 @@ namespace Daptive.views
                                         QuizId = reader.GetInt32(0),
                                         Question = reader.IsDBNull(1) ? "" : reader.GetString(1),
                                         isCompleted = !reader.IsDBNull(3),
-                                        Score = reader.IsDBNull(3) ? "Incomplete" : reader.GetInt32(3).ToString(),
+                                        Score = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
                                         Description = reader.IsDBNull(2) ? "" : reader.GetString(2)
                                     });
                                 }

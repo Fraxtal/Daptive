@@ -101,7 +101,7 @@ namespace Daptive.views.learner
 
             string script = $"{functionName}('{msg.Replace("'", "\\'")}');";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "ServerToast", script, true);
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), script, true);
         }
     }
 }

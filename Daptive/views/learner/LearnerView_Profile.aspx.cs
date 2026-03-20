@@ -47,8 +47,8 @@ namespace Daptive.views.learner
                                     }
                                     else
                                     {
-                                        // Handle case where user is not found
-                                        Console.WriteLine("User not found.");
+                                        // Handle case where user is not found (which shouldn't happen if session is valid)
+                                        ShowMessage("Invalid user! Please try again.", false);
                                     }
                                 }
                             }
@@ -56,8 +56,8 @@ namespace Daptive.views.learner
                     }
                     catch (Exception ex)
                     {
-                        // Handle exceptions (e.g., log the error)
-                        Console.WriteLine("An error occurred: " + ex.Message);
+                        // Handle exceptions
+                        ShowMessage("Something went wrong! Please try again.", false);
                     }
                 }
                 else
@@ -69,6 +69,24 @@ namespace Daptive.views.learner
 
         protected void btnSaveChanges_Click(object sender, EventArgs e)
         {
+            var required = new[] { txtUsername, txtFullName, txtEmail, txtPassword };
+            foreach (var box in required)
+            {
+                box.CssClass = "form-control editable-target";
+            }
+
+            var emptyFields = required.Where(b => string.IsNullOrWhiteSpace(b.Text)).ToList();
+
+            if (emptyFields.Any())
+            {
+                foreach (var box in emptyFields)
+                {
+                    box.CssClass = "is-invalid form-control editable-target";
+                }
+                ShowMessage("Please fill in all required fields!", false);
+                return;
+            }
+
             int curUserId = Convert.ToInt32(Session["UserID"]);
             string updateQuery = "UPDATE [user] SET Username = @Username, FullName = @FullName, Email = @Email, Password = @Password WHERE UserID = @UsrId";
             try
@@ -96,7 +114,6 @@ namespace Daptive.views.learner
                         }
                     }
                 }
-                ShowMessage("Profile updated successfully!", true);
             }
             catch (Exception ex)
             {
@@ -144,7 +161,7 @@ namespace Daptive.views.learner
 
             string script = $"{functionName}('{msg.Replace("'", "\\'")}');";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "ServerToast", script, true);
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), script, true);
         }
     }
 }

@@ -7,7 +7,6 @@
 <head runat="server">
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
-    <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/assessment.css" runat="server"/>
     <title></title>
@@ -19,7 +18,7 @@
                 <div class="logo-container">
                     <custom:Logo runat="server" ID="MainBrandLogo" />
                 </div>
-                <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
+                <asp:Button ID="btnSignout" runat="server" class="btn-signout" UseSubmitBehavior="false" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
             </div>
             <div id="err-container"></div>
              <div class="layout-container">
@@ -28,6 +27,7 @@
                          <li><a href="LearnerView_Dashboard.aspx">Dashboard Overview</a></li>
                          <li><a href="LearnerView_Courses.aspx">Courses</a></li>
                          <li><a href="LearnerView_Assessments.aspx" class="active">Assessments</a></li>
+                         <li><a href="LearnerView_Forum.aspx">Forum</a></li>
                          <li><a href="LearnerView_Profile.aspx">Profile</a></li>
                      </ul>
                  </div>
@@ -43,10 +43,9 @@
                                             <span><%# Eval("Question") %></span>
                                         </div>
                                         <div class="content-right" style="flex: 0 0 25%">
-                                            <span>Highest Score: <%# Eval("Score") %>%</span>
+                                            <span id="score-<%# Eval("QuizId") %>">Highest Score: <%# Eval("Score", "{0:F0}") %>%</span>
                                         </div>
                                     </div>
-                                
                                 </div>
                                 <div class="row-content">
                                     <div class="flex-wrapper">
@@ -127,6 +126,7 @@
                     .then(data => {
                         var result = data.d;
                         if (result.Score >= 0) {
+                            document.getElementById('score-' + currentQuizId).innerText = "Highest Score: " + (result.Score).toFixed(0) + "%";
                             outputLit.innerText = result.Message;
                         } else {
                             var errorMsg = result.Message.replace(/\n/g, '<br>');

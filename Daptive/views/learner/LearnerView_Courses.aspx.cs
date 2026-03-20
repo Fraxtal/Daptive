@@ -65,18 +65,22 @@ namespace Daptive.views
                                     });
                                 }
                             }
+                            if (topics.Count == 0)
+                            {
+                                ShowMessage("No topics found! Please check back later.");
+                                return;
+                            }
                             rptSidebar.DataSource = topics;
                             rptSidebar.DataBind();
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Handle exceptions
                     ShowMessage("Error loading topics! Please try again.");
                 }
             }
-            
         }
 
         protected void rptSidebar_ItemCommand(object sender, RepeaterCommandEventArgs e)
@@ -132,8 +136,6 @@ namespace Daptive.views
                     {
                         rptContent.DataSource = this.courses;
                         rptContent.DataBind();
-
-                        
                     }
                     contentTopic.InnerText = currentTopicName;
                     contentTopicDesc.Text = currentTopicDesc;
@@ -141,7 +143,7 @@ namespace Daptive.views
                 catch (Exception ex)
                 {
                     // Handle exceptions
-                    ShowMessage("Error loading courses! Please try again.");
+                    ShowMessage("Error loading courses! Please try again." + ex.Message);
                 }
             }
         }
@@ -175,7 +177,7 @@ namespace Daptive.views
 
             string script = $"{functionName}('{msg.Replace("'", "\\'")}');";
 
-            ScriptManager.RegisterStartupScript(this, GetType(), "ServerToast", script, true);
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), script, true);
         }
     }
 }
