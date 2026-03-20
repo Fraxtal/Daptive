@@ -16,11 +16,16 @@ namespace Daptive
         {
             if (!Page.IsValid) return;
 
+
             string username = txtUsername.Text.Trim();
             string fullName = txtFullName.Text.Trim();
-            string email    = txtEmail.Text.Trim();
+            string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
-            string role     = rbLecturer.Checked ? "Lecturer" : "Student";
+            string role = rbLecturer.Checked ? "Lecturer" : "Student";
+
+           
+            // WorkFactor 12 = strong but still fast enough for login
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, workFactor: 12);
 
             try
             {
@@ -36,7 +41,7 @@ namespace Daptive
                         int count = (int)checkCmd.ExecuteScalar();
                         if (count > 0)
                         {
-                            lblMessage.Text    = "Username already taken. Please choose another.";
+                            lblMessage.Text = "Username already taken. Please choose another.";
                             lblMessage.Visible = true;
                             return;
                         }
@@ -50,14 +55,14 @@ namespace Daptive
                         int count = (int)emailCmd.ExecuteScalar();
                         if (count > 0)
                         {
-                            lblMessage.Text    = "This email is already registered.";
+                            lblMessage.Text = "This email is already registered.";
                             lblMessage.Visible = true;
                             return;
                         }
                     }
 
-                    // 3. Insert new account
-                    // NOTE: Hash password before storing in production!
+                    // 3. Insert with hashed password
+                    // Password column must be NVARCHAR(255) to hold the BCrypt hash
                     string insertSql = @"INSERT INTO [user] (Username, FullName, Email, Password, Role)
                                          VALUES (@Username, @FullName, @Email, @Password, @Role)";
 
@@ -65,29 +70,28 @@ namespace Daptive
                     {
                         insertCmd.Parameters.AddWithValue("@Username", username);
                         insertCmd.Parameters.AddWithValue("@FullName", fullName);
-                        insertCmd.Parameters.AddWithValue("@Email",    email);
-                        insertCmd.Parameters.AddWithValue("@Password", password);
-                        insertCmd.Parameters.AddWithValue("@Role",     role);
+                        insertCmd.Parameters.AddWithValue("@Email", email);
+                        insertCmd.Parameters.AddWithValue("@Password", hashedPassword);
+                        insertCmd.Parameters.AddWithValue("@Role", role);
                         insertCmd.ExecuteNonQuery();
                     }
 
-                    lblSuccess.Text    = "Account created successfully! You can now sign in.";
+                    lblSuccess.Text = "Account created successfully! You can now sign in.";
                     lblSuccess.Visible = true;
                     lblMessage.Visible = false;
 
                     // Clear form
-                    txtUsername.Text        = "";
-                    txtFullName.Text        = "";
-                    txtEmail.Text           = "";
-                    txtPassword.Text        = "";
+                    txtUsername.Text = "";
+                    txtFullName.Text = "";
+                    txtEmail.Text = "";
+                    txtPassword.Text = "";
                     txtConfirmPassword.Text = "";
                 }
             }
             catch (Exception ex)
             {
-                lblMessage.Text    = "Registration failed. Please try again.";
+                lblMessage.Text = "Registration failed. Please try again.";
                 lblMessage.Visible = true;
-                // Log ex.Message
             }
         }
     }

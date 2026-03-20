@@ -6,7 +6,6 @@ namespace Daptive
 {
     public partial class Login : Page
     {
-        // ── Connection string – update to match your SQL Server ──────────────
         private readonly string _connStr =
             System.Configuration.ConfigurationManager
                   .ConnectionStrings["CodeDaptiveDB"].ConnectionString;
@@ -24,46 +23,58 @@ namespace Daptive
                 {
                     conn.Open();
 
-                    // NOTE: In production, store hashed passwords (e.g. BCrypt)
-                    string sql = @"SELECT UserID, Role
+                    // Fetch the stored hash + role by username only
+                    // (never compare password in SQL when using BCrypt)
+                    string sql = @"SELECT UserID, Password, Role
                                    FROM   [user]
-                                   WHERE  Username = @Username
-                                   AND    Password = @Password";
+                                   WHERE  Username = @Username";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@Username", username);
-                        cmd.Parameters.AddWithValue("@Password", password);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                int    userID = (int)reader["UserID"];
-                                string role   = reader["Role"].ToString();
+                                int userID = (int)reader["UserID"];
+                                string storedHash = reader["Password"].ToString();
+                                string role = reader["Role"].ToString();
+                                bool passwordMatch = BCrypt.Net.BCrypt.Verify(password, storedHash);
 
-                                // Store in Session
-                                Session["UserID"]   = userID;
-                                Session["Username"] = username;
-                                Session["Role"]     = role;
-
-                                // Redirect based on role
-                                switch (role.ToLower())
+                                if (passwordMatch)
                                 {
-                                    case "admin":
-                                        Response.Redirect("~/views/Admin/Dashboard.aspx");
-                                        break;
-                                    case "lecturer":
-                                        Response.Redirect("~/views/lecturer/LecturerDashboard.aspx");
-                                        break;
-                                    default:
-                                        Response.Redirect("~/views/learner/LearnerView_Dashboard.aspx");
-                                        break;
+                                    // Store in Session
+                                    Session["UserID"] = userID;
+                                    Session["Username"] = username;
+                                    Session["Role"] = role;
+
+                                    // Redirect based on role
+                                    switch (role.ToLower())
+                                    {
+                                        case "admin":
+                                            Response.Redirect("~/views/Admin/Dashboard.aspx");
+                                            break;
+                                        case "lecturer":
+                                            Response.Redirect("~/views/lecturer/LecturerDashboard.aspx");
+                                            break;
+                                        default:
+                                            Response.Redirect("~/views/learner/LearnerView_Dashboard.aspx");
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    // Password wrong — same message as "user not found"
+                                    // to avoid revealing which part is incorrect
+                                    lblMessage.Text = "Invalid username or password. Please try again." ;
+                                    lblMessage.Visible = true;
                                 }
                             }
                             else
                             {
-                                lblMessage.Text    = "Invalid username or password. Please try again.";
+                                // Username not found
+                                lblMessage.Text = "Invalid username or password. Please try again.";
                                 lblMessage.Visible = true;
                             }
                         }
@@ -72,9 +83,8 @@ namespace Daptive
             }
             catch (Exception ex)
             {
-                lblMessage.Text    = "A system error occurred. Please try again later.";
+                lblMessage.Text = "A system error occurred. Please try again later."+ ex.Message;
                 lblMessage.Visible = true;
-                // Log ex.Message to your logging system
             }
         }
     }
