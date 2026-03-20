@@ -72,7 +72,7 @@ namespace Daptive
             }
             catch (Exception ex)
             {
-                lblMessage.Text    = "A system error occurred. Please try again later.";
+                lblMessage.Text    = "A system error occurred. Please try again later." + ex;
                 lblMessage.Visible = true;
                 // Log ex.Message to your logging system
             }

@@ -30,12 +30,17 @@ hr {
     flex-grow: 1;
     min-width: 0;
     background-color: #ffffff;
-    background-image: none;
+    background-image: linear-gradient(#ecece4 1px, transparent 1px), linear-gradient(90deg, #ecece4 1px, transparent 1px);
     padding: 40px 60px;
     height: calc(100vh - 60px);
     overflow-y: auto;
     box-sizing: border-box;
 }
+
+    .main-content h1 {
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--accent);
+    }
 
 .row-item {
     background: var(--bg-ivory);
@@ -49,6 +54,7 @@ hr {
     .row-item.active .row-header {
         background: rgba(45, 74, 62, 0.05);
         border-bottom: 1px solid #ddd;
+        border-radius: 6px 6px 0 0;
         color: var(--accent);
     }
 
@@ -62,8 +68,10 @@ hr {
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
-        background: #F5F5DC;
-        border-bottom: 1px solid var(--border);
+        background: #ffffff;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
     }
 
         .row-item .row-header:hover {
@@ -104,7 +112,6 @@ hr {
     height: 250px;
     border: 1px solid var(--border);
     border-radius: 5px;
-    overflow: hidden;
     margin-bottom: 15px;
 }
 
@@ -128,6 +135,25 @@ hr {
 
     .btn-run:active {
         transform: scale(0.98);
+    }
+
+.btn-signout {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+    .btn-signout:hover {
+        color: var(--accent);
+        border-color: var(--accent);
     }
 
 .output-box {
@@ -223,4 +249,10 @@ hr {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+.monaco-editor, .monaco-editor *,
+.monaco-editor-hover, .monaco-editor-hover *,
+.suggest-widget, .suggest-widget * {
+    box-sizing: content-box !important;
 }

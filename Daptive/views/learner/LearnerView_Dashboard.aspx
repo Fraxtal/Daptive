@@ -5,7 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
-    <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
     <title>CodeDaptive - Dashboard</title>
 </head>
@@ -15,7 +14,7 @@
             <div class="logo-container">
                 <custom:Logo runat="server" ID="MainBrandLogo" />
             </div>
-            <asp:Button ID="btnSignout" runat="server" class="btn-signout" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
+            <asp:Button ID="btnSignout" runat="server" class="btn-signout" UseSubmitBehavior="false" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
         </div>
         <div id="err-container"></div>
 
@@ -25,6 +24,7 @@
                     <li><a href="LearnerView_Dashboard.aspx" class="active">Dashboard Overview</a></li>
                     <li><a href="LearnerView_Courses.aspx">Courses</a></li>
                     <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
+                    <li><a href="LearnerView_Forum.aspx">Forum</a></li>
                     <li><a href="LearnerView_Profile.aspx">Profile</a></li>
                 </ul>
             </div>
@@ -47,7 +47,7 @@
                                 <asp:Repeater ID="rptMiniCourses" runat="server">
                                     <ItemTemplate>
                                         <div class="mini-list-item">
-                                            <div class="mini-item-left">
+                                            <div class="mini-item-left" style="min-width: 50%">
                                                 <div class="mini-item-text">
                                                     <h4><%# Eval("Name") %></h4>
                                                     <span class="sub-text"><%# Eval("Topic") %></span>
@@ -72,13 +72,13 @@
                                 <asp:Repeater ID="rptMiniQuizzes" runat="server">
                                     <ItemTemplate>
                                         <div class="mini-list-item">
-                                            <div class="mini-item-left" style="max-width: 75%;">
+                                            <div class="mini-item-left" style="width: 65%">
                                                 <div class="mini-item-text">
                                                     <h4 class="truncate" title='<%# Eval("Question") %>'><%# Eval("Question") %></h4>
                                                 </div>
                                             </div>
                                             <span class="score-text">
-                                                Recent Highest: <%# Eval("UserScore") %> pts
+                                                Recent Highest: <%# Eval("UserScore", "{0:F0}") %>%
                                             </span>
                                         </div>
                                     </ItemTemplate>
@@ -110,6 +110,6 @@
                 }, 400);
             }, 4000);
         }
-</script>
+    </script>
 </body>
 </html>
