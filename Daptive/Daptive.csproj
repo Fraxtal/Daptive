@@ -93,6 +93,7 @@
     <Content Include="scripts\learner\course.js" />
     <Content Include="scripts\learner\dashboard.js" />
     <Content Include="scripts\learner\forum.js" />
+    <Content Include="scripts\learner\learner.js" />
     <Content Include="scripts\learner\profile.js" />
     <Content Include="styles\admin.css" />
     <Content Include="styles\learner\dashboard.css" />

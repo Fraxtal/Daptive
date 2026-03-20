@@ -9,6 +9,7 @@
     <title>CodeDaptive - Dashboard</title>
 </head>
 <body>
+    <script src="../../scripts/learner/dashboard.js"></script>
     <form id="form1" runat="server">
         <div class="top-bar">
             <div class="logo-container">
@@ -92,24 +93,5 @@
             </div>
         </div>
     </form>
-    <script>
-        function showErrorText(message) {
-            var container = document.getElementById('err-container');
-
-            var txt = document.createElement('div');
-            txt.className = 'error-text';
-            txt.innerHTML = message;
-
-            container.prepend(txt);
-
-            setTimeout(function () {
-                txt.style.opacity = '0';
-                txt.style.transform = 'translateY(-20px)';
-                setTimeout(function () {
-                    txt.remove();
-                }, 400);
-            }, 4000);
-        }
-    </script>
 </body>
 </html>
