@@ -107,12 +107,12 @@
               <div class="stat-card">
                 <span class="stat-label">Quizzes Created</span>
                 <span class="stat-value" id="quizzesCreated" runat="server">--</span>
-                <span class="stat-sub">C# exercises</span>
+                <span class="stat-sub">Total quizzes</span>
               </div>
               <div class="stat-card">
                 <span class="stat-label">Avg Completion</span>
                 <span class="stat-value" id="avgCompletion" runat="server">--</span>
-                <span class="stat-sub">Quiz attempts</span>
+                <span class="stat-sub">Completed learners</span>
               </div>
               <div class="stat-card">
                 <span class="stat-label">Avg Score</span>
@@ -129,39 +129,37 @@
                   <span class="panel-title">Quick Actions</span>
                 </div>
                 <div class="course-list">
-                  <div class="course-item">
+                  <a href="CreateQuiz.aspx" class="course-item">
                     <div class="course-icon">+Q</div>
                     <div class="course-info">
                       <div class="course-name">Create New Quiz</div>
-                      <div class="course-meta">
-                        Add coding challenges for students
-                      </div>
+                      <div class="course-meta">Add coding challenges for students</div>
                     </div>
-                  </div>
+                  </a>
 
-                  <div class="course-item">
+                  <a href="CreateCourse.aspx" class="course-item">
                     <div class="course-icon">+C</div>
                     <div class="course-info">
                       <div class="course-name">Create New Course</div>
                       <div class="course-meta">Build structured learning paths</div>
                     </div>
-                  </div>
+                  </a>
 
-                  <div class="course-item">
+                  <a href="StudentResults.aspx" class="course-item">
                     <div class="course-icon">📊</div>
                     <div class="course-info">
                       <div class="course-name">View Student Progress</div>
                       <div class="course-meta">Track quiz completion & scores</div>
                     </div>
-                  </div>
+                  </a>
 
-                  <div class="course-item">
+                  <a href="ManageQuizzes.aspx" class="course-item">
                     <div class="course-icon">⚙</div>
                     <div class="course-info">
                       <div class="course-name">Manage Quizzes</div>
                       <div class="course-meta">Edit or delete existing quizzes</div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
 
