@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\dbms.mdf" />
     <Content Include="resources\logo.png" />
     <Content Include="scripts\learner\assessment.js" />
     <Content Include="scripts\learner\course.js" />
