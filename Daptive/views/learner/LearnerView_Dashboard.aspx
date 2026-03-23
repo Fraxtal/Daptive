@@ -111,5 +111,7 @@
             }, 4000);
         }
     </script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2026/03/19/07/20260319073610-3GSVD0WT.js" defer></script>
 </body>
 </html>
