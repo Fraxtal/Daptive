@@ -5,10 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/learner.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
     <title>CodeDaptive - Dashboard</title>
 </head>
 <body>
+    <script src="../../scripts/learner/learner.js"></script>
     <form id="form1" runat="server">
         <div class="top-bar">
             <div class="logo-container">
@@ -92,25 +94,6 @@
             </div>
         </div>
     </form>
-    <script>
-        function showErrorText(message) {
-            var container = document.getElementById('err-container');
-
-            var txt = document.createElement('div');
-            txt.className = 'error-text';
-            txt.innerHTML = message;
-
-            container.prepend(txt);
-
-            setTimeout(function () {
-                txt.style.opacity = '0';
-                txt.style.transform = 'translateY(-20px)';
-                setTimeout(function () {
-                    txt.remove();
-                }, 400);
-            }, 4000);
-        }
-    </script>
     <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2026/03/19/07/20260319073610-3GSVD0WT.js" defer></script>
 </body>

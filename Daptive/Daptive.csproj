@@ -92,12 +92,13 @@
     <Content Include="resources\logo.png" />
     <Content Include="scripts\learner\assessment.js" />
     <Content Include="scripts\learner\course.js" />
-    <Content Include="scripts\learner\dashboard.js" />
     <Content Include="scripts\learner\forum.js" />
+    <Content Include="scripts\learner\learner.js" />
     <Content Include="scripts\learner\profile.js" />
     <Content Include="styles\admin.css" />
     <Content Include="styles\learner\dashboard.css" />
     <Content Include="styles\learner\forum.css" />
+    <Content Include="styles\learner\learner.css" />
     <Content Include="styles\learner\profile.css" />
     <Content Include="styles\lecturer\managequizzes.css" />
     <Content Include="views\Admin\AdminProfile.aspx" />
