@@ -28,7 +28,7 @@
                 <ul>
                     <li><a href="LearnerView_Dashboard.aspx">Dashboard Overview</a></li>
                     <li><a href="LearnerView_Courses.aspx">Courses</a></li>
-                    <li><a href="LearnerView_Assessments.aspx">Assessments</a></li>
+                    <li><a href="LearnerView_Assessments.aspx">Quizzes</a></li>
                     <li><a href="LearnerView_Forum.aspx" class="active">Forum</a></li>
                     <li><a href="LearnerView_Profile.aspx">Profile</a></li>
                 </ul>

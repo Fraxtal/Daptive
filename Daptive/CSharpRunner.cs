@@ -52,7 +52,9 @@ namespace CodeRunner
                     clearMethod.Invoke(null, null);
 
                     // input testcase
-                    inputField.SetValue(null, new StringReader(testCases[i] ?? ""));
+                    string rawinput = testCases[i] ?? "";
+                    string actualInput = System.Text.RegularExpressions.Regex.Unescape(rawinput);
+                    inputField.SetValue(null, new StringReader(actualInput));
 
                     // execute student's main function
                     if (mainMethod.GetParameters().Length > 0)
@@ -114,6 +116,8 @@ namespace CodeRunner
                 public static void WriteLine() { Output.WriteLine(); }
                 public static void Write(object obj) { Output.Write(obj); }
                 public static void Write(string obj) { Output.Write(obj); }
+                public static int Read() { return Input != null ? Input.Read() : -1; }
+                public static string ReadToEnd() { return Input != null ? Input.ReadToEnd() : null; }
             }";
             string finalCode = injectedCode + "\n#line 1\n" + userCode;
 

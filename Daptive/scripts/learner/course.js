@@ -56,8 +56,10 @@ function toggleMenuFold() {
     sidebar.classList.toggle('folded');
     if (sidebar.classList.contains('folded')) {
         btn.innerHTML = '&#10095;';
+        localStorage.setItem('menuFolded', 'true');
     } else {
         btn.innerHTML = '&#10094;';
+        localStorage.setItem('menuFolded', 'false');
     }
 
     setTimeout(function () {
@@ -69,3 +71,11 @@ function toggleMenuFold() {
         });
     }, 300);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var isFolded = localStorage.getItem('menuFolded') === 'true';
+    if (isFolded) {
+        document.getElementById('menu-sidebar').classList.add('folded');
+        document.getElementById('btn-menu').innerHTML = '&#10095;';
+    }
+});
