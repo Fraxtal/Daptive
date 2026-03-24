@@ -90,7 +90,7 @@ namespace Daptive
             }
             catch (Exception ex)
             {
-                lblMessage.Text = "Registration failed. Please try again.";
+                lblMessage.Text = "Registration failed. Please try again." + ex.Message;
                 lblMessage.Visible = true;
             }
         }

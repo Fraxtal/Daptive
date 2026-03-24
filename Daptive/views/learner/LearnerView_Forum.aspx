@@ -6,11 +6,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/learner.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/forum.css" runat="server"/>
     <title>CodeDaptive</title>
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/loader.min.js"></script>
+    <script src="../../scripts/learner/learner.js"></script>
     <script src="../../scripts/learner/forum.js"></script>
     <form id="form1" runat="server">
         <div class="top-bar">
@@ -34,7 +36,6 @@
             <div class="main-content">
                 <div class="header">
                     <h1>Learner Forum</h1>
-                    <button class="btn-new" type="button" onclick="showPost()">Create Post</button>
                 </div>
                 <br />
                 <div class="sub-header" style="">
@@ -44,6 +45,7 @@
                         search()"
                         placeholder="Search"></textarea>
                     <button class="btn-date" type="button" onclick="dateReverse(this)">Date <span class="toggle-icon" style="display: inline-block; font-weight: bold; transition: transform 0.5s ease;">&#9660;</span></button>
+                    <button class="btn-new" type="button" style="margin-left: auto" onclick="showPost()">Create Post</button>
                 </div>
                 <br />
                 <asp:Repeater ID="rptForum" runat="server">
@@ -76,12 +78,12 @@
                 </asp:Repeater>
             </div>
         </div>
-        <div class="post-box" id="post-box" style="display: none;">
-            <div class="post-content">
+        <div class="modal-overlay" id="post-box" style="display: none;">
+            <div class="modal-content">
                 <h3>Post a new discussion</h3>
                 <asp:TextBox ID="txtPostTitle" runat="server" CssClass="form-control" placeholder="Title" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
                 <asp:TextBox ID="txtPostContent" runat="server" TextMode="MultiLine" CssClass="form-control" placeholder="Content" style="margin-top: 10px; height: 100px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;" />
-                <div class="post-actions">
+                <div class="modal-actions">
                     <button class="btn-confirm" type="button" onclick="sendPost()">Send</button>
                     <button class="btn-cancel" type="button" onclick="hidePost()">Cancel</button>
                 </div>  

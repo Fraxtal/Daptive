@@ -95,10 +95,11 @@ namespace Daptive.views.learner
                 {
                     using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
                     {
+                        string pwd = BCrypt.Net.BCrypt.HashPassword(txtPassword.Text, workFactor: 12);
                         cmd.Parameters.AddWithValue("@Username", txtUsername.Text);
                         cmd.Parameters.AddWithValue("@FullName", txtFullName.Text);
                         cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
-                        cmd.Parameters.AddWithValue("@Password", txtPassword.Text);
+                        cmd.Parameters.AddWithValue("@Password", pwd);
                         cmd.Parameters.AddWithValue("@UsrId", curUserId);
                         conn.Open();
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -133,7 +134,7 @@ namespace Daptive.views.learner
             if (HttpContext.Current.Session["UserID"] == null)
                 return false;
             int userId = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
-            string query = "SELECT COUNT(1) FROM [user] WHERE UserID = @UsrId AND Password = @Pwd";
+            string query = "SELECT Password FROM [user] WHERE UserID = @UsrId";
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connStr))
@@ -141,10 +142,17 @@ namespace Daptive.views.learner
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@UsrId", userId);
-                        cmd.Parameters.AddWithValue("@Pwd", password.Trim());
                         conn.Open();
-                        int count = (int)cmd.ExecuteScalar();
-                        return count > 0;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            bool isPassed = false;
+                            if (reader.Read())
+                            {
+                                string pwd = reader.IsDBNull(0) ? "" : reader["Password"].ToString();
+                                isPassed = BCrypt.Net.BCrypt.Verify(password, pwd);
+                            }
+                            return isPassed;
+                        }
                     }
                 }
             }

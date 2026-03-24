@@ -5,12 +5,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/learner.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/profile.css" runat="server"/>
     <title>CodeDaptive - My Profile</title>
 </head>
 <body>
     <script src="../../scripts/learner/profile.js"></script>
+    <script src="../../scripts/learner/learner.js"></script>
     <form id="form1" runat="server">
         <div class="top-bar">
             <div class="logo-container">

@@ -6,11 +6,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/learner.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/course.css" runat="server"/>
     <title>CodeDaptive</title>
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/loader.min.js"></script>
+    <script src="../../scripts/learner/learner.js"></script>
     <script src="../../scripts/learner/course.js"></script>
     <form id="form1" runat="server">
         <div class="top-bar">

@@ -1,5 +1,4 @@
-﻿
-function toggleFocusMode(header, ForumId) {
+﻿function toggleFocusMode(header, ForumId) {
     var rowItem = header.closest('.row-item');
     var repliesContainer = document.getElementById('replies-' + ForumId);
     if (rowItem.classList.contains('active')) {
@@ -121,6 +120,9 @@ function search() {
 }
 
 function dateReverse(self) {
+    document.querySelectorAll('.row-item.active').forEach(function (e) {
+        e.classList.remove('active');
+    });
     self.classList.toggle('active');
     var icon = self.querySelector('.toggle-icon')
     if (self.classList.contains('active')) {

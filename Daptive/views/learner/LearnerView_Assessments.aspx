@@ -7,12 +7,13 @@
 <head runat="server">
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="~/styles/authentication/login.css" runat="server"/>
-    <link rel="stylesheet" href="~/styles/learner/dashboard.css" runat="server"/>
+    <link rel="stylesheet" href="~/styles/learner/learner.css" runat="server"/>
     <link rel="stylesheet" href="~/styles/learner/assessment.css" runat="server"/>
     <title></title>
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/loader.min.js"></script>
+    <script src="../../scripts/learner/learner.js"></script>
     <script src="../../scripts/learner/assessment.js"></script>
     <form id="form1" runat="server">
         <div>
@@ -23,7 +24,7 @@
                 <asp:Button ID="btnSignout" runat="server" class="btn-signout" UseSubmitBehavior="false" OnClick="btnsignout_click" style="margin-left: auto" Text="Logout"></asp:Button>
             </div>
             <div id="err-container"></div>
-             <div class="layout-container">
+            <div class="layout-container">
                  <div class="sidebar">
                      <ul>
                          <li><a href="LearnerView_Dashboard.aspx">Dashboard Overview</a></li>
