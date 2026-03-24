@@ -81,8 +81,8 @@ hr {
 }
 
 .btn-menu-trigger {
-    position: absolute;
-    right: -25px;
+    position: fixed;
+    left: 249px;
     top: 50%;
     transform: translateY(-50%);
     width: 25px;
@@ -99,12 +99,16 @@ hr {
     font-size: 1.5em;
     z-index: 100;
     font-weight: bold;
-    transition: background-color 0.2s, color 0.2s;
+    transition: left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.2s, color 0.2s;
 }
 
     .btn-menu-trigger:hover {
         background-color: #f0f4f8;
         color: var(--accent);
+    }
+
+    .sidebar.folded .btn-menu-trigger {
+        left: 0;
     }
 
 .main-content {
