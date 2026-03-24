@@ -9,6 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../../styles/dashboard.css" />
     <link rel="stylesheet" href="../../styles/lecturer/managequizzes.css" />
+    <style>
+      /* Scoped styles for the student results modal to make it larger and scrollable */
+      #studentModal .modal-content {
+        width: 94%;
+        max-width: 1100px;
+        max-height: 84vh; /* keep some space for viewport */
+        box-sizing: border-box;
+        overflow: hidden; /* keep header/footer visible */
+      }
+
+      /* Make the results area scrollable while keeping modal header/footer fixed */
+      #studentModal #studentResultBody {
+        max-height: calc(84vh - 120px); /* reserve space for title/footer */
+        overflow-y: auto;
+        padding-right: 12px; /* avoid content hiding behind scrollbar */
+      }
+
+      /* Ensure table inside modal expands to container width */
+      #studentModal table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      /* Optional: improve readability inside modal */
+      #studentModal .modal-title { display: block; margin-bottom: 8px; }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">

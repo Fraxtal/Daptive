@@ -124,78 +124,55 @@ namespace Daptive.views.lecturer
                 {
                     conn.Open();
 
-                    // Total students
-                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM [user] WHERE Role = 'Student'", conn))
+                    // Total students (users with Role = 'Student')
+                    int totalStudentsCount = 0;
+                    using (var cmd = new System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM [user] WHERE LOWER(Role) = 'student'", conn))
                     {
                         var val = cmd.ExecuteScalar();
-                        totalStudents.InnerText = val != null ? val.ToString() : "0";
+                        totalStudentsCount = val != null && val != DBNull.Value ? Convert.ToInt32(val) : 0;
+                        totalStudents.InnerText = totalStudentsCount.ToString();
                     }
 
-                    // Quizzes created by this lecturer (assuming quiz table has a CreatedBy or LecturerId column)
-                    // Fallback to total quizzes if no lecturer mapping
-                    string quizSql = "SELECT COUNT(*) FROM [quiz]";
-                    try
+                    // Total quizzes
+                    using (var cmdQ = new System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM [quiz]", conn))
                     {
-                        using (var testCmd = new System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'quiz' AND COLUMN_NAME = 'CreatedBy'", conn))
+                        var qv = cmdQ.ExecuteScalar();
+                        quizzesCreated.InnerText = qv != null && qv != DBNull.Value ? qv.ToString() : "0";
+                    }
+
+                    // Average score across all entries in `score` table
+                    double avgScoreVal = -1;
+                    using (var cmdS = new System.Data.SqlClient.SqlCommand("SELECT AVG(CAST(Score AS FLOAT)) FROM [score]", conn))
+                    {
+                        var s = cmdS.ExecuteScalar();
+                        if (s != null && s != DBNull.Value)
                         {
-                            var has = Convert.ToInt32(testCmd.ExecuteScalar());
-                            if (has > 0 && Session["UserID"] != null)
-                                quizSql = "SELECT COUNT(*) FROM [quiz] WHERE CreatedBy = @UserID";
+                            avgScoreVal = Convert.ToDouble(s);
                         }
                     }
-                    catch { }
 
-                    using (var cmd2 = new System.Data.SqlClient.SqlCommand(quizSql, conn))
+                    // Completion rate: distinct users in `score` divided by total students
+                    int distinctUsersWithScores = 0;
+                    using (var cmdU = new System.Data.SqlClient.SqlCommand("SELECT COUNT(DISTINCT UserId) FROM [score]", conn))
                     {
-                        if (quizSql.Contains("@UserID") && Session["UserID"] != null)
-                            cmd2.Parameters.AddWithValue("@UserID", Convert.ToInt32(Session["UserID"]));
-                        quizzesCreated.InnerText = cmd2.ExecuteScalar().ToString();
+                        var u = cmdU.ExecuteScalar();
+                        distinctUsersWithScores = u != null && u != DBNull.Value ? Convert.ToInt32(u) : 0;
                     }
 
-                    // Average completion and score across quizzes
-                    // These tables may vary; attempt to compute from score/attempt tables if present
-                    double avgCompletionVal = 0.0;
-                    double avgScoreVal = 0.0;
-                    bool computed = false;
-                    try
+                    if (totalStudentsCount > 0)
                     {
-                        string attemptSql = @"SELECT AVG(CAST(Completed AS FLOAT)) FROM [attempt]"; // Example
-                        using (var cmd3 = new System.Data.SqlClient.SqlCommand(attemptSql, conn))
-                        {
-                            var a = cmd3.ExecuteScalar();
-                            if (a != null && a != DBNull.Value)
-                            {
-                                avgCompletionVal = Convert.ToDouble(a) * 100.0;
-                                computed = true;
-                            }
-                        }
-
-                        string scoreSql = @"SELECT AVG(CAST(Score AS FLOAT)) FROM [score]";
-                        using (var cmd4 = new System.Data.SqlClient.SqlCommand(scoreSql, conn))
-                        {
-                            var s = cmd4.ExecuteScalar();
-                            if (s != null && s != DBNull.Value)
-                            {
-                                avgScoreVal = Convert.ToDouble(s);
-                                computed = true;
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        // ignore if tables not present
-                    }
-
-                    if (computed)
-                    {
-                        avgCompletion.InnerText = Math.Round(avgCompletionVal, 0) + "%";
-                        avgScore.InnerText = Math.Round(avgScoreVal, 0) + "%";
+                        var completionPct = Math.Round((distinctUsersWithScores * 100.0) / totalStudentsCount, 0);
+                        avgCompletion.InnerText = completionPct + "%";
                     }
                     else
                     {
                         avgCompletion.InnerText = "--";
-                        avgScore.InnerText = "--";
                     }
+
+                    if (avgScoreVal >= 0)
+                        avgScore.InnerText = Math.Round(avgScoreVal, 0) + "%";
+                    else
+                        avgScore.InnerText = "--";
                 }
             }
             catch (Exception ex)
