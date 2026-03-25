@@ -147,10 +147,9 @@ namespace Daptive.views.learner
             }
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public static List<ForumReply> GetRepliesAJAX(int ForumId)
         {
-            int userId = HttpContext.Current.Session["UserId"] != null ? Convert.ToInt32(HttpContext.Current.Session["UserId"]) : 1;
             List<ForumReply> rply = new List<ForumReply>();
             try
             {
