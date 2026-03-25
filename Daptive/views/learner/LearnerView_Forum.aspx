@@ -44,7 +44,9 @@
                         this.style.height = this.scrollHeight + 'px';
                         search()"
                         placeholder="Search"></textarea>
-                    <button class="btn-date" type="button" onclick="dateReverse(this)">Date <span class="toggle-icon" style="display: inline-block; font-weight: bold; transition: transform 0.5s ease;">&#9660;</span></button>
+                    <button class="btn-date" type="button" onclick="dateReverse(this)">
+                        Date <span class="toggle-icon" style="display: inline-block; font-weight: bold; transition: transform 0.5s ease;">&#9660;</span>
+                    </button>
                     <button class="btn-new" type="button" style="margin-left: auto" onclick="showPost()">Create Post</button>
                 </div>
                 <br />
