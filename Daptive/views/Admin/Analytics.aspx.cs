@@ -10,14 +10,11 @@ namespace Daptive.views.Admin
         private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
-            //{
-            //    Response.Redirect("~/Login.aspx");
-            //    return;
-            //}
-            Session["Role"] = "admin";
-            Session["Username"] = "Admin";
-            Session["UserID"] = 1;
+            if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 string username = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
@@ -28,6 +25,11 @@ namespace Daptive.views.Admin
                 LoadPlatformSummary();
             }
         }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
         private void LoadTotalCounts()
         {
             try
@@ -35,7 +37,7 @@ namespace Daptive.views.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT (SELECT COUNT(*) FROM [user]) AS TotalUsers, (SELECT COUNT(*) FROM [course]) AS TotalCourses, (SELECT COUNT(*) FROM [question]) AS TotalQuestions, (SELECT COUNT(*) FROM [testcase]) AS TotalTestCases";
+                    string sql = @"SELECT (SELECT COUNT(*) FROM [user]) AS TotalUsers, (SELECT COUNT(*) FROM [course]) AS TotalCourses, (SELECT COUNT(*) FROM [quiz]) AS TotalQuestions, (SELECT COUNT(*) FROM [testcase]) AS TotalTestCases";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     using (SqlDataReader r = cmd.ExecuteReader())
                     {
@@ -54,7 +56,6 @@ namespace Daptive.views.Admin
                 System.Diagnostics.Debug.WriteLine("LoadTotalCounts error: " + ex.Message);
             }
         }
-
         private void LoadUserBreakdown()
         {
             try
@@ -62,7 +63,7 @@ namespace Daptive.views.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT COUNT(*) AS TotalUsers, SUM(CASE WHEN Role = 'Student' THEN 1 ELSE 0 END) AS Students, SUM(CASE WHEN Role = 'Lecturer' THEN 1 ELSE 0 END) AS Lecturers, SUM(CASE WHEN Role = 'admin'    THEN 1 ELSE 0 END) AS Admins FROM [user]";
+                    string sql = @"SELECT COUNT(*) AS TotalUsers, SUM(CASE WHEN Role = 'Student' THEN 1 ELSE 0 END) AS Students, SUM(CASE WHEN Role = 'Lecturer' THEN 1 ELSE 0 END) AS Lecturers, SUM(CASE WHEN Role = 'admin' THEN 1 ELSE 0 END) AS Admins FROM [user]";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     using (SqlDataReader r = cmd.ExecuteReader())
                     {
@@ -109,7 +110,7 @@ namespace Daptive.views.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT (SELECT COUNT(*) FROM [user]) AS TotalUsers, (SELECT COUNT(*) FROM [course]) AS TotalCourses, (SELECT COUNT(*) FROM [topic]) AS TotalTopics, (SELECT COUNT(*) FROM [question]) AS TotalQuestions, (SELECT COUNT(*) FROM [testcase]) AS TotalTestCases, (SELECT COUNT(*) FROM [score]) AS TotalScores";
+                    string sql = @"SELECT (SELECT COUNT(*) FROM [user]) AS TotalUsers, (SELECT COUNT(*) FROM [course]) AS TotalCourses, (SELECT COUNT(*) FROM [topic]) AS TotalTopics, (SELECT COUNT(*) FROM [quiz]) AS TotalQuestions, (SELECT COUNT(*) FROM [testcase]) AS TotalTestCases, (SELECT COUNT(*) FROM [score]) AS TotalScores";
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     using (SqlDataReader r = cmd.ExecuteReader())
                     {

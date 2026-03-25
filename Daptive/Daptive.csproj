@@ -90,7 +90,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\dbms.mdf" />
+    <Content Include="App_Data\CodeDaptiveDB.mdf" />
+    <Content Include="App_Data\CodeDaptiveDB_log.ldf">
+      <DependentUpon>CodeDaptiveDB.mdf</DependentUpon>
+    </Content>
     <Content Include="resources\logo.png" />
     <Content Include="scripts\learner\assessment.js" />
     <Content Include="scripts\learner\course.js" />
@@ -135,13 +138,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="views\Admin\AdminMaster.master.cs">
-      <DependentUpon>AdminMaster.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="views\Admin\AdminMaster.master.designer.cs">
-      <DependentUpon>AdminMaster.master</DependentUpon>
-    </Compile>
     <Compile Include="views\Admin\AdminProfile.aspx.cs">
       <DependentUpon>AdminProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -292,7 +288,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="views\Admin\AdminMaster.master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -307,9 +302,7 @@
       <Name>CodeRunner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

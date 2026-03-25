@@ -11,14 +11,11 @@ namespace Daptive.Admin
         private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
-            //{
-            //    Response.Redirect("~/Login.aspx");
-            //    return;
-            //}
-            Session["Role"] = "admin";
-            Session["Username"] = "Bobby67";
-            Session["UserID"] = 1;
+            if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 string username = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
@@ -28,6 +25,11 @@ namespace Daptive.Admin
                 LoadCourseChart();
                 LoadRecentUsers();
             }
+        }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
         private void LoadStatCards()
         {
@@ -66,7 +68,7 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT TOP 5 c.Name AS CourseName, COUNT(s.ScoreId) AS ActivityCount FROM [course] c LEFT JOIN [question] q ON c.CourseId = q.QuestionId LEFT JOIN [score] s ON q.QuestionId = s.QuestionId GROUP BY c.CourseId, c.Name ORDER BY ActivityCount DESC";
+                    string sql = @"SELECT TOP 5 q.Quiz AS CourseName, COUNT(s.ScoreId) AS ActivityCount FROM [quiz] q LEFT JOIN [score] s ON q.QuizId = s.QuizId GROUP BY q.QuizId, q.Quiz ORDER BY ActivityCount DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
                     {
@@ -74,7 +76,9 @@ namespace Daptive.Admin
                     }
                     if (dt.Rows.Count == 0)
                     {
-                        string fallback = "SELECT TOP 5 Name AS CourseName, 0 AS ActivityCount FROM [course]";
+                        dt.Clear();
+                        dt.Columns.Clear();
+                        string fallback = @"SELECT TOP 5 Name AS CourseName, 0 AS ActivityCount FROM [course] ORDER BY CourseId DESC";
                         using (SqlDataAdapter da2 = new SqlDataAdapter(fallback, conn))
                         {
                             da2.Fill(dt);

@@ -97,7 +97,9 @@
                             <div class="admin-role">Super Admin</div>
                         </div>
                     </a>
-                    <a href="../authentication/Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
+                    <asp:LinkButton ID="btnSignOut" runat="server" CssClass="logout-link"
+                        OnClientClick="return confirm('Sign out?');"
+                        OnClick="btnSignOut_Click">Sign out</asp:LinkButton>
                 </div>
             </aside>
 

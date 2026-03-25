@@ -23,7 +23,13 @@ namespace Daptive.Admin
                 litInitials.Text = GetInitials(username);
                 LoadCourses();
                 LoadTopics();
+                PopulateTopicDropDown();
             }
+        }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
         private void LoadCourses()
         {
@@ -32,23 +38,20 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT c.CourseId, c.Name, c.Content, c.DefaultCode, ISNULL(t.Topic, 'No Topic') AS TopicName FROM [course] c LEFT JOIN [topic] t ON c.TopicId = t.TopicId ORDER BY c.CourseId DESC";
+                    const string sql = @"SELECT c.CourseId, c.Name, c.Content, c.DefaultCode, ISNULL(t.Topic, 'No Topic') AS TopicName FROM [course] c LEFT JOIN [topic] t ON c.TopicId = t.TopicId ORDER BY c.CourseId DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
                     {
                         da.Fill(dt);
                     }
                     litCourseCount.Text = dt.Rows.Count.ToString();
-                    if (dt.Rows.Count == 0)
+                    lblNoCourses.Visible = dt.Rows.Count == 0;
+                    rptCourses.Visible = dt.Rows.Count > 0;
+                    if (dt.Rows.Count > 0)
                     {
-                        lblNoCourses.Visible = true;
-                        rptCourses.Visible   = false;
-                        return;
+                        rptCourses.DataSource = dt;
+                        rptCourses.DataBind();
                     }
-                    lblNoCourses.Visible  = false;
-                    rptCourses.Visible    = true;
-                    rptCourses.DataSource = dt;
-                    rptCourses.DataBind();
                 }
             }
             catch (Exception ex)
@@ -63,28 +66,142 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT t.TopicId, t.Topic, t.Description, COUNT(c.CourseId) AS CourseCount FROM [topic] t LEFT JOIN [course] c ON t.TopicId = c.TopicId GROUP BY t.TopicId, t.Topic, t.Description ORDER BY t.TopicId DESC";
+                    const string sql = @"SELECT t.TopicId, t.Topic, CAST(t.Description AS nvarchar(500)) AS Description, COUNT(c.CourseId) AS CourseCount FROM [topic] t LEFT JOIN [course] c ON t.TopicId = c.TopicId GROUP BY t.TopicId, t.Topic, CAST(t.Description AS nvarchar(500)) ORDER BY t.TopicId DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
                     {
                         da.Fill(dt);
                     }
                     litTopicCount.Text = dt.Rows.Count.ToString();
-                    if (dt.Rows.Count == 0)
+                    lblNoTopics.Visible = dt.Rows.Count == 0;
+                    rptTopics.Visible = dt.Rows.Count > 0;
+                    if (dt.Rows.Count > 0)
                     {
-                        lblNoTopics.Visible = true;
-                        rptTopics.Visible   = false;
-                        return;
+                        rptTopics.DataSource = dt;
+                        rptTopics.DataBind();
                     }
-                    lblNoTopics.Visible  = false;
-                    rptTopics.Visible    = true;
-                    rptTopics.DataSource = dt;
-                    rptTopics.DataBind();
                 }
             }
             catch (Exception ex)
             {
                 ShowError("Could not load topics: " + ex.Message);
+            }
+        }
+        private void PopulateTopicDropDown()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connStr))
+                {
+                    conn.Open();
+                    const string sql = "SELECT TopicId, Topic FROM [topic] ORDER BY Topic";
+                    DataTable dt = new DataTable();
+                    using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+                    {
+                        da.Fill(dt);
+                    }
+                    ddlCourseTopic.Items.Clear();
+                    ddlCourseTopic.Items.Add(new ListItem("-- Select a topic --", ""));
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        ddlCourseTopic.Items.Add(new ListItem(row["Topic"].ToString(), row["TopicId"].ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Could not load topics for dropdown: " + ex.Message);
+            }
+        }
+        protected void btnAddCourse_Click(object sender, EventArgs e)
+        {
+            string name = txtCourseName.Text.Trim();
+            string content = txtCourseContent.Text.Trim();
+            string code = txtDefaultCode.Text.Trim();
+            string topicVal = ddlCourseTopic.SelectedValue;
+            if (string.IsNullOrEmpty(name))
+            {
+                ShowError("Course name is required.");
+                return;
+            }
+            if (string.IsNullOrEmpty(topicVal))
+            {
+                ShowError("Please select a topic for this course.");
+                return;
+            }
+            int topicId = Convert.ToInt32(topicVal);
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connStr))
+                {
+                    conn.Open();
+                    const string sql = @"INSERT INTO [course] (TopicId, Name, Content, DefaultCode) VALUES (@TopicId, @Name, @Content, @Code)";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TopicId", topicId);
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        cmd.Parameters.AddWithValue("@Content", string.IsNullOrEmpty(content) ? (object)DBNull.Value : content);
+                        cmd.Parameters.AddWithValue("@Code", string.IsNullOrEmpty(code) ? (object)DBNull.Value : code);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                txtCourseName.Text = "";
+                txtCourseContent.Text = "";
+                txtDefaultCode.Text = "";
+                ShowSuccess("Course added successfully.");
+                LoadCourses();
+                LoadTopics();
+                PopulateTopicDropDown();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Could not add course: " + ex.Message);
+            }
+        }
+        protected void btnAddTopic_Click(object sender, EventArgs e)
+        {
+            string topicName = txtTopicName.Text.Trim();
+            string topicDesc = txtTopicDesc.Text.Trim();
+            if (string.IsNullOrEmpty(topicName))
+            {
+                ShowError("Topic name is required.");
+                return;
+            }
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connStr))
+                {
+                    conn.Open();
+                    const string checkSql = "SELECT COUNT(1) FROM [topic] WHERE Topic = @Topic";
+                    using (SqlCommand chk = new SqlCommand(checkSql, conn))
+                    {
+                        chk.Parameters.AddWithValue("@Topic", topicName);
+                        int exists = (int)chk.ExecuteScalar();
+                        if (exists > 0)
+                        {
+                            ShowError("A topic with that name already exists.");
+                            return;
+                        }
+                    }
+                    const string sql = @"INSERT INTO [topic] (Topic, Description) VALUES (@Topic, @Desc)";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Topic", topicName);
+                        cmd.Parameters.AddWithValue("@Desc", string.IsNullOrEmpty(topicDesc) ? (object)DBNull.Value : topicDesc);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                txtTopicName.Text = "";
+                txtTopicDesc.Text = "";
+                ShowSuccess("Topic added successfully.");
+                LoadCourses();
+                LoadTopics();
+                PopulateTopicDropDown();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Could not add topic: " + ex.Message);
             }
         }
         protected void rptCourses_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -99,22 +216,17 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string deleteScores = @"DELETE FROM [score] WHERE QuestionId IN (SELECT QuestionId FROM [question] WHERE QuestionId = @CourseId)";
-                    using (SqlCommand cmd = new SqlCommand(deleteScores, conn))
+                    const string sql = "DELETE FROM [course] WHERE CourseId = @CourseId";
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@CourseId", courseID);
                         cmd.ExecuteNonQuery();
-                    }
-                    string deleteCourse = "DELETE FROM [course] WHERE CourseId = @CourseId";
-                    using (SqlCommand cmd2 = new SqlCommand(deleteCourse, conn))
-                    {
-                        cmd2.Parameters.AddWithValue("@CourseId", courseID);
-                        cmd2.ExecuteNonQuery();
                     }
                 }
                 ShowSuccess("Course deleted successfully.");
                 LoadCourses();
                 LoadTopics();
+                PopulateTopicDropDown();
             }
             catch (Exception ex)
             {
@@ -133,14 +245,14 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string unlinkCourses = "UPDATE [course] SET TopicId = NULL WHERE TopicId = @TopicId";
-                    using (SqlCommand cmd = new SqlCommand(unlinkCourses, conn))
+                    const string unlinkSql = "UPDATE [course] SET TopicId = NULL WHERE TopicId = @TopicId";
+                    using (SqlCommand cmd = new SqlCommand(unlinkSql, conn))
                     {
                         cmd.Parameters.AddWithValue("@TopicId", topicID);
                         cmd.ExecuteNonQuery();
                     }
-                    string deleteTopic = "DELETE FROM [topic] WHERE TopicId = @TopicId";
-                    using (SqlCommand cmd2 = new SqlCommand(deleteTopic, conn))
+                    const string deleteSql = "DELETE FROM [topic] WHERE TopicId = @TopicId";
+                    using (SqlCommand cmd2 = new SqlCommand(deleteSql, conn))
                     {
                         cmd2.Parameters.AddWithValue("@TopicId", topicID);
                         cmd2.ExecuteNonQuery();
@@ -149,6 +261,7 @@ namespace Daptive.Admin
                 ShowSuccess("Topic deleted successfully.");
                 LoadCourses();
                 LoadTopics();
+                PopulateTopicDropDown();
             }
             catch (Exception ex)
             {
@@ -157,14 +270,14 @@ namespace Daptive.Admin
         }
         private void ShowSuccess(string msg)
         {
-            lblSuccess.Text    = msg;
+            lblSuccess.Text = msg;
             lblSuccess.Visible = true;
-            lblError.Visible   = false;
+            lblError.Visible = false;
         }
         private void ShowError(string msg)
         {
-            lblError.Text      = msg;
-            lblError.Visible   = true;
+            lblError.Text = msg;
+            lblError.Visible = true;
             lblSuccess.Visible = false;
         }
         private static string GetInitials(string name)

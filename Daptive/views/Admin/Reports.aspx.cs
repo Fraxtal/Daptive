@@ -26,6 +26,11 @@ namespace Daptive.views.Admin
                 LoadQuestions();
             }
         }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
+        }
         private void LoadScores()
         {
             try
@@ -33,7 +38,7 @@ namespace Daptive.views.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT s.ScoreId, s.Score, u.FullName, u.Username, q.Question FROM [score] s LEFT JOIN [user] u ON s.UserId = u.UserID LEFT JOIN [question] q ON s.QuestionId = q.QuestionId ORDER BY s.ScoreId DESC";
+                    string sql = @"SELECT s.ScoreId, s.Score, u.FullName, u.Username, q.Quiz AS Question FROM [score] s LEFT JOIN [user] u  ON s.UserId  = u.UserID LEFT JOIN [quiz] q  ON s.QuizId  = q.QuizId ORDER BY s.ScoreId DESC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
                     {
@@ -50,18 +55,7 @@ namespace Daptive.views.Admin
                     foreach (DataRow row in dt.Rows)
                     {
                         int score = row["Score"] != DBNull.Value ? Convert.ToInt32(row["Score"]) : 0;
-                        if (score >= 80)
-                        {
-                            row["ScoreClass"] = "score-high";
-                        }
-                        else if (score >= 50)
-                        {
-                            row["ScoreClass"] = "score-mid";
-                        }
-                        else
-                        {
-                            row["ScoreClass"] = "score-low";
-                        }
+                        row["ScoreClass"] = score >= 80 ? "score-high" : score >= 50 ? "score-mid" : "score-low";
                     }
                     lblNoScores.Visible = false;
                     rptScores.Visible = true;
@@ -149,12 +143,12 @@ namespace Daptive.views.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string sql = @"SELECT q.QuestionId, q.Question, COUNT(t.TestCaseId) AS TestCaseCount FROM [question] q LEFT JOIN [testcase] t ON q.QuestionId = t.QuestionId GROUP BY q.QuestionId, q.Question ORDER BY q.QuestionId ASC";
+                    string sql = @"SELECT q.QuizId, q.Quiz, COUNT(t.TestCaseId) AS TestCaseCount FROM [quiz] q LEFT JOIN [testcase] t ON q.QuizId = t.QuizId GROUP BY q.QuizId, q.Quiz ORDER BY q.QuizId ASC";
                     DataTable dt = new DataTable();
                     using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
                     {
                         da.Fill(dt);
-                    }                
+                    }
                     litQuestionCount.Text = dt.Rows.Count.ToString();
                     if (dt.Rows.Count == 0)
                     {

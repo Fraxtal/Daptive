@@ -11,11 +11,11 @@ namespace Daptive.Admin
         private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
-            //{
-            //    Response.Redirect("~/Login.aspx");
-            //    return;
-            //}
+            if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 string username = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
@@ -23,6 +23,11 @@ namespace Daptive.Admin
                 litInitials.Text = GetInitials(username);
                 LoadUsers("", "");
             }
+        }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
         private void LoadUsers(string search, string role)
         {
@@ -145,7 +150,8 @@ namespace Daptive.Admin
                             cmd.Parameters.AddWithValue("@Username", username);
                             cmd.Parameters.AddWithValue("@FullName", fullName);
                             cmd.Parameters.AddWithValue("@Email", email);
-                            cmd.Parameters.AddWithValue("@Password", password);
+                            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, workFactor: 12);
+                            cmd.Parameters.AddWithValue("@Password", hashedPassword);
                             cmd.Parameters.AddWithValue("@Role", role);
                             cmd.ExecuteNonQuery();
                         }
@@ -184,7 +190,8 @@ namespace Daptive.Admin
                                 cmd.Parameters.AddWithValue("@Username", username);
                                 cmd.Parameters.AddWithValue("@Email", email);
                                 cmd.Parameters.AddWithValue("@Role", role);
-                                cmd.Parameters.AddWithValue("@Password", password);
+                                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, workFactor: 12);
+                                cmd.Parameters.AddWithValue("@Password", hashedPassword);
                                 cmd.Parameters.AddWithValue("@UserID", userID);
                                 cmd.ExecuteNonQuery();
                             }

@@ -97,7 +97,9 @@
                             <div class="admin-role">Super Admin</div>
                         </div>
                     </a>
-                    <a href="../authentication/Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
+                    <asp:LinkButton ID="btnSignOut" runat="server" CssClass="logout-link"
+                        OnClientClick="return confirm('Sign out?');"
+                        OnClick="btnSignOut_Click">Sign out</asp:LinkButton>
                 </div>
             </aside>
 
@@ -116,7 +118,27 @@
                     <asp:Label ID="lblSuccess" runat="server" CssClass="alert alert-success" Visible="false" />
                     <asp:Label ID="lblError"   runat="server" CssClass="alert alert-error"   Visible="false" />
 
-                    <!-- Questions Table -->
+                    <!-- ADD QUESTION FORM -->
+                    <div class="card" style="margin-bottom:28px;">
+                        <div class="card-header">
+                            <span class="card-title">Add a question</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group" style="margin-bottom:14px;">
+                                <label class="form-label">Question text <span class="req">*</span></label>
+                                <asp:TextBox ID="txtQuestion" runat="server"
+                                    CssClass="form-input form-textarea"
+                                    TextMode="MultiLine" Rows="3"
+                                    placeholder="Describe what the student must write code to solve…" />
+                            </div>
+                            <div style="display:flex; justify-content:flex-end;">
+                                <asp:Button ID="btnAddQuestion" runat="server" Text="Add question"
+                                    CssClass="btn btn-primary" OnClick="btnAddQuestion_Click" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QUESTIONS TABLE -->
                     <div class="card" style="margin-bottom:32px;">
                         <div class="card-header">
                             <span class="card-title">
@@ -170,7 +192,7 @@
                             style="display:block; padding:20px; font-size:13px; color:var(--text-light);" />
                     </div>
 
-                    <!-- Test Cases Section -->
+                    <!-- ADD TEST CASE FORM -->
                     <div style="margin-bottom:16px;">
                         <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--text-dark);">
                             Test Cases
@@ -180,6 +202,43 @@
                         </div>
                     </div>
 
+                    <div class="card" style="margin-bottom:28px;">
+                        <div class="card-header">
+                            <span class="card-title">Add a test case</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-grid">
+
+                                <div class="form-group form-full">
+                                    <label class="form-label">Question <span class="req">*</span></label>
+                                    <asp:DropDownList ID="ddlTestCaseQuestion" runat="server" CssClass="form-input" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Test case input <span class="req">*</span></label>
+                                    <asp:TextBox ID="txtTestCase" runat="server"
+                                        CssClass="form-input form-code"
+                                        TextMode="MultiLine" Rows="3"
+                                        placeholder="e.g. add(2, 3)" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Expected output <span class="req">*</span></label>
+                                    <asp:TextBox ID="txtExpectedResult" runat="server"
+                                        CssClass="form-input form-code"
+                                        TextMode="MultiLine" Rows="3"
+                                        placeholder="e.g. 5" />
+                                </div>
+
+                            </div>
+                            <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+                                <asp:Button ID="btnAddTestCase" runat="server" Text="Add test case"
+                                    CssClass="btn btn-primary" OnClick="btnAddTestCase_Click" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TEST CASES TABLE -->
                     <div class="card">
                         <div class="card-header">
                             <span class="card-title">
@@ -241,6 +300,47 @@
     </form>
 
     <style>
+        /* Form layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 20px;
+        }
+        .form-full  { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+        .req { color: var(--error); }
+        .form-input {
+            padding: 8px 11px;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-white);
+            border: 0.5px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dark);
+            transition: border-color 0.15s, box-shadow 0.15s;
+            width: 100%;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 3px rgba(45,74,62,0.08);
+        }
+        .form-textarea { resize: vertical; }
+        .form-code {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+        select.form-input { cursor: pointer; }
+
+        /* Table helpers */
         .code-preview {
             font-family: 'DM Mono', monospace;
             font-size: 11px;

@@ -97,7 +97,9 @@
                             <div class="admin-role">Super Admin</div>
                         </div>
                     </a>
-                    <a href="../authentication/Login.aspx" class="logout-link" onclick="return confirm('Sign out?')">Sign out</a>
+                    <asp:LinkButton ID="btnSignOut" runat="server" CssClass="logout-link"
+                        OnClientClick="return confirm('Sign out?');"
+                        OnClick="btnSignOut_Click">Sign out</asp:LinkButton>
                 </div>
             </aside>
 
@@ -116,7 +118,48 @@
                     <asp:Label ID="lblSuccess" runat="server" CssClass="alert alert-success" Visible="false" />
                     <asp:Label ID="lblError"   runat="server" CssClass="alert alert-error"   Visible="false" />
 
-                    <!-- Courses Table -->
+                    <!-- ADD COURSE FORM -->
+                    <div class="card" style="margin-bottom:28px;">
+                        <div class="card-header">
+                            <span class="card-title">Add a course</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-grid">
+
+                                <div class="form-group">
+                                    <label class="form-label">Course name <span class="req">*</span></label>
+                                    <asp:TextBox ID="txtCourseName" runat="server" CssClass="form-input"
+                                        placeholder="e.g. Introduction to Variables" MaxLength="255" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Topic <span class="req">*</span></label>
+                                    <asp:DropDownList ID="ddlCourseTopic" runat="server" CssClass="form-input" />
+                                </div>
+
+                                <div class="form-group form-full">
+                                    <label class="form-label">Content</label>
+                                    <asp:TextBox ID="txtCourseContent" runat="server" CssClass="form-input form-textarea"
+                                        TextMode="MultiLine" Rows="4"
+                                        placeholder="Lesson description, learning objectives, theory…" />
+                                </div>
+
+                                <div class="form-group form-full">
+                                    <label class="form-label">Default starter code</label>
+                                    <asp:TextBox ID="txtDefaultCode" runat="server" CssClass="form-input form-code"
+                                        TextMode="MultiLine" Rows="4"
+                                        placeholder="// starter code shown to the student" />
+                                </div>
+
+                            </div>
+                            <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+                                <asp:Button ID="btnAddCourse" runat="server" Text="Add course"
+                                    CssClass="btn btn-primary" OnClick="btnAddCourse_Click" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COURSES TABLE -->
                     <div class="card" style="margin-bottom:32px;">
                         <div class="card-header">
                             <span class="card-title">
@@ -170,7 +213,7 @@
                             style="display:block; padding:20px; font-size:13px; color:var(--text-light);" />
                     </div>
 
-                    <!-- Topics Section -->
+                    <!-- ADD TOPIC FORM -->
                     <div style="margin-bottom:16px;">
                         <div style="font-family:'DM Serif Display',serif; font-size:18px; color:var(--text-dark);">Topics</div>
                         <div style="font-size:11px; color:var(--text-light); font-family:'DM Mono',monospace; margin-top:2px;">
@@ -178,6 +221,34 @@
                         </div>
                     </div>
 
+                    <div class="card" style="margin-bottom:28px;">
+                        <div class="card-header">
+                            <span class="card-title">Add a topic</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-grid">
+
+                                <div class="form-group">
+                                    <label class="form-label">Topic name <span class="req">*</span></label>
+                                    <asp:TextBox ID="txtTopicName" runat="server" CssClass="form-input"
+                                        placeholder="e.g. Control Flow" MaxLength="255" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <asp:TextBox ID="txtTopicDesc" runat="server" CssClass="form-input"
+                                        placeholder="Short description of this topic" MaxLength="500" />
+                                </div>
+
+                            </div>
+                            <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+                                <asp:Button ID="btnAddTopic" runat="server" Text="Add topic"
+                                    CssClass="btn btn-primary" OnClick="btnAddTopic_Click" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TOPICS TABLE -->
                     <div class="card">
                         <div class="card-header">
                             <span class="card-title">
@@ -237,6 +308,47 @@
     </form>
 
     <style>
+        /* Form layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 20px;
+        }
+        .form-full  { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+        .req { color: var(--error); }
+        .form-input {
+            padding: 8px 11px;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-white);
+            border: 0.5px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dark);
+            transition: border-color 0.15s, box-shadow 0.15s;
+            width: 100%;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 3px rgba(45,74,62,0.08);
+        }
+        .form-textarea { resize: vertical; }
+        .form-code {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+        select.form-input { cursor: pointer; }
+
+        /* Table helpers */
         .td-clamp {
             max-width: 240px;
             overflow: hidden;
@@ -265,4 +377,3 @@
     </style>
 </body>
 </html>
-

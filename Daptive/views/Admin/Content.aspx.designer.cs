@@ -42,6 +42,15 @@ namespace Daptive.Admin
         protected global::System.Web.UI.WebControls.Literal litUsername;
 
         /// <summary>
+        /// btnSignOut control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSignOut;
+
+        /// <summary>
         /// lblSuccess control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,24 @@ namespace Daptive.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// txtQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQuestion;
+
+        /// <summary>
+        /// btnAddQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddQuestion;
 
         /// <summary>
         /// litQuestionCount control.
@@ -85,6 +112,42 @@ namespace Daptive.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNoQuestions;
+
+        /// <summary>
+        /// ddlTestCaseQuestion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTestCaseQuestion;
+
+        /// <summary>
+        /// txtTestCase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTestCase;
+
+        /// <summary>
+        /// txtExpectedResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtExpectedResult;
+
+        /// <summary>
+        /// btnAddTestCase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddTestCase;
 
         /// <summary>
         /// litTestCaseCount control.

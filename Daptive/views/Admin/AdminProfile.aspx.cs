@@ -9,15 +9,20 @@ namespace Daptive.Admin
         private readonly string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
-            //{
-            //    Response.Redirect("~/Login.aspx");
-            //    return;
-            //}
+            if (Session["Role"] == null || Session["Role"].ToString().ToLower() != "admin")
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 LoadProfile();
             }
+        }
+        protected void btnSignOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/views/authentication/Login.aspx");
         }
         private void LoadProfile()
         {
@@ -127,21 +132,23 @@ namespace Daptive.Admin
                 using (SqlConnection conn = new SqlConnection(_connStr))
                 {
                     conn.Open();
-                    string verifyCurrentPassword = "SELECT COUNT(1) FROM [user] WHERE UserID = @UserID AND Password = @Password";
-                    using (SqlCommand chk = new SqlCommand(verifyCurrentPassword, conn))
+                    string fetchHash = "SELECT Password FROM [user] WHERE UserID = @UserID";
+                    string storedHash = "";
+                    using (SqlCommand chk = new SqlCommand(fetchHash, conn))
                     {
                         chk.Parameters.AddWithValue("@UserID", userID);
-                        chk.Parameters.AddWithValue("@Password", currentPw);
-                        if ((int)chk.ExecuteScalar() == 0)
-                        {
-                            ShowError("Current password is incorrect.");
-                            return;
-                        }
+                        storedHash = chk.ExecuteScalar().ToString();
                     }
+                    if (!BCrypt.Net.BCrypt.Verify(currentPw, storedHash))
+                    {
+                        ShowError("Current password is incorrect.");
+                        return;
+                    }
+                    string newHashed = BCrypt.Net.BCrypt.HashPassword(newPw, workFactor: 12);
                     string updateNewPassword = "UPDATE [user] SET Password = @Password WHERE UserID = @UserID";
                     using (SqlCommand cmd = new SqlCommand(updateNewPassword, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Password", newPw);
+                        cmd.Parameters.AddWithValue("@Password", newHashed);
                         cmd.Parameters.AddWithValue("@UserID", userID);
                         cmd.ExecuteNonQuery();
                     }
