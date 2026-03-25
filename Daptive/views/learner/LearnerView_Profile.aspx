@@ -79,7 +79,8 @@
 
                         <div class="form-actions">
                             <button type="button" id="btnEditProfile" class="btn-action-primary" onclick="showAuth()">Edit Profile</button>
-                            <asp:Button ID="btnSaveChanges" runat="server" ClientIDMode="Static" UseSubmitBehavior="false" Text="Save Changes" CssClass="btn-action-primary" style="display:none;" OnClick="btnSaveChanges_Click"/>
+                            <asp:Button ID="btnSaveChanges" runat="server" ClientIDMode="Static" UseSubmitBehavior="false" Text="Save Changes" CssClass="btn-action-primary" 
+                                style="display:none;" OnClick="btnSaveChanges_Click"/>
                         </div>
                     </div>
                 </div>

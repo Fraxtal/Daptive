@@ -106,12 +106,12 @@ namespace Daptive.views.learner
                         if (rowsAffected > 0)
                         {
                             // Optionally show a success message
-                            Console.WriteLine("Profile updated successfully.");
+                            ShowMessage("Update successful!", true);
                         }
                         else
                         {
                             // Handle case where update failed
-                            Console.WriteLine("Profile update failed.");
+                            ShowMessage("Profile update failed.", true);
                         }
                     }
                 }
@@ -158,7 +158,7 @@ namespace Daptive.views.learner
             }
             catch (Exception ex)
             {
-                // Handle exceptions (e.g., log the error)
+                // Handle exceptions
                 return false;
             }
         }
