@@ -225,21 +225,6 @@
                 const el = document.getElementById(id); if (el) el.classList.add('active');
               }
 
-              function submitModalChanges() {
-                // move modal form data into hidden fields and postback to server
-                document.getElementById('hfModalQuizId').value = currentQuizId || '';
-                document.getElementById('hfModalQuizName').value = document.getElementById('modalQuizName').value.trim();
-                document.getElementById('hfModalQuizDesc').value = document.getElementById('modalQuizDesc').value.trim();
-                document.getElementById('hfModalQuizContent').value = document.getElementById('modalQuizContent').value.trim();
-                // serialize testcases to simple JSON
-                const cards = document.querySelectorAll('#modalTestList .testcase-card');
-                const arr = [];
-                cards.forEach(c=>{ const inputs = c.querySelectorAll('input'); if (inputs.length>=2) arr.push({ Input: inputs[0].value.trim(), Expected: inputs[1].value.trim() }); });
-                document.getElementById('hfModalTestCases').value = JSON.stringify(arr);
-                // trigger server postback
-                document.getElementById('btnModalSavePost').click();
-              }
-
               function showEditSection(name) {
                 document.getElementById('editSectionInfo').style.display = name === 'info' ? 'block' : 'none';
                 document.getElementById('editSectionContent').style.display = name === 'content' ? 'block' : 'none';
@@ -347,35 +332,6 @@
                 document.getElementById(id).style.display = 'none';
               }
 
-              function confirmDelete() {
-                if (!currentQuizId) return;
-                // Call page method to delete
-                fetch('ManageQuizzes.aspx/DeleteQuiz', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                  body: JSON.stringify({ quizId: parseInt(currentQuizId, 10) })
-                }).then(r => r.json()).then(function(res) {
-                  // ASP.NET returns { d: <value> }
-                  const payload = res && res.d ? res.d : res;
-                  if (payload && payload.success) {
-                    // remove row from table
-                    try {
-                      const selector = `button[data-id='${currentQuizId}']`;
-                      const btn = document.querySelector(selector);
-                      const tr = btn && btn.closest('tr');
-                      if (tr) tr.remove();
-                    } catch (err) { console.warn('Failed to remove row', err); }
-                    closeModal('deleteModal');
-                  } else {
-                    alert('Failed to delete quiz');
-                    closeModal('deleteModal');
-                  }
-                }).catch(function(err){
-                  console.error(err);
-                  alert('Failed to delete quiz');
-                  closeModal('deleteModal');
-                });
-              }
             </script>
           </main>
         </div>

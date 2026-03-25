@@ -192,43 +192,6 @@ namespace Daptive.views.lecturer
             }
         }
 
-        protected void gvQuizzes_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "EditQuiz")
-            {
-                // keep server-side edit handling if needed - currently modal handles edit
-                var id = e.CommandArgument?.ToString();
-                // If you want server-side redirect to create page, uncomment below
-                // Response.Redirect("CreateQuiz.aspx?id=" + Server.UrlEncode(id));
-                return;
-            }
-            else if (e.CommandName == "DeleteQuiz")
-            {
-                int id;
-                if (int.TryParse(e.CommandArgument?.ToString(), out id))
-                {
-                    DeleteQuizLocal(id);
-                    BindQuizzes();
-                }
-            }
-        }
-
-        private void DeleteQuizLocal(int quizId)
-        {
-            DeleteQuizImpl(quizId);
-        }
-
-        private static void DeleteQuizImpl(int quizId)
-        {
-            var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
-            using (var conn = new SqlConnection(connStr))
-            using (var cmd = new SqlCommand("DELETE FROM [dbo].[testcase] WHERE QuizId = @QuizId; DELETE FROM [dbo].[quiz] WHERE QuizId = @QuizId;", conn))
-            {
-                cmd.Parameters.Add(new SqlParameter("@QuizId", System.Data.SqlDbType.Int) { Value = quizId });
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
 
         [System.Web.Services.WebMethod]
         public static object DeleteQuiz(int quizId)

@@ -97,27 +97,6 @@ namespace Daptive.views.lecturer
             // Show modal on client after postback
             ScriptManager.RegisterStartupScript(this, GetType(), "showStudentModal", "document.getElementById('studentModal').style.display='flex';", true);
         }
-
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public static object GetUserScores(int userId)
-        {
-            var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
-            var list = new System.Collections.Generic.List<object>();
-            using (var conn = new SqlConnection(connStr))
-            using (var cmd = new SqlCommand(@"SELECT q.Quiz, q.Description, s.Score FROM dbo.score s LEFT JOIN dbo.quiz q ON s.QuizId = q.QuizId WHERE s.UserId = @UserId ORDER BY q.Quiz", conn))
-            {
-                cmd.Parameters.AddWithValue("@UserId", userId);
-                conn.Open();
-                using (var rdr = cmd.ExecuteReader())
-                {
-                    while (rdr.Read())
-                    {
-                        list.Add(new { Quiz = rdr[0] as string, Description = rdr[1] as string, Score = rdr.IsDBNull(2) ? (int?)null : rdr.GetInt32(2) });
-                    }
-                }
-            }
-            return list.ToArray();
-        }
     }
 }
+    
