@@ -110,6 +110,27 @@ namespace Daptive.views.lecturer
                 return null;
             }
         }
+        
+        protected void gvQuizzes_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditQuiz")
+            {
+                // keep server-side edit handling if needed - currently modal handles edit
+                var id = e.CommandArgument?.ToString();
+                // If you want server-side redirect to create page, uncomment below
+                // Response.Redirect("CreateQuiz.aspx?id=" + Server.UrlEncode(id));
+                return;
+            }
+            else if (e.CommandName == "DeleteQuiz")
+            {
+                int id;
+                if (int.TryParse(e.CommandArgument?.ToString(), out id))
+                {
+                    DeleteQuizLocal(id);
+                    BindQuizzes();
+                }
+            }
+        }
 
         [System.Web.Services.WebMethod]
         public static object SaveQuizChanges(int quizId, string quiz, string description, object[] testcases)
