@@ -126,13 +126,13 @@ namespace Daptive.views.lecturer
                 int id;
                 if (int.TryParse(e.CommandArgument?.ToString(), out id))
                 {
-                    DeleteQuiz(id);
+                    DeleteQuizfromedit(id);
                     BindQuizzes();
                 }
             }
         }
         
-        private static void DeleteQuiz(int quizId)
+        private static void DeleteQuizfromedit(int quizId)
         {
             var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
             using (var conn = new SqlConnection(connStr))
