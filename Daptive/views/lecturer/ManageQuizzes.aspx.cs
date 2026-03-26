@@ -126,9 +126,21 @@ namespace Daptive.views.lecturer
                 int id;
                 if (int.TryParse(e.CommandArgument?.ToString(), out id))
                 {
-                    DeleteQuizLocal(id);
+                    DeleteQuiz(id);
                     BindQuizzes();
                 }
+            }
+        }
+        
+        private static void DeleteQuiz(int quizId)
+        {
+            var connStr = ConfigurationManager.ConnectionStrings["CodeDaptiveDB"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand("DELETE FROM [dbo].[testcase] WHERE QuizId = @QuizId; DELETE FROM [dbo].[quiz] WHERE QuizId = @QuizId;", conn))
+            {
+                cmd.Parameters.Add(new SqlParameter("@QuizId", System.Data.SqlDbType.Int) { Value = quizId });
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
 
