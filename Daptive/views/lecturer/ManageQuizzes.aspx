@@ -120,7 +120,7 @@
               </div>
               <p class="section-hint">View, edit or remove quizzes you have published.</p>
 
-              <asp:GridView runat="server" ID="gvQuizzes" CssClass="table" AutoGenerateColumns="false" DataKeyNames="QuizId" OnRowCommand="gvQuizzes_RowCommand">
+              <asp:GridView runat="server" ID="gvQuizzes" CssClass="table" AutoGenerateColumns="false" DataKeyNames="QuizId">
                 <Columns>
                   <asp:BoundField DataField="QuizId" HeaderText="#" />
                   <asp:BoundField DataField="Quiz" HeaderText="Quiz" />
